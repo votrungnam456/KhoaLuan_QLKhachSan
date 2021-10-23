@@ -1,7 +1,23 @@
 import React, { Component } from 'react'
-
+import { Link } from 'react-router-dom';
 export default class Header extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userLogin: this.props.user || {
+                email: "namvt@runsystem.net",
+                password: "123",
+                name: "Võ Trung Nam",
+                role: "Quản lý",
+                roleId: "role1"
+            }
+        }
+    }
+    componentDidMount() {
+
+    }
     render() {
+        const { userLogin } = this.state
         return (
             <div className="page-header navbar navbar-fixed-top">
                 <div className="page-header-inner ">
@@ -13,10 +29,10 @@ export default class Header extends Component {
                     </div>
                     {/* logo end */}
                     <ul className="nav navbar-nav navbar-left in">
-                        <li><a href="#" className="menu-toggler sidebar-toggler"><i className="icon-menu" /></a></li>
+                        <li><a href=" " className="menu-toggler sidebar-toggler"><i className="icon-menu" /></a></li>
                     </ul>
                     {/* start mobile menu */}
-                    <a href="javascript:;" className="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <a href=" " className="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
                         <span />
                     </a>
                     {/* end mobile menu */}
@@ -25,7 +41,7 @@ export default class Header extends Component {
                         <ul className="nav navbar-nav pull-right">
                             {/* start notification dropdown */}
                             <li className="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
-                                <a href="javascript:;" className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <a href=" " className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <i className="fa fa-bell-o" />
                                     <span className="badge headerBadgeColor1"> 6 </span>
                                 </a>
@@ -37,14 +53,14 @@ export default class Header extends Component {
                                     <li>
                                         <ul className="dropdown-menu-list small-slimscroll-style" data-handle-color="#637283">
                                             <li>
-                                                <a href="javascript:;">
+                                                <a href=" ">
                                                     <span className="time">just now</span>
                                                     <span className="details">
                                                         <span className="notification-icon circle deepPink-bgcolor"><i className="fa fa-check" /></span> Congratulations!. </span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="javascript:;">
+                                                <a href=" ">
                                                     <span className="time">3 mins</span>
                                                     <span className="details">
                                                         <span className="notification-icon circle purple-bgcolor"><i className="fa fa-user o" /></span>
@@ -52,7 +68,7 @@ export default class Header extends Component {
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="javascript:;">
+                                                <a href=" ">
                                                     <span className="time">7 mins</span>
                                                     <span className="details">
                                                         <span className="notification-icon circle blue-bgcolor"><i className="fa fa-comments-o" /></span>
@@ -60,7 +76,7 @@ export default class Header extends Component {
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="javascript:;">
+                                                <a href=" ">
                                                     <span className="time">12 mins</span>
                                                     <span className="details">
                                                         <span className="notification-icon circle pink"><i className="fa fa-heart" /></span>
@@ -68,14 +84,14 @@ export default class Header extends Component {
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="javascript:;">
+                                                <a href=" ">
                                                     <span className="time">15 mins</span>
                                                     <span className="details">
                                                         <span className="notification-icon circle yellow"><i className="fa fa-warning" /></span> Warning! </span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="javascript:;">
+                                                <a href=" ">
                                                     <span className="time">10 hrs</span>
                                                     <span className="details">
                                                         <span className="notification-icon circle red"><i className="fa fa-times" /></span> Application error. </span>
@@ -83,7 +99,7 @@ export default class Header extends Component {
                                             </li>
                                         </ul>
                                         <div className="dropdown-menu-footer">
-                                            <a href="javascript:void(0)"> All notifications </a>
+                                            <a href=" "> All notifications </a>
                                         </div>
                                     </li>
                                 </ul>
@@ -91,7 +107,7 @@ export default class Header extends Component {
                             {/* end notification dropdown */}
                             {/* start message dropdown */}
                             <li className="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
-                                <a href="javascript:;" className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <a href=" " className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <i className="fa fa-envelope-o" />
                                     <span className="badge headerBadgeColor2"> 2 </span>
                                 </a>
@@ -103,9 +119,9 @@ export default class Header extends Component {
                                     <li>
                                         <ul className="dropdown-menu-list small-slimscroll-style" data-handle-color="#637283">
                                             <li>
-                                                <a href="#">
+                                                <a href=" ">
                                                     <span className="photo">
-                                                        <img src="assets/img/user/user2.jpg" className="img-circle" alt />
+                                                        <img src="assets/img/user/user2.jpg" className="img-circle" alt="" />
                                                     </span>
                                                     <span className="subject">
                                                         <span className="from"> Sarah Smith </span>
@@ -115,9 +131,9 @@ export default class Header extends Component {
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href=" ">
                                                     <span className="photo">
-                                                        <img src="assets/img/user/user3.jpg" className="img-circle" alt />
+                                                        <img src="assets/img/user/user3.jpg" className="img-circle" alt="" />
                                                     </span>
                                                     <span className="subject">
                                                         <span className="from"> John Deo </span>
@@ -128,9 +144,9 @@ export default class Header extends Component {
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href=" ">
                                                     <span className="photo">
-                                                        <img src="assets/img/user/user1.jpg" className="img-circle" alt />
+                                                        <img src="assets/img/user/user1.jpg" className="img-circle" alt="" />
                                                     </span>
                                                     <span className="subject">
                                                         <span className="from"> Rajesh </span>
@@ -140,9 +156,9 @@ export default class Header extends Component {
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href=" ">
                                                     <span className="photo">
-                                                        <img src="assets/img/user/user8.jpg" className="img-circle" alt />
+                                                        <img src="assets/img/user/user8.jpg" className="img-circle" alt="" />
                                                     </span>
                                                     <span className="subject">
                                                         <span className="from"> Lina Smith </span>
@@ -152,9 +168,9 @@ export default class Header extends Component {
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href=" ">
                                                     <span className="photo">
-                                                        <img src="assets/img/user/user5.jpg" className="img-circle" alt />
+                                                        <img src="assets/img/user/user5.jpg" className="img-circle" alt="" />
                                                     </span>
                                                     <span className="subject">
                                                         <span className="from"> Jacob Ryan </span>
@@ -165,7 +181,7 @@ export default class Header extends Component {
                                             </li>
                                         </ul>
                                         <div className="dropdown-menu-footer">
-                                            <a href="#"> All Messages </a>
+                                            <a href=" "> All Messages </a>
                                         </div>
                                     </li>
                                 </ul>
@@ -173,30 +189,30 @@ export default class Header extends Component {
                             {/* end message dropdown */}
                             {/* start manage user dropdown */}
                             <li className="dropdown dropdown-user">
-                                <a href="javascript:;" className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <img alt className="img-circle " src="assets/img/dp.jpg" />
-                                    <span className="username username-hide-on-mobile"> John </span>
+                                <a href=" " className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    <img alt="" className="img-circle " src="assets/img/dp.jpg" />
+                                    <span className="username username-hide-on-mobile"> {userLogin.name} </span>
                                     <i className="fa fa-angle-down" />
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-default animated jello">
                                     <li>
-                                        <a href="user_profile.html">
-                                            <i className="icon-user" /> Profile </a>
+                                        <Link to="/employee-profile">
+                                            <i className="icon-user" /> Profile </Link>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href=" ">
                                             <i className="icon-settings" /> Settings
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="login.html">
-                                            <i className="icon-logout" /> Log Out </a>
+                                        <Link to="/login">
+                                            <i className="icon-logout" /> Log Out </Link>
                                     </li>
                                 </ul>
                             </li>
                             {/* end manage user dropdown */}
                             <li className="dropdown dropdown-quick-sidebar-toggler">
-                                <a id="headerSettingButton" className="mdl-button mdl-js-button mdl-button--icon pull-right" data-upgraded=",MaterialButton">
+                                <a href=" " id="headerSettingButton" className="mdl-button mdl-js-button mdl-button--icon pull-right" data-upgraded=",MaterialButton">
                                     <i className="material-icons">settings</i>
                                 </a>
                             </li>

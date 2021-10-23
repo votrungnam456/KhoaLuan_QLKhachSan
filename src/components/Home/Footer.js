@@ -5,7 +5,7 @@ export default class Footer extends Component {
         return (
             <div className="page-footer">
                 <div className="page-footer-inner"> 2021 © LNĐ Hotel Mananger
-                    <a href="#" target="_top" className="makerCss">RedStar Theme</a>
+                    <a href=" " target="_top" className="makerCss"> HUFI</a>
                 </div>
                 <div className="scroll-to-top">
                     <i className="icon-arrow-up" />

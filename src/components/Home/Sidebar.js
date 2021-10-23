@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-let sideBarItem = [
+const sideBarQL = [
     {
         icon: "business_center",
         title: "Đặt/Nhận/Trả phòng",
@@ -25,16 +25,28 @@ let sideBarItem = [
         title: "Quản lý phòng",
         subMenus: [
             {
-                to: "/addroom",
+                to: "/add-room",
                 title: "Thêm phòng"
             },
             {
-                to: "/listroom",
-                title: "Xem phòng"
+                to: "/list-room",
+                title: "Danh sách phòng"
             },
             {
-                to: "/editroom",
+                to: "/edit-room",
                 title: "Sửa thông tin phòng"
+            },
+            {
+                to: "/list-type-room",
+                title: "Danh sách loại phòng"
+            },
+            {
+                to: "/add-type-room",
+                title: "Thêm loại phòng"
+            },
+            {
+                to: "/edit-type-room",
+                title: "Sửa thông tin loại phòng"
             },
         ]
     },
@@ -61,16 +73,28 @@ let sideBarItem = [
         title: "Quản lý thông tin khách hàng",
         subMenus: [
             {
-                to: "/add-employee",
+                to: "/add-customer",
                 title: "Thêm khách hàng"
             },
             {
-                to: "/list-employee",
+                to: "/list-customer",
                 title: "Xem danh sách khách hàng"
             },
             {
-                to: "/edit-employee",
+                to: "/edit-customer",
                 title: "Sửa thông tin khách hàng"
+            },
+            {
+                to: "/delegation",
+                title: "Khách đoàn"
+            },
+            {
+                to: "/add-delegation",
+                title: "Thêm khách đoàn"
+            },
+            {
+                to: "/edit-delegation",
+                title: "Sửa thông tin khách đoàn"
             },
         ]
     },
@@ -97,15 +121,15 @@ let sideBarItem = [
         title: "Quản lý thiết bị kho",
         subMenus: [
             {
-                to: "/add-service",
+                to: "/add-device",
                 title: "Thêm thiết bị"
             },
             {
-                to: "/list-service",
+                to: "/list-device",
                 title: "Xem danh sách thiết bị"
             },
             {
-                to: "/edit-service",
+                to: "/edit-device",
                 title: "Sửa thông tin thiết bị"
             },
         ]
@@ -147,19 +171,200 @@ let sideBarItem = [
         ]
     },
 ]
-
-const SideBarItem = (item) => {
+const sideBarNVKho = [
+    {
+        icon: "grain",
+        title: "Quản lý thiết bị kho",
+        subMenus: [
+            {
+                to: "/add-device",
+                title: "Thêm thiết bị"
+            },
+            {
+                to: "/list-device",
+                title: "Xem danh sách thiết bị"
+            },
+            {
+                to: "/edit-device",
+                title: "Sửa thông tin thiết bị"
+            },
+        ]
+    },
+    {
+        icon: "timeline",
+        title: "Thống kê",
+        subMenus: [
+            {
+                to: "/timeline-1",
+                title: "Thống kê 1"
+            },
+            {
+                to: "/timeline-2",
+                title: "Thống kê 2"
+            },
+            {
+                to: "/timeline-3",
+                title: "Thống kê 3"
+            },
+        ]
+    },
+    {
+        icon: "info",
+        title: "Thông tin nhóm",
+        subMenus: [
+            {
+                to: "/vtn",
+                title: "Võ Trung Nam"
+            },
+            {
+                to: "/ntl",
+                title: "Nguyễn Thành Long"
+            },
+            {
+                to: "/dvd",
+                title: "Dương Văn Đại"
+            },
+        ]
+    },
+]
+const sideBarNVTiepTan = [
+    {
+        icon: "business_center",
+        title: "Đặt/Nhận/Trả phòng",
+        subMenus: [
+            {
+                to: "/booking-room",
+                title: "Đặt phòng"
+            },
+            {
+                to: "/check-in-room",
+                title: "Nhận phòng"
+            },
+            {
+                to: "/check-out-room",
+                title: "Trả phòng"
+            },
+        ]
+    },
+    {
+        icon: "vpn_key",
+        title: "Quản lý phòng",
+        subMenus: [
+            {
+                to: "/add-room",
+                title: "Thêm phòng"
+            },
+            {
+                to: "/list-room",
+                title: "Danh sách phòng"
+            },
+            {
+                to: "/edit-room",
+                title: "Sửa thông tin phòng"
+            },
+            {
+                to: "/list-type-room",
+                title: "Danh sách loại phòng"
+            },
+            {
+                to: "/add-type-room",
+                title: "Thêm loại phòng"
+            },
+            {
+                to: "/edit-type-room",
+                title: "Sửa thông tin loại phòng"
+            },
+        ]
+    },
+    {
+        icon: "directions_run",
+        title: "Quản lý thông tin khách hàng",
+        subMenus: [
+            {
+                to: "/add-customer",
+                title: "Thêm khách hàng"
+            },
+            {
+                to: "/list-customer",
+                title: "Xem danh sách khách hàng"
+            },
+            {
+                to: "/edit-customer",
+                title: "Sửa thông tin khách hàng"
+            },
+            {
+                to: "/delegation",
+                title: "Khách đoàn"
+            },
+            {
+                to: "/add-delegation",
+                title: "Thêm khách đoàn"
+            },
+            {
+                to: "/edit-delegation",
+                title: "Sửa thông tin khách đoàn"
+            },
+        ]
+    },
+    {
+        icon: "card_travel",
+        title: "Dịch vụ",
+        subMenus: [
+            {
+                to: "/list-service",
+                title: "Xem danh sách dịch vụ"
+            },
+        ]
+    },
+    {
+        icon: "timeline",
+        title: "Thống kê",
+        subMenus: [
+            {
+                to: "/timeline-1",
+                title: "Thống kê 1"
+            },
+            {
+                to: "/timeline-2",
+                title: "Thống kê 2"
+            },
+            {
+                to: "/timeline-3",
+                title: "Thống kê 3"
+            },
+        ]
+    },
+    {
+        icon: "info",
+        title: "Thông tin nhóm",
+        subMenus: [
+            {
+                to: "/vtn",
+                title: "Võ Trung Nam"
+            },
+            {
+                to: "/ntl",
+                title: "Nguyễn Thành Long"
+            },
+            {
+                to: "/dvd",
+                title: "Dương Văn Đại"
+            },
+        ]
+    },
+]
+const SideBarItem = (item, index) => {
     return (
-        <li className="nav-item">
-            <a href="true" className="nav-link nav-toggle">
+        <li key={index} className="nav-item">
+            <a href=" " className="nav-link nav-toggle">
                 <i className="material-icons">{item.icon}</i>
                 <span className="title">{item.title}</span>
                 <span className="arrow" />
             </a>
             <ul className="sub-menu">
-                {item.subMenus.map(sub => {
+                {item.subMenus.map((sub, index) => {
                     return (
-                        <li className="nav-item">
+                        <li key={index} className="nav-item">
                             <Link to={sub.to} className="nav-link">
                                 <span className="title">{sub.title}</span>
                             </Link>
@@ -172,16 +377,29 @@ const SideBarItem = (item) => {
     )
 }
 export default class Sidebar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userLogin: this.props.user || {
+                email: "namvt@runsystem.net",
+                password: "123",
+                name: "Võ Trung Nam",
+                role: "Quản lý",
+                roleId: "role1"
+            }
+        }
+    }
     loadSideBar(sideBarItem) {
         let result = null
         if (sideBarItem.length > 0) {
-            result = sideBarItem.map(item => {
-                return SideBarItem(item)
+            result = sideBarItem.map((item, index) => {
+                return SideBarItem(item, index)
             })
         }
         return result
     }
     render() {
+        const { userLogin } = this.state
         return (
             <div className="sidebar-container">
                 <div className="sidemenu-container navbar-collapse collapse fixed-menu">
@@ -196,26 +414,26 @@ export default class Sidebar extends Component {
                                 <div className="user-panel">
                                     <div className="row">
                                         <div className="sidebar-userpic">
-                                            <img src="assets/img/dp.jpg" className="img-responsive" alt /> </div>
+                                            <img src="assets/img/dp.jpg" className="img-responsive" alt="" /> </div>
                                     </div>
                                     <div className="profile-usertitle">
-                                        <div className="sidebar-userpic-name"> Võ Trung Nam </div>
-                                        <div className="profile-usertitle-job"> Quản lý </div>
+                                        <div className="sidebar-userpic-name"> {userLogin.name} </div>
+                                        <div className="profile-usertitle-job">{userLogin.role} </div>
                                     </div>
                                     <div className="sidebar-userpic-btn">
-                                        <a className="tooltips" href="user_profile.html" data-placement="top" data-original-title="Profile">
+                                        <Link className="tooltips" to="/employee-profile" data-placement="top" data-original-title="Profile">
                                             <i className="material-icons">person_outline</i>
-                                        </a>
-                                        <a className="tooltips" href="login.html" data-placement="top" data-original-title="Logout">
+                                        </Link>
+                                        <Link className="tooltips" to="/login" data-placement="top" data-original-title="Logout">
                                             <i className="material-icons">input</i>
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </li>
                             <li className="menu-heading">
                                 <span>Menu</span>
                             </li>
-                            {this.loadSideBar(sideBarItem)}
+                            {userLogin.roleId === "role1" ? this.loadSideBar(sideBarQL) : userLogin.roleId === "role2" ? this.loadSideBar(sideBarNVTiepTan) : this.loadSideBar(sideBarNVKho)}
                         </ul>
                     </div>
                 </div>

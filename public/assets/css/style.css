@@ -8388,3 +8388,14 @@ span.notificationtime {
 	margin-top: 0px !important; 
 	color: #000000;
 }
+
+.placeholder__white::placeholder{
+    color: #ffffff;
+}
+.placeholder__white:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #ffffff;
+}
+
+.placeholder__white::-ms-input-placeholder { /* Microsoft Edge */
+  color: #ffffff;
+}

@@ -65,7 +65,8 @@ ul, li {
 /*---------------------------------------------*/
 input {
 	outline: none;
-	border: none;
+  border: none;
+	border-bottom: 1px solid #333333;
 }
 
 textarea {
@@ -73,24 +74,24 @@ textarea {
   border: none;
 }
 
-textarea:focus, input:focus {
+/* textarea:focus, input:focus {
   border-color: transparent !important;
-}
+} */
 
-input:focus::-webkit-input-placeholder { color:transparent; }
+/* input:focus::-webkit-input-placeholder { color:transparent; }
 input:focus:-moz-placeholder { color:transparent; }
 input:focus::-moz-placeholder { color:transparent; }
-input:focus:-ms-input-placeholder { color:transparent; }
+input:focus:-ms-input-placeholder { color:transparent; } */
 
 textarea:focus::-webkit-input-placeholder { color:transparent; }
 textarea:focus:-moz-placeholder { color:transparent; }
 textarea:focus::-moz-placeholder { color:transparent; }
 textarea:focus:-ms-input-placeholder { color:transparent; }
 
-input::-webkit-input-placeholder { color: #fff;}
+/* input::-webkit-input-placeholder { color: #fff;}
 input:-moz-placeholder { color: #fff;}
 input::-moz-placeholder { color: #fff;}
-input:-ms-input-placeholder { color: #fff;}
+input:-ms-input-placeholder { color: #fff;} */
 
 textarea::-webkit-input-placeholder { color: #fff;}
 textarea:-moz-placeholder { color: #fff;}

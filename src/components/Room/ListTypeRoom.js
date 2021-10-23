@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-export default class ListRoom extends Component {
+export default class ListTypeRoom extends Component {
     render() {
         return (
             <div className="page-content-wrapper">
@@ -23,7 +23,7 @@ export default class ListRoom extends Component {
                         <div className="col-md-12">
                             <div className="card card-box">
                                 <div className="card-head">
-                                    <header>Danh sách phòng</header>
+                                    <header>Danh sách loại phòng</header>
                                     <div className="tools">
                                         <i className="fa fa-repeat btn-color box-refresh" />
                                         <i className="t-collapse btn-color fa fa-chevron-down" />
@@ -33,12 +33,12 @@ export default class ListRoom extends Component {
                                     <div className="row p-b-20">
                                         <div className="col-md-6 col-sm-6 col-6">
                                             <div className="btn-group">
-                                                <Link to="/add-room" id="addRow" className="btn btn-info">
-                                                    Thêm phòng <i className="fa fa-plus" />
+                                                <Link to="/add-type-room" id="addRow" className="btn btn-info">
+                                                    Thêm loại phòng <i className="fa fa-plus" />
                                                 </Link>
                                             </div>
                                             <div className="btn-group">
-                                                <button id="addRow" className="btn btn-success">
+                                                <button id="" className="btn btn-success">
                                                     Làm mới <i className="fa fa-repeat" />
                                                 </button>
                                             </div>
@@ -75,26 +75,20 @@ export default class ListRoom extends Component {
                                         <table className="table table-hover table-checkable order-column full-width" id="example4">
                                             <thead>
                                                 <tr>
-                                                    <th className="center"> Tên phòng </th>
-                                                    <th className="center"> Loại phòng </th>
-                                                    <th className="center"> Tình trạng phòng </th>
-                                                    <th className="center"> Nhân viên dọn phòng </th>
-                                                    <th className="center"> Phiếu đăng ký </th>
+                                                    <th className="center"> Tên loại phòng </th>
+                                                    <th className="center"> Giá </th>
                                                     <th className="center"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr className="odd gradeX">
-                                                    <td className="center">Phòng 101</td>
                                                     <td className="center">Phòng đơn</td>
-                                                    <td className="center">Trống</td>
-                                                    <td className="center">Đào Thuý Nga</td>
-                                                    <td className="center">PĐK01</td>
+                                                    <td className="center">50000</td>
                                                     <td className="center">
                                                         <a href="edit_room.html" className="btn btn-tbl-edit btn-xs">
                                                             <i className="fa fa-pencil" />
                                                         </a>
-                                                        <a className="btn btn-tbl-delete btn-xs">
+                                                        <a href=" " className="btn btn-tbl-delete btn-xs">
                                                             <i className="fa fa-trash-o " />
                                                         </a>
                                                     </td>
@@ -108,7 +102,6 @@ export default class ListRoom extends Component {
                     </div>
                 </div>
             </div>
-
         )
     }
 }

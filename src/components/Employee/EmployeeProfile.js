@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
-export default class EditRoom extends Component {
+export default class EmployeeProfile extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
     render() {
         return (
             <div className="page-content-wrapper">
@@ -8,7 +15,7 @@ export default class EditRoom extends Component {
                     <div className="page-bar">
                         <div className="page-title-breadcrumb">
                             <div className=" pull-left">
-                                <div className="page-title">Phòng</div>
+                                <div className="page-title">Nhân viên</div>
                             </div>
                             {/* <ol className="breadcrumb page-breadcrumb pull-right">
                                 <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
@@ -23,37 +30,42 @@ export default class EditRoom extends Component {
                         <div className="col-sm-12">
                             <div className="card-box">
                                 <div className="card-head">
-                                    <header>Sửa thông tin phòng</header>
-                                    <button id="panel-button" className="mdl-button mdl-js-button mdl-button--icon pull-right" data-upgraded=",MaterialButton">
-                                        <i className="material-icons">more_vert</i>
-                                    </button>
+                                    <header>Thông tin nhân viên</header>
                                 </div>
                                 <div className="card-body row">
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                                            <label className="">Tên phòng</label>
-                                            <input className="mdl-textfield__input" type="text" id="txtRoomNo" />
+                                            <label className="">Tên nhân viên</label>
+
                                         </div>
                                     </div>
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                                            <label className="">Mô tả</label>
-                                            <input className="mdl-textfield__input" type="text" id="txtRoomNo" />
+                                            <label className="">Giới tính</label>
+
                                         </div>
                                     </div>
                                     <div className="col-lg-6 p-t-20">
-                                        <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width">
-                                            <label htmlFor="list3" className="">Loại phòng</label>
-                                            <select name="cars" id="cars" className="mdl-textfield__input">
-                                                <option value="1">Phòng đơn</option>
-                                                <option value="2">Phòng đôi</option>
-                                                <option value="3">Phòng đơn - VIP</option>
-                                                <option value="4">Phòng đôi - VIP</option>
-                                            </select>
+                                        <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
+                                            <label className="">Chứng minh thư</label>
+
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-6 p-t-20">
+                                        <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
+                                            <label className="">Số điện thoại</label>
+
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-6 p-t-20">
+                                        <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
+                                            <label className="">Địa chỉ</label>
+
                                         </div>
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">
-                                        <button type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa thông tin phòng</button>
+                                        <Link to="/edit-employee" type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa thông tin nhân viên</Link>
                                     </div>
                                 </div>
                             </div>
@@ -61,8 +73,6 @@ export default class EditRoom extends Component {
                     </div>
                 </div>
             </div>
-
-
         )
     }
 }
