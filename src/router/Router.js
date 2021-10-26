@@ -42,9 +42,9 @@ const routes = [
         main: ({ history }) => <ListRoom history={history} />
     },
     {
-        path: "/edit-room",
+        path: "/edit-room/:idRoom",
         exact: true,
-        main: ({ history }) => <EditRoom history={history} />
+        main: ({ history,match }) => <EditRoom history={history} match={match}/>
     },
     {
         path: "/list-customer",

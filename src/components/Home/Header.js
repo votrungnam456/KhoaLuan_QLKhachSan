@@ -4,20 +4,11 @@ export default class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userLogin: this.props.user || {
-                email: "namvt@runsystem.net",
-                password: "123",
-                name: "Võ Trung Nam",
-                role: "Quản lý",
-                roleId: "role1"
-            }
         }
     }
-    componentDidMount() {
 
-    }
     render() {
-        const { userLogin } = this.state
+        const {user} = this.props;
         return (
             <div className="page-header navbar navbar-fixed-top">
                 <div className="page-header-inner ">
@@ -191,7 +182,7 @@ export default class Header extends Component {
                             <li className="dropdown dropdown-user">
                                 <a href=" " className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <img alt="" className="img-circle " src="assets/img/dp.jpg" />
-                                    <span className="username username-hide-on-mobile"> {userLogin.name} </span>
+                                    <span className="username username-hide-on-mobile"> {user.name} </span>
                                     <i className="fa fa-angle-down" />
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-default animated jello">

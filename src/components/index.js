@@ -5,23 +5,25 @@ import SettingTheme from './Home/SettingTheme.js'
 import Sidebar from './Home/Sidebar.js'
 import routes from '../router/Router.js';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Page404 from './ErrorPage/Page404.js'
+import Login from './Login/Login.js'
 export default class index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: Object
+            user: {}
         }
     }
     componentDidMount() {
         let userLocal = JSON.parse(localStorage.getItem("userLogin"));
         let userSession = JSON.parse(sessionStorage.getItem("userLogin"));
         if (userLocal === null && userSession === null) {
-            this.props.history.push("/login");
+            return <Login />
         }
-        this.setState({
-            user: userLocal || userSession
-        })
+        else {
+            this.setState({
+                user: userLocal || userSession
+            })
+        }
     }
     render() {
         const { user } = this.state;

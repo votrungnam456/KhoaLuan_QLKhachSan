@@ -1,7 +1,37 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { APIRoom } from '../../constanst/API';
+import * as CallAPI from "../../constanst/CallAPI";
+import ListRoomItem from './ListRoomItem';
 export default class ListRoom extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listRoom:[]
+        }
+    }
+    componentDidMount(){
+        this.loadData();
+    }
+    loadData = () =>{
+        CallAPI.loadData(APIRoom).then(res=>{
+            if(res.status == 200){
+                this.setState({
+                    listRoom:res.data
+                })
+            }
+        });
+    }
+    deleteItem = (id) =>{
+        console.log(id)
+        CallAPI.deleteItem(APIRoom + "/" + id).then(res=>{
+            if(res.status == 200){
+                this.loadData();
+            }
+        });
+    }
     render() {
+        const {listRoom} = this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -84,21 +114,18 @@ export default class ListRoom extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr className="odd gradeX">
-                                                    <td className="center">Phòng 101</td>
-                                                    <td className="center">Phòng đơn</td>
-                                                    <td className="center">Trống</td>
-                                                    <td className="center">Đào Thuý Nga</td>
-                                                    <td className="center">PĐK01</td>
-                                                    <td className="center">
-                                                        <a href="edit_room.html" className="btn btn-tbl-edit btn-xs">
-                                                            <i className="fa fa-pencil" />
-                                                        </a>
-                                                        <a className="btn btn-tbl-delete btn-xs">
-                                                            <i className="fa fa-trash-o " />
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                {
+                                                    listRoom.length >0 ? listRoom.map((value,index)=>{
+                                                        return (
+                                                            <ListRoomItem deleteItem={this.deleteItem} room={value} key={index}></ListRoomItem>
+                                                        )
+                                                    }):(
+                                                        <tr className="spinner-border" role="status">
+                                                            <td className="sr-only">Loading...</td>
+                                                        </tr>
+                                                    )
+                                                }
+                                            
                                             </tbody>
                                         </table>
                                     </div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { APIRoom } from '../../constanst/API';
 export default class ListTypeRoom extends Component {
     render() {
         return (
