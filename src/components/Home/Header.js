@@ -182,7 +182,7 @@ export default class Header extends Component {
                             <li className="dropdown dropdown-user">
                                 <a href=" " className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <img alt="" className="img-circle " src="assets/img/dp.jpg" />
-                                    <span className="username username-hide-on-mobile"> {user.name} </span>
+                                    <span className="username username-hide-on-mobile"> {user.nameEmployee} </span>
                                     <i className="fa fa-angle-down" />
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-default animated jello">

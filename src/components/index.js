@@ -16,8 +16,13 @@ export default class index extends Component {
     componentDidMount() {
         let userLocal = JSON.parse(localStorage.getItem("userLogin"));
         let userSession = JSON.parse(sessionStorage.getItem("userLogin"));
+        console.log(userSession,userLocal)
         if (userLocal === null && userSession === null) {
-            return <Login />
+            console.log(userSession,userLocal)
+            this.props.history.push("/login")
+            this.props.history.go(0);
+            // return <Login />
+            // <Redirect to="/login"/>
         }
         else {
             this.setState({

@@ -13,11 +13,17 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    // this.setState({
-    //   user: [
-
-    //   ]
-    // })
+    // let userLocal = JSON.parse(localStorage.getItem("userLogin"));
+    // let userSession = JSON.parse(sessionStorage.getItem("userLogin"));
+    // if (userLocal === null && userSession === null) {
+    //     return <Login />
+    //     // <Redirect to="/login"/>
+    // }
+    // else {
+    //     this.setState({
+    //         user: userLocal || userSession
+    //     })
+    // }
   }
 
   render() {

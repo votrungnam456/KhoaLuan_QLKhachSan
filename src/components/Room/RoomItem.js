@@ -1,19 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { APIRoom } from '../../constanst/API';
-import * as CallAPI from "../../constanst/CallAPI";
 export default class ListRoomItem extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-
-        }
+        this.state = {}
     }
-    componentDidMount(){
-    }
-    // deleteItem(id){
-    //     CallAPI.deleteItem(APIRoom + "/" + id).then(res=>console.log(res));
-    // }
     onDeleteItem = ()=>{
         this.props.deleteItem(this.props.room.id)
     }

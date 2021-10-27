@@ -117,9 +117,9 @@ const routes = [
         main: ({ history }) => <AddTypeRoom history={history} />
     },
     {
-        path: "/edit-type-room",
+        path: "/edit-type-room/:idTypeRoom",
         exact: true,
-        main: ({ history }) => <EditTypeRoom history={history} />
+        main: ({ history,match }) => <EditTypeRoom history={history} match={match} />
     },
     {
         path: "/booking-room",

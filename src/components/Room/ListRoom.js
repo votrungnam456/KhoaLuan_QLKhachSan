@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { APIRoom } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
-import ListRoomItem from './ListRoomItem';
+import RoomItem from './RoomItem';
 export default class ListRoom extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +14,7 @@ export default class ListRoom extends Component {
         this.loadData();
     }
     loadData = () =>{
-        CallAPI.loadData(APIRoom).then(res=>{
+        CallAPI.GET(APIRoom).then(res=>{
             if(res.status == 200){
                 this.setState({
                     listRoom:res.data
@@ -24,7 +24,7 @@ export default class ListRoom extends Component {
     }
     deleteItem = (id) =>{
         console.log(id)
-        CallAPI.deleteItem(APIRoom + "/" + id).then(res=>{
+        CallAPI.DELETE(APIRoom + "/" + id).then(res=>{
             if(res.status == 200){
                 this.loadData();
             }
@@ -117,7 +117,7 @@ export default class ListRoom extends Component {
                                                 {
                                                     listRoom.length >0 ? listRoom.map((value,index)=>{
                                                         return (
-                                                            <ListRoomItem deleteItem={this.deleteItem} room={value} key={index}></ListRoomItem>
+                                                            <RoomItem deleteItem={this.deleteItem} room={value} key={index}></RoomItem>
                                                         )
                                                     }):(
                                                         <tr className="spinner-border" role="status">

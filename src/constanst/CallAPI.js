@@ -1,19 +1,16 @@
 import axios from "axios";
 
 
-function loadData(API) {
+function GET(API) {
   return axios.get(API);
 }
-// function getItem(API) {
-//   return axios.get(API);
-// }
-function addItem(API,data) {
+function POST(API,data) {
   return axios.post(API, data);
 }
-function deleteItem(API) {
+function DELETE(API) {
   return axios.delete(API);
 }
-function updateItem(API,data) {
+function PUT(API,data) {
   return axios.put(API,data);
 }
-export {loadData,addItem,deleteItem,updateItem}
+export {GET,POST,DELETE,PUT}

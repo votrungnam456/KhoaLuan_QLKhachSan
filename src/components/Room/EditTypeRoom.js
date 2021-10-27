@@ -1,7 +1,64 @@
 import React, { Component } from 'react'
-
+import * as CallAPI from "../../constanst/CallAPI";
+import { APIRoom, APITypeRoom } from '../../constanst/API';
 export default class EditTypeRoom extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            nameTypeRoom: "",
+            price: "",
+            message: 0
+        }
+    }
+    componentDidMount() {
+        CallAPI.GET(APITypeRoom + "/" + this.props.match.params.idTypeRoom).then(res=>{
+            if(res.status == 200){
+                this.setState({
+                    nameTypeRoom:res.data.nameTypeRoom,
+                    price:res.data.price,
+                })
+            }
+            else{
+                alert("Load data failed!");
+            }
+        })
+    }
+    onChange = (ev) => {
+        let name = ev.target.name;
+        let value = ev.target.value;
+        this.setState({
+            [name]: value
+        })
+    }
+    editTypeRoom = (ev) => {
+        const { nameTypeRoom, price } = this.state
+        const {history} = this.props
+        ev.preventDefault();
+        if (nameTypeRoom === "" || price === "") {
+            this.setState({
+                message: 1
+            })
+        }
+        else {
+            const typeRoomEdit = {
+                nameTypeRoom,
+                price
+            }
+            CallAPI.PUT(APITypeRoom + "/" + this.props.match.params.idTypeRoom, typeRoomEdit).then(res => {
+                console.log(res)
+                if (res.status === 200) {
+                    history.push("/list-type-room");
+                }
+                else {
+                    this.setState({
+                        message: 2
+                    })
+                }
+            });
+        }
+    }
     render() {
+        const {nameTypeRoom,price,message} = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -29,17 +86,18 @@ export default class EditTypeRoom extends Component {
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                                             <label className="">Tên loại phòng</label>
-                                            <input className="mdl-textfield__input" type="text" id="txtRoomNo" />
+                                            <input className="mdl-textfield__input" type="text" onChange={this.onChange} value={nameTypeRoom} name="nameTypeRoom"/>
                                         </div>
                                     </div>
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                                             <label className="">Giá</label>
-                                            <input className="mdl-textfield__input" type="text" id="txtRoomNo" />
+                                            <input className="mdl-textfield__input" type="text" onChange={this.onChange} value={price} name="price"/>
                                         </div>
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">
-                                        <button type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa loại phòng</button>
+                                        <button onClick={this.editTypeRoom} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa thông tin loại phòng</button>
+                                        <p style={{color:"red"}} >{message == 1 ? "Thông tin không được để trống" : message == 2 ? "Sửa thông tin thất bại, vui lòng kiểm tra lại thông tin và thử lại" : ""}</p>
                                     </div>
                                 </div>
                             </div>

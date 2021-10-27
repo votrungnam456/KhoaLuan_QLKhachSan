@@ -13,8 +13,8 @@ export default class AddRoom extends Component {
         }
     }
     componentDidMount() {
-        CallAPI.loadData(APITypeRoom).then(res => {
-            if (res.status == 200) {
+        CallAPI.GET(APITypeRoom).then(res => {
+            if (res.status === 200) {
                 this.setState({
                     listTypeRoom: res.data
                 })
@@ -22,10 +22,9 @@ export default class AddRoom extends Component {
         });
     }
     onChange = (ev) => {
-        // this.setState({
-        //     message:0
-        // })
-
+        this.setState({
+            message:0
+        })
         let name = ev.target.name;
         let value = ev.target.value;
         console.log(name, value)
@@ -46,8 +45,8 @@ export default class AddRoom extends Component {
                 nameRoom,
                 description, idTypeRoom
             }
-            CallAPI.addItem(APIRoom, roomAdd).then(res => {
-                if (res.status == 201) {
+            CallAPI.POST(APIRoom, roomAdd).then(res => {
+                if (res.status === 200) {
                     this.setState({
                         message: 3,
                         nameRoom: "",
@@ -60,7 +59,6 @@ export default class AddRoom extends Component {
                         message: 2
                     })
                 }
-
             });
         }
 
@@ -109,7 +107,7 @@ export default class AddRoom extends Component {
                                             <select name="idTypeRoom" onChange={this.onChange} className="mdl-textfield__input">
                                                 {listTypeRoom.length > 0 ? listTypeRoom.map((typeRoom, index) => {
                                                     return (
-                                                        <option key={index} value={typeRoom.id}>{typeRoom.nameType}</option>
+                                                        <option key={index} value={typeRoom.id}>{typeRoom.nameTypeRoom}</option>
                                                     )
                                                 }) : <option value="">Loading data....</option>}
                                             </select>
@@ -117,7 +115,7 @@ export default class AddRoom extends Component {
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">
                                         <button onClick={this.addRoom} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Thêm phòng</button>
-                                        <p style={message == 3 ? { color: "green" } : { color: "red" }}>{message == 1 ? "Tên phòng không được để trống" : message == 2 ? "Thêm phòng thất bại, vui lòng kiểm tra lại thông tin và thử lại" : message == 3 ? "Thêm phòng thành công" : ""}</p>
+                                        <p style={message === 3 ? { color: "green" } : { color: "red" }}>{message === 1 ? "Tên phòng không được để trống" : message === 2 ? "Thêm phòng thất bại, vui lòng kiểm tra lại thông tin và thử lại" : message == 3 ? "Thêm phòng thành công" : ""}</p>
                                     </div>
                                 </div>
                             </div>

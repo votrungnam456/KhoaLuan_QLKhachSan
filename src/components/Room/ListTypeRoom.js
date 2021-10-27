@@ -1,8 +1,37 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { APIRoom } from '../../constanst/API';
+import { APITypeRoom } from '../../constanst/API';
+import * as CallAPI from "../../constanst/CallAPI";
+import TypeRoomItem from './TypeRoomItem';
 export default class ListTypeRoom extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listTypeRoom:[]
+        }
+    }
+    componentDidMount(){
+        this.loadTypeRoom();
+    }
+    loadTypeRoom = () =>{
+        CallAPI.GET(APITypeRoom).then(res=>{
+            if(res.status === 200){
+                this.setState({
+                    listTypeRoom:res.data
+                })
+            }
+        });
+    }
+    deleteItem = (id) =>{
+        CallAPI.DELETE(APITypeRoom + "/" + id).then(res=>{
+            if(res.status == 200){
+                this.loadTypeRoom();
+            }
+        });
+    }
     render() {
+        const {listTypeRoom} = this.state;
+        
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -82,18 +111,17 @@ export default class ListTypeRoom extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr className="odd gradeX">
-                                                    <td className="center">Phòng đơn</td>
-                                                    <td className="center">50000</td>
-                                                    <td className="center">
-                                                        <a href="edit_room.html" className="btn btn-tbl-edit btn-xs">
-                                                            <i className="fa fa-pencil" />
-                                                        </a>
-                                                        <a href=" " className="btn btn-tbl-delete btn-xs">
-                                                            <i className="fa fa-trash-o " />
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                            {
+                                                    listTypeRoom.length >0 ? listTypeRoom.map((value,index)=>{
+                                                        return (
+                                                            <TypeRoomItem deleteItem={this.deleteItem} typeRoom={value} key={index}></TypeRoomItem>
+                                                        )
+                                                    }):(
+                                                        <tr className="spinner-border" role="status">
+                                                            <td className="sr-only">Loading...</td>
+                                                        </tr>
+                                                    )
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

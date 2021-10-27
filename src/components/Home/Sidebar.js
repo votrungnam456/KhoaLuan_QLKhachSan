@@ -403,8 +403,8 @@ export default class Sidebar extends Component {
                                             <img src="assets/img/dp.jpg" className="img-responsive" alt="" /> </div>
                                     </div>
                                     <div className="profile-usertitle">
-                                        <div className="sidebar-userpic-name"> {user.name} </div>
-                                        <div className="profile-usertitle-job">{user.role} </div>
+                                        <div className="sidebar-userpic-name"> {user.nameEmployee} </div>
+                                        <div className="profile-usertitle-job">{user.nameRole} </div>
                                     </div>
                                     <div className="sidebar-userpic-btn">
                                         <Link className="tooltips" to="/employee-profile" data-placement="top" data-original-title="Profile">
@@ -419,7 +419,7 @@ export default class Sidebar extends Component {
                             <li className="menu-heading">
                                 <span>Menu</span>
                             </li>
-                            {user.roleId === "role1" ? this.loadSideBar(sideBarQL) : user.roleId === "role2" ? this.loadSideBar(sideBarNVTiepTan) : this.loadSideBar(sideBarNVKho)}
+                            {user.codeRole === "ADMIN" ? this.loadSideBar(sideBarQL) : user.roleId === "USER" ? this.loadSideBar(sideBarNVTiepTan) : this.loadSideBar(sideBarNVKho)}
                         </ul>
                     </div>
                 </div>

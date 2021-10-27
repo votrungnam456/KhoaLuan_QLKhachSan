@@ -13,14 +13,14 @@ export default class EditRoom extends Component {
         }
     }
     componentDidMount() {
-        CallAPI.loadData(APITypeRoom).then(res => {
+        CallAPI.GET(APITypeRoom).then(res => {
             if (res.status == 200) {
                 this.setState({
                     listTypeRoom: res.data
                 })
             }
         });
-        CallAPI.loadData(APIRoom + "/" + this.props.match.params.idRoom).then(res=>{
+        CallAPI.GET(APIRoom + "/" + this.props.match.params.idRoom).then(res=>{
             if(res.status == 200){
                 this.setState({
                     nameRoom:res.data.nameRoom,
@@ -54,7 +54,7 @@ export default class EditRoom extends Component {
                 nameRoom,
                 description, idTypeRoom
             }
-            CallAPI.updateItem(APIRoom + "/" + this.props.match.params.idRoom, roomEdit).then(res => {
+            CallAPI.PUT(APIRoom + "/" + this.props.match.params.idRoom, roomEdit).then(res => {
                 console.log(res)
                 if (res.status == 200) {
                     history.push("/list-room");
@@ -116,7 +116,7 @@ export default class EditRoom extends Component {
                                             <select value={idTypeRoom} name="idTypeRoom" onChange={this.onChange} className="mdl-textfield__input">
                                             {listTypeRoom.length > 0 ? listTypeRoom.map((typeRoom, index) => {
                                                     return (
-                                                        <option key={index} value={typeRoom.id}>{typeRoom.nameType}</option>
+                                                        <option key={index} value={typeRoom.id}>{typeRoom.nameTypeRoom}</option>
                                                     )
                                                 }) : <option value="">Loading data....</option>}
                                             </select>

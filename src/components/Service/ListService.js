@@ -1,6 +1,35 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { APITypeRoom } from '../../constanst/API';
+import * as CallAPI from "../../constanst/CallAPI";
 export default class ListService extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listService:[]
+        }
+    }
+    componentDidMount(){
+        this.loadService();
+    }
+    loadService = () =>{
+        CallAPI.GET(APITypeRoom).then(res=>{
+            if(res.status === 200){
+                this.setState({
+                    listTypeRoom:res.data
+                })
+            }
+        });
+    }
+    deleteItem = (id) =>{
+        CallAPI.DELETE(APITypeRoom + "/" + id).then(res=>{
+            if(res.status == 200){
+                this.loadService();
+            }
+        });
+    }
+
+
     render() {
         return (
             <div className="page-content-wrapper">

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import * as CallAPI from "../../constanst/CallAPI";
+import { APILogin } from '../../constanst/API';
 
 export default class Login extends Component {
     constructor(props) {
@@ -22,27 +23,26 @@ export default class Login extends Component {
         const { email, password, remember } = this.state;
         let { history } = this.props;
         ev.preventDefault();
-        if (email === "namvt@runsystem.net" && password === "123") {
-            const userLogin = {
-                email: "namvt@runsystem.net",
-                password: "123",
-                name: "Võ Trung Nam",
-                role: "Quản lý",
-                roleId: "role1"
-            }
+        const userLogin = {
+            email, passWord: password
+        }
+        CallAPI.POST(APILogin, userLogin).then(res => {
+            console.log(res)
             if (remember) {
-                localStorage.setItem("userLogin", JSON.stringify(userLogin));
+                localStorage.setItem("userLogin", JSON.stringify(res.data));
             }
             else {
-                sessionStorage.setItem("userLogin", JSON.stringify(userLogin));
+                sessionStorage.setItem("userLogin", JSON.stringify(res.data));
+                history.push("/");
             }
-            history.push("/");
-        }
-        else {
+        }).catch(er => {
+            console.log(er.response);
             this.setState({
-                messageError: 2
+                messageError: er.response.data.message
             })
-        }
+            alert(er.response.data.message)
+            return;
+        })
     }
     componentDidMount() {
         localStorage.removeItem("userLogin");
@@ -75,7 +75,7 @@ export default class Login extends Component {
                                     Remember me
                                 </label>
                             </div>
-                            <p style={messageError === 1 ? { color: "red", display: "none" } : { color: "red", display: "inline" }}>Error</p>
+                            <p style={messageError === 1 ? { color: "red", display: "none" } : { color: "red", display: "inline" }}>{messageError}</p>
                             <div className="container-login100-form-btn">
                                 <button onClick={this.submitLogin} className="login100-form-btn">
                                     Login
