@@ -1,7 +1,36 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { APIEmployee } from '../../constanst/API';
+import * as CallAPI from "../../constanst/CallAPI";
+import EmloyeeItem from './EmloyeeItem';
 export default class ListEmployee extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listEmployee:[]
+        }
+    }
+    componentDidMount(){
+        this.loadData();
+    }
+    loadData = () =>{
+        CallAPI.GET(APIEmployee).then(res=>{
+            if(res.status === 200){
+                this.setState({
+                    listEmployee:res.data
+                })
+            }
+        });
+    }
+    deleteItem = (id) =>{
+        CallAPI.DELETE(APIEmployee + "/" + id).then(res=>{
+            if(res.status === 200){
+                this.loadData();
+            }
+        });
+    }
     render() {
+        const {listEmployee} = this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -10,13 +39,6 @@ export default class ListEmployee extends Component {
                             <div className=" pull-left">
                                 <div className="page-title">Nhân viên</div>
                             </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Booking</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">All Bookings</li>
-                            </ol> */}
                         </div>
                     </div>
                     <div className="row">
@@ -25,16 +47,16 @@ export default class ListEmployee extends Component {
                                 <div className="card-head">
                                     <header>Danh sách nhân viên</header>
                                     <div className="tools">
-                                        <i className="fa fa-repeat btn-color box-refresh" href="javascript:;" />
-                                        <i className="t-collapse btn-color fa fa-chevron-down" href="javascript:;" />
+                                        <i className="fa fa-repeat btn-color box-refresh" />
+                                        <i className="t-collapse btn-color fa fa-chevron-down" />
                                     </div>
                                 </div>
                                 <div className="card-body ">
                                     <div className="row p-b-20">
                                         <div className="col-md-6 col-sm-6 col-6">
                                             <div className="btn-group">
-                                                <Link to="/add-customer" id="addRow" className="btn btn-info">
-                                                    Thêm khách hàng <i className="fa fa-plus" />
+                                                <Link to="/add-employee" id="addRow" className="btn btn-info">
+                                                    Thêm nhân viên<i className="fa fa-plus" />
                                                 </Link>
                                             </div>
                                             <div className="btn-group">
@@ -50,15 +72,15 @@ export default class ListEmployee extends Component {
                                                 </i>
                                                 <ul className="dropdown-menu pull-right">
                                                     <li>
-                                                        <a href="javascript:;">
+                                                        <a href=" ">
                                                             <i className="fa fa-print" /> Print </a>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:;">
+                                                        <a href=" ">
                                                             <i className="fa fa-file-pdf-o" /> Save as PDF </a>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:;">
+                                                        <a href=" ">
                                                             <i className="fa fa-file-excel-o" /> Export to Excel </a>
                                                     </li>
                                                 </ul>
@@ -80,25 +102,22 @@ export default class ListEmployee extends Component {
                                                     <th className="center"> Chứng minh thư </th>
                                                     <th className="center"> Số điện thoại </th>
                                                     <th className="center"> Địa chỉ </th>
+                                                    <th className="center"> Chức vụ </th>
                                                     <th className="center"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr className="odd gradeX">
-                                                    <td className="center">Võ Trung Nam</td>
-                                                    <td className="center">Nam</td>
-                                                    <td className="center">026066168</td>
-                                                    <td className="center">0703197183</td>
-                                                    <td className="center">38/3</td>
-                                                    <td className="center">
-                                                        <a href="edit_room.html" className="btn btn-tbl-edit btn-xs">
-                                                            <i className="fa fa-pencil" />
-                                                        </a>
-                                                        <a className="btn btn-tbl-delete btn-xs">
-                                                            <i className="fa fa-trash-o " />
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                            {
+                                                    listEmployee.length >0 ? listEmployee.map((value,index)=>{
+                                                        return (
+                                                            <EmloyeeItem deleteItem={this.deleteItem} employee={value} key={index}></EmloyeeItem>
+                                                        )
+                                                    }):(
+                                                        <tr className="spinner-border" role="status">
+                                                            <td className="sr-only">Loading...</td>
+                                                        </tr>
+                                                    )
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

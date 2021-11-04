@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { APITypeRoom } from '../../constanst/API';
+import { APIService } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
+import ServiceItem from './ServiceItem';
 export default class ListService extends Component {
     constructor(props) {
         super(props);
@@ -13,17 +14,17 @@ export default class ListService extends Component {
         this.loadService();
     }
     loadService = () =>{
-        CallAPI.GET(APITypeRoom).then(res=>{
+        CallAPI.GET(APIService).then(res=>{
             if(res.status === 200){
                 this.setState({
-                    listTypeRoom:res.data
+                    listService:res.data
                 })
             }
         });
     }
     deleteItem = (id) =>{
-        CallAPI.DELETE(APITypeRoom + "/" + id).then(res=>{
-            if(res.status == 200){
+        CallAPI.DELETE(APIService + "/" + id).then(res=>{
+            if(res.status === 200){
                 this.loadService();
             }
         });
@@ -31,6 +32,7 @@ export default class ListService extends Component {
 
 
     render() {
+        const {listService}= this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -39,13 +41,6 @@ export default class ListService extends Component {
                             <div className=" pull-left">
                                 <div className="page-title">Dịch vụ</div>
                             </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Booking</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">All Bookings</li>
-                            </ol> */}
                         </div>
                     </div>
                     <div className="row">
@@ -110,18 +105,17 @@ export default class ListService extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr className="odd gradeX">
-                                                    <td className="center">Ăn sáng</td>
-                                                    <td className="center">100000</td>
-                                                    <td className="center">
-                                                        <a href="edit_room.html" className="btn btn-tbl-edit btn-xs">
-                                                            <i className="fa fa-pencil" />
-                                                        </a>
-                                                        <a className="btn btn-tbl-delete btn-xs">
-                                                            <i className="fa fa-trash-o " />
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                            {
+                                                    listService.length >0 ? listService.map((value,index)=>{
+                                                        return (
+                                                            <ServiceItem deleteItem={this.deleteItem} service={value} key={index}></ServiceItem>
+                                                        )
+                                                    }):(
+                                                        <tr className="spinner-border" role="status">
+                                                            <td className="sr-only">Loading...</td>
+                                                        </tr>
+                                                    )
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

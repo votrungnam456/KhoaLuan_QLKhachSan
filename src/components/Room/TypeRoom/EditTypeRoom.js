@@ -1,65 +1,72 @@
 import React, { Component } from 'react'
-import * as CallAPI from "../../constanst/CallAPI";
-import { APITypeRoom } from '../../constanst/API';
-export default class AddTypeRoom extends Component {
+import * as CallAPI from "../../../constanst/CallAPI";
+import { APITypeRoom } from '../../../constanst/API';
+export default class EditTypeRoom extends Component {
     constructor(props) {
         super(props);
         this.state = {
             nameTypeRoom: "",
             price: "",
+            description:"",
             message: 0
         }
     }
-    onChange = (ev) => {
-        this.setState({
-            message:0
+    componentDidMount() {
+        CallAPI.GET(APITypeRoom + "/" + this.props.match.params.idTypeRoom).then(res=>{
+            if(res.status === 200){
+                this.setState({
+                    nameTypeRoom:res.data.nameTypeRoom,
+                    price:res.data.price,
+                    description:res.data.description
+                })
+            }
+            else{
+                alert("Load data failed!");
+            }
         })
+    }
+    onChange = (ev) => {
         let name = ev.target.name;
         let value = ev.target.value;
         this.setState({
             [name]: value
         })
     }
-    addTypeRoom = (ev) =>{
+    editTypeRoom = (ev) => {
+        const { nameTypeRoom, price,description } = this.state
+        const {history} = this.props
         ev.preventDefault();
-        const {nameTypeRoom,price} = this.state
-        if(nameTypeRoom === "" || price === ""){
+        if (nameTypeRoom === "" || price === "") {
             this.setState({
-                message:1
+                message: 1
             })
-            return;
         }
-        else{
-            const addItem = {
-                nameTypeRoom,price
+        else if(price === 0){
+            this.setState({
+                message: 3
+            })
+        }
+        else {
+            const typeRoomEdit = {
+                nameTypeRoom,
+                price:parseInt(price),
+                description
             }
-            CallAPI.POST(APITypeRoom,addItem).then(res=>{
+            CallAPI.PUT(APITypeRoom + "/" + this.props.match.params.idTypeRoom, typeRoomEdit).then(res => {
                 console.log(res)
                 if (res.status === 200) {
-                    if(res.data.code !== 1){
-                        this.setState({
-                            message: 2
-                        })
-                        return;
-                    }
-                    else{
-                        this.setState({
-                            message: 3,
-                            nameTypeRoom: "",
-                            price: "",
-                        })
-                    }
+                    history.push("/list-type-room");
                 }
                 else {
                     this.setState({
                         message: 2
                     })
                 }
-            })
+            }).catch(err=>console.log(err.response));
         }
     }
     render() {
-        const {nameTypeRoom,price,message} = this.state
+        const {nameTypeRoom,price,message,description} = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -68,20 +75,13 @@ export default class AddTypeRoom extends Component {
                             <div className=" pull-left">
                                 <div className="page-title">Phòng</div>
                             </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Rooms</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">Add Room Details</li>
-                            </ol> */}
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="card-box">
                                 <div className="card-head">
-                                    <header>Thêm loại phòng</header>
+                                    <header>Sửa loại phòng</header>
                                 </div>
                                 <div className="card-body row">
                                     <div className="col-lg-6 p-t-20">
@@ -93,12 +93,18 @@ export default class AddTypeRoom extends Component {
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                                             <label className="">Giá</label>
-                                            <input className="mdl-textfield__input" type="text" onChange={this.onChange} value={price} name="price"/>
+                                            <input className="mdl-textfield__input" type="number" onChange={this.onChange} value={price} name="price"/>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-6 p-t-20">
+                                        <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
+                                            <label className="">Mô tả</label>
+                                            <input className="mdl-textfield__input" type="text" onChange={this.onChange} value={description} name="description"/>
                                         </div>
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">
-                                        <button onClick={this.addTypeRoom} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Thêm loại phòng</button>
-                                        <p style={message === 3 ? { color: "green" } : { color: "red" }}>{message === 1 ? "Thông tin không được để trống" : message === 2 ? "Thêm thất bại, vui lòng kiểm tra lại thông tin và thử lại" : message == 3 ? "Thêm thành công" : ""}</p>
+                                        <button onClick={this.editTypeRoom} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa thông tin loại phòng</button>
+                                        <p style={{color:"red"}} >{message === 1 ? "Thông tin không được để trống" : message === 2 ? "Sửa thông tin thất bại, vui lòng kiểm tra lại thông tin và thử lại" : message === 3 ? "Giá phải lớn hơn 0": ""}</p>
                                     </div>
                                 </div>
                             </div>

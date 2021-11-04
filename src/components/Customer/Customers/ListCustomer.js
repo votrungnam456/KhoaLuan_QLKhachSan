@@ -1,59 +1,51 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { APITypeRoom } from '../../constanst/API';
-import * as CallAPI from "../../constanst/CallAPI";
-import TypeRoomItem from './TypeRoomItem';
-export default class ListTypeRoom extends Component {
+import { APICustomer } from '../../../constanst/API';
+import * as CallAPI from "../../../constanst/CallAPI";
+import CustomerItem from './CustomerItem';
+export default class ListCustomer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listTypeRoom:[]
+            listCustomer:[]
         }
     }
     componentDidMount(){
-        this.loadTypeRoom();
+        this.loadData();
     }
-    loadTypeRoom = () =>{
-        CallAPI.GET(APITypeRoom).then(res=>{
+    loadData = () =>{
+        CallAPI.GET(APICustomer).then(res=>{
             if(res.status === 200){
                 this.setState({
-                    listTypeRoom:res.data
+                    listCustomer:res.data
                 })
             }
         });
     }
     deleteItem = (id) =>{
-        CallAPI.DELETE(APITypeRoom + "/" + id).then(res=>{
-            if(res.status == 200){
-                this.loadTypeRoom();
+        CallAPI.DELETE(APICustomer + "/" + id).then(res=>{
+            if(res.status === 200){
+                this.loadData();
             }
         });
     }
     render() {
-        const {listTypeRoom} = this.state;
-        
+        const {listCustomer} = this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
                     <div className="page-bar">
                         <div className="page-title-breadcrumb">
                             <div className=" pull-left">
-                                <div className="page-title">Phòng</div>
+                                <div className="page-title">Khách hàng</div>
                             </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Booking</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">All Bookings</li>
-                            </ol> */}
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">
                                 <div className="card-head">
-                                    <header>Danh sách loại phòng</header>
+                                    <header>Danh sách khách hàng</header>
                                     <div className="tools">
                                         <i className="fa fa-repeat btn-color box-refresh" />
                                         <i className="t-collapse btn-color fa fa-chevron-down" />
@@ -63,12 +55,12 @@ export default class ListTypeRoom extends Component {
                                     <div className="row p-b-20">
                                         <div className="col-md-6 col-sm-6 col-6">
                                             <div className="btn-group">
-                                                <Link to="/add-type-room" id="addRow" className="btn btn-info">
-                                                    Thêm loại phòng <i className="fa fa-plus" />
+                                                <Link to="/add-customer" id="addRow" className="btn btn-info">
+                                                    Thêm khách hàng <i className="fa fa-plus" />
                                                 </Link>
                                             </div>
                                             <div className="btn-group">
-                                                <button id="" className="btn btn-success">
+                                                <button onClick={this.loadData} id="addRow" className="btn btn-success">
                                                     Làm mới <i className="fa fa-repeat" />
                                                 </button>
                                             </div>
@@ -105,16 +97,19 @@ export default class ListTypeRoom extends Component {
                                         <table className="table table-hover table-checkable order-column full-width" id="example4">
                                             <thead>
                                                 <tr>
-                                                    <th className="center"> Tên loại phòng </th>
-                                                    <th className="center"> Giá </th>
+                                                    <th className="center"> Tên khách hàng </th>
+                                                    <th className="center"> Chứng minh thư </th>
+                                                    <th className="center"> Quốc tịch </th>
+                                                    <th className="center"> Số điện thoại </th>
+                                                    <th className="center"> Email </th>
                                                     <th className="center"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             {
-                                                    listTypeRoom.length >0 ? listTypeRoom.map((value,index)=>{
+                                                    listCustomer.length >0 ? listCustomer.map((value,index)=>{
                                                         return (
-                                                            <TypeRoomItem deleteItem={this.deleteItem} typeRoom={value} key={index}></TypeRoomItem>
+                                                            <CustomerItem deleteItem={this.deleteItem} customer={value} key={index}></CustomerItem>
                                                         )
                                                     }):(
                                                         <tr className="spinner-border" role="status">

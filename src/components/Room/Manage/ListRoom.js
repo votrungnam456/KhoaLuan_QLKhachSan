@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { APIRoom } from '../../constanst/API';
-import * as CallAPI from "../../constanst/CallAPI";
+import { APIRoom } from '../../../constanst/API';
+import * as CallAPI from "../../../constanst/CallAPI";
 import RoomItem from './RoomItem';
 export default class ListRoom extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class ListRoom extends Component {
     }
     loadData = () =>{
         CallAPI.GET(APIRoom).then(res=>{
-            if(res.status == 200){
+            if(res.status === 200){
                 this.setState({
                     listRoom:res.data
                 })
@@ -23,9 +23,8 @@ export default class ListRoom extends Component {
         });
     }
     deleteItem = (id) =>{
-        console.log(id)
         CallAPI.DELETE(APIRoom + "/" + id).then(res=>{
-            if(res.status == 200){
+            if(res.status === 200){
                 this.loadData();
             }
         });

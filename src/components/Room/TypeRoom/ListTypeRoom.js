@@ -1,14 +1,45 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-export default class Delegation extends Component {
+import { APITypeRoom } from '../../../constanst/API';
+import * as CallAPI from "../../../constanst/CallAPI";
+import TypeRoomItem from './TypeRoomItem';
+export default class ListTypeRoom extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listTypeRoom: []
+        }
+    }
+    componentDidMount() {
+        this.loadTypeRoom();
+    }
+    loadTypeRoom = () => {
+        CallAPI.GET(APITypeRoom).then(res => {
+            console.log(res.data)
+            if (res.status === 200) {
+                this.setState({
+                    listTypeRoom: res.data
+                })
+            }
+        });
+    }
+    deleteItem = (id) => {
+        CallAPI.DELETE(APITypeRoom + "/" + id).then(res => {
+            if (res.status === 200) {
+                this.loadTypeRoom();
+            }
+        });
+    }
     render() {
+        const { listTypeRoom } = this.state;
+
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
                     <div className="page-bar">
                         <div className="page-title-breadcrumb">
                             <div className=" pull-left">
-                                <div className="page-title">Khách đoàn</div>
+                                <div className="page-title">Phòng</div>
                             </div>
                             {/* <ol className="breadcrumb page-breadcrumb pull-right">
                                 <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
@@ -23,22 +54,22 @@ export default class Delegation extends Component {
                         <div className="col-md-12">
                             <div className="card card-box">
                                 <div className="card-head">
-                                    <header>Danh sách đoàn</header>
+                                    <header>Danh sách loại phòng</header>
                                     <div className="tools">
-                                        <i className="fa fa-repeat btn-color box-refresh" href="javascript:;" />
-                                        <i className="t-collapse btn-color fa fa-chevron-down" href="javascript:;" />
+                                        <i className="fa fa-repeat btn-color box-refresh" />
+                                        <i className="t-collapse btn-color fa fa-chevron-down" />
                                     </div>
                                 </div>
                                 <div className="card-body ">
                                     <div className="row p-b-20">
                                         <div className="col-md-6 col-sm-6 col-6">
                                             <div className="btn-group">
-                                                <Link to="/add-room" id="addRow" className="btn btn-info">
-                                                    Thêm đoàn <i className="fa fa-plus" />
+                                                <Link to="/add-type-room" id="addRow" className="btn btn-info">
+                                                    Thêm loại phòng <i className="fa fa-plus" />
                                                 </Link>
                                             </div>
                                             <div className="btn-group">
-                                                <button id="addRow" className="btn btn-success">
+                                                <button id="" className="btn btn-success">
                                                     Làm mới <i className="fa fa-repeat" />
                                                 </button>
                                             </div>
@@ -50,15 +81,15 @@ export default class Delegation extends Component {
                                                 </i>
                                                 <ul className="dropdown-menu pull-right">
                                                     <li>
-                                                        <a href="javascript:;">
+                                                        <a href=" ">
                                                             <i className="fa fa-print" /> Print </a>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:;">
+                                                        <a href=" ">
                                                             <i className="fa fa-file-pdf-o" /> Save as PDF </a>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:;">
+                                                        <a href=" ">
                                                             <i className="fa fa-file-excel-o" /> Export to Excel </a>
                                                     </li>
                                                 </ul>
@@ -75,28 +106,24 @@ export default class Delegation extends Component {
                                         <table className="table table-hover table-checkable order-column full-width" id="example4">
                                             <thead>
                                                 <tr>
-                                                    <th className="center"> Tên đoàn khách </th>
-                                                    <th className="center"> Trưởng đoàn </th>
-                                                    <th className="center"> Tên công ty </th>
-                                                    <th className="center"> Số người </th>
+                                                    <th className="center"> Tên loại phòng </th>
+                                                    <th className="center"> Giá </th>
+                                                    <th className="center"> Mô tả </th>
                                                     <th className="center"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr className="odd gradeX">
-                                                    <td className="center">Đoàn khách 1</td>
-                                                    <td className="center">Tina Trần</td>
-                                                    <td className="center">Closers company</td>
-                                                    <td className="center">5</td>
-                                                    <td className="center">
-                                                        <a href="edit_room.html" className="btn btn-tbl-edit btn-xs">
-                                                            <i className="fa fa-pencil" />
-                                                        </a>
-                                                        <i className="btn btn-tbl-delete btn-xs">
-                                                            <i className="fa fa-trash-o " />
-                                                        </i>
-                                                    </td>
-                                                </tr>
+                                                {
+                                                    listTypeRoom.length > 0 ? listTypeRoom.map((value, index) => {
+                                                        return (
+                                                            <TypeRoomItem deleteItem={this.deleteItem} typeRoom={value} key={index}></TypeRoomItem>
+                                                        )
+                                                    }) : (
+                                                        <tr className="spinner-border" role="status">
+                                                            <td className="sr-only">Loading...</td>
+                                                        </tr>
+                                                    )
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

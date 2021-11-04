@@ -1,8 +1,10 @@
-// const API = "";
-// const APIRoom = "https://603e558448171b0017b2f2e0.mockapi.io/rooms";
-const APIRoom = "https://hotel.loca.lt/manager/room"
-const APILogin = "https://hotel.loca.lt/user/login"
-// const APITypeRoom = "https://603e558448171b0017b2f2e0.mockapi.io/typeRooms";
-const APITypeRoom = "https://hotel.loca.lt/manager/type-room";
-const APIService = "https://603e558448171b0017b2f2e0.mockapi.io/service";
-export {APIRoom,APITypeRoom,APIService,APILogin};
+const API = "http://107.167.80.37:8000";
+// const API = "https://hotel.loca.lt"
+const APIRoom = API+"/manager/room"
+const APILogin = API+"/user/login"
+const APITypeRoom = API+"/manager/type-room";
+const APIEmployee = API+"/user/"
+const APIService = API+"/manager/service";
+const APIDevice = API+"/manager/hotel-device";
+const APICustomer = API+"/manager/customer";
+export {APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer};

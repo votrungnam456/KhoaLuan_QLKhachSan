@@ -1,30 +1,31 @@
 import Content from "../components/Home/Content";
-import AddRoom from "../components/Room/AddRoom";
-import EditRoom from "../components/Room/EditRoom";
-import ListRoom from "../components/Room/ListRoom";
+import AddRoom from "../components/Room/Manage/AddRoom";
+import EditRoom from "../components/Room/Manage/EditRoom";
+import ListRoom from "../components/Room/Manage/ListRoom";
 import Page404 from '../components/ErrorPage/Page404'
-import ListCustomer from "../components/Customer/ListCustomer";
-import AddCustomer from "../components/Customer/AddCustomer";
-import Delegation from "../components/Customer/Delegation";
-import EditCustomer from "../components/Customer/EditCustomer";
-import AddDelegation from "../components/Customer/AddDelegation";
+import ListCustomer from "../components/Customer/Customers/ListCustomer";
+import AddCustomer from "../components/Customer/Customers/AddCustomer";
+import ListDelegation from "../components/Customer/Delegation/ListDelegation";
+import EditCustomer from "../components/Customer/Customers/EditCustomer";
+import AddDelegation from "../components/Customer/Delegation/AddDelegation";
 import ListEmployee from "../components/Employee/ListEmployee";
 import EditEmployee from "../components/Employee/EditEmployee";
 import AddEmployee from "../components/Employee/AddEmployee";
 import AddService from "../components/Service/AddService"
 import ListService from "../components/Service/ListService"
 import EditService from "../components/Service/EditService"
-import ListTypeRoom from "../components/Room/ListTypeRoom";
-import BookingRoom from "../components/Room/BookingRoom";
-import CheckInRoom from "../components/Room/CheckInRoom";
-import CheckoutRoom from "../components/Room/CheckoutRoom";
+import ListTypeRoom from "../components/Room/TypeRoom/ListTypeRoom";
+import BookingRoom from "../components/Room/Booking/BookingRoom";
+import CheckInRoom from "../components/Room/Booking/CheckInRoom";
+import CheckoutRoom from "../components/Room/Booking/CheckoutRoom";
 import AddDevice from "../components/Device/AddDevice";
 import ListDevice from "../components/Device/ListDevice";
 import EditDevice from "../components/Device/EditDevice";
-import AddTypeRoom from "../components/Room/AddTypeRoom";
-import EditTypeRoom from "../components/Room/EditTypeRoom";
-import EditDelegation from "../components/Customer/EditDelegation";
+import AddTypeRoom from "../components/Room/TypeRoom/AddTypeRoom";
+import EditTypeRoom from "../components/Room/TypeRoom/EditTypeRoom";
+import EditDelegation from "../components/Customer/Delegation/EditDelegation";
 import EmployeeProfile from "../components/Employee/EmployeeProfile";
+import RoomDetail from "../components/Room/RoomDetail";
 const routes = [
     {
         path: "/",
@@ -57,14 +58,14 @@ const routes = [
         main: ({ history }) => <AddCustomer history={history} />
     },
     {
-        path: "/edit-customer",
+        path: "/edit-customer/:idCustomer",
         exact: true,
-        main: ({ history }) => <EditCustomer history={history} />
+        main: ({ history,match }) => <EditCustomer match={match} history={history} />
     },
     {
-        path: "/delegation",
+        path: "/list-delegation",
         exact: true,
-        main: ({ history }) => <Delegation history={history} />
+        main: ({ history }) => <ListDelegation history={history} />
     },
     {
         path: "/add-delegation",
@@ -87,9 +88,9 @@ const routes = [
         main: ({ history }) => <ListEmployee history={history} />
     },
     {
-        path: "/edit-employee",
+        path: "/edit-employee/:idEmployee",
         exact: true,
-        main: ({ history }) => <EditEmployee history={history} />
+        main: ({ history, match }) => <EditEmployee match={match} history={history} />
     },
     {
         path: "/add-service",
@@ -102,9 +103,9 @@ const routes = [
         main: ({ history }) => <ListService history={history} />
     },
     {
-        path: "/edit-service",
+        path: "/edit-service/:idService",
         exact: true,
-        main: ({ history }) => <EditService history={history} />
+        main: ({ history,match }) => <EditService match={match} history={history} />
     },
     {
         path: "/list-type-room",
@@ -147,14 +148,19 @@ const routes = [
         main: ({ history }) => <ListDevice history={history} />
     },
     {
-        path: "/edit-device",
+        path: "/edit-device/:idDevice",
         exact: true,
-        main: ({ history }) => <EditDevice history={history} />
+        main: ({ history,match }) => <EditDevice match={match} history={history} />
     },
     {
-        path: "/employee-profile",
+        path: "/employee-profile/:idCustomer",
         exact: true,
-        main: ({ history }) => <EmployeeProfile history={history} />
+        main: ({ history,match }) => <EmployeeProfile match={match} history={history} />
+    },
+    {
+        path: "/room-detail",
+        exact: true,
+        main: ({ history,match }) => <RoomDetail match={match} history={history} />
     },
     {
         path: "",

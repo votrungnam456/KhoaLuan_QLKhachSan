@@ -14,6 +14,7 @@ export default class TypeRoomItem extends Component {
       <tr className="odd gradeX">
       <td className="center">{typeRoom.nameTypeRoom}</td>
       <td className="center">{typeRoom.price}</td>
+      <td className="center">{typeRoom.description}</td>
       <td className="center">
           <Link to={"/edit-type-room/" + typeRoom.id} className="btn btn-tbl-edit btn-xs">
               <i className="fa fa-pencil" />

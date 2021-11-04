@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import * as CallAPI from "../../constanst/CallAPI";
-import { APIRoom, APITypeRoom } from '../../constanst/API';
+import * as CallAPI from "../../../constanst/CallAPI";
+import { APIRoom, APITypeRoom } from '../../../constanst/API';
 export default class AddRoom extends Component {
     constructor(props) {
         super(props);
@@ -27,7 +27,6 @@ export default class AddRoom extends Component {
         })
         let name = ev.target.name;
         let value = ev.target.value;
-        console.log(name, value)
         this.setState({
             [name]: value
         })
@@ -35,7 +34,7 @@ export default class AddRoom extends Component {
     addRoom = (ev) => {
         const { nameRoom, description, idTypeRoom } = this.state
         ev.preventDefault();
-        if (nameRoom == "") {
+        if (nameRoom === "" || idTypeRoom === "") {
             this.setState({
                 message: 1
             })
@@ -105,6 +104,7 @@ export default class AddRoom extends Component {
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width">
                                             <label htmlFor="list3" className="">Loại phòng</label>
                                             <select name="idTypeRoom" onChange={this.onChange} className="mdl-textfield__input">
+                                                <option value="">Chọn loại phòng</option>
                                                 {listTypeRoom.length > 0 ? listTypeRoom.map((typeRoom, index) => {
                                                     return (
                                                         <option key={index} value={typeRoom.id}>{typeRoom.nameTypeRoom}</option>
@@ -115,7 +115,7 @@ export default class AddRoom extends Component {
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">
                                         <button onClick={this.addRoom} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Thêm phòng</button>
-                                        <p style={message === 3 ? { color: "green" } : { color: "red" }}>{message === 1 ? "Tên phòng không được để trống" : message === 2 ? "Thêm phòng thất bại, vui lòng kiểm tra lại thông tin và thử lại" : message == 3 ? "Thêm phòng thành công" : ""}</p>
+                                        <p style={message === 3 ? { color: "green" } : { color: "red" }}>{message === 1 ? "Thông tin không được để trống" : message === 2 ? "Thêm phòng thất bại, vui lòng kiểm tra lại thông tin và thử lại" : message === 3 ? "Thêm thành công" : ""}</p>
                                     </div>
                                 </div>
                             </div>

@@ -20,10 +20,10 @@ export default class Header extends Component {
                     </div>
                     {/* logo end */}
                     <ul className="nav navbar-nav navbar-left in">
-                        <li><a href=" " className="menu-toggler sidebar-toggler"><i className="icon-menu" /></a></li>
+                        <li><a href="#" className="menu-toggler sidebar-toggler"><i className="icon-menu" /></a></li>
                     </ul>
                     {/* start mobile menu */}
-                    <a href=" " className="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <a href="#" className="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
                         <span />
                     </a>
                     {/* end mobile menu */}
@@ -32,7 +32,7 @@ export default class Header extends Component {
                         <ul className="nav navbar-nav pull-right">
                             {/* start notification dropdown */}
                             <li className="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
-                                <a href=" " className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <i className="fa fa-bell-o" />
                                     <span className="badge headerBadgeColor1"> 6 </span>
                                 </a>

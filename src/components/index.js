@@ -16,13 +16,9 @@ export default class index extends Component {
     componentDidMount() {
         let userLocal = JSON.parse(localStorage.getItem("userLogin"));
         let userSession = JSON.parse(sessionStorage.getItem("userLogin"));
-        console.log(userSession,userLocal)
         if (userLocal === null && userSession === null) {
-            console.log(userSession,userLocal)
             this.props.history.push("/login")
             this.props.history.go(0);
-            // return <Login />
-            // <Redirect to="/login"/>
         }
         else {
             this.setState({
@@ -32,6 +28,7 @@ export default class index extends Component {
     }
     render() {
         const { user } = this.state;
+        const{history} = this.props;
         return (
             <div className="page-wrapper">
                 {/* start header */}
@@ -40,7 +37,7 @@ export default class index extends Component {
                 {/* start page container */}
                 <div className="page-container">
                     {/* start sidebar menu */}
-                    <Sidebar user={user} />
+                    <Sidebar history={history} user={user} />
                     {/* end sidebar menu */}
                     {/* start page content */}
                     {/* <Content /> */}

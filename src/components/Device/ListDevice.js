@@ -1,7 +1,37 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { APIDevice } from '../../constanst/API';
+import * as CallAPI from "../../constanst/CallAPI";
+import DeviceItem from './DeviceItem';
 export default class ListDevice extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listDevice:[]
+        }
+    }
+    componentDidMount(){
+        this.loadData();
+    }
+    loadData = () =>{
+        CallAPI.GET(APIDevice).then(res=>{
+            if(res.status === 200){
+                this.setState({
+                    listDevice:res.data
+                })
+            }
+        });
+    }
+    deleteItem = (id) =>{
+        CallAPI.DELETE(APIDevice + "/" + id).then(res=>{
+            if(res.status === 200){
+                this.loadData();
+            }
+        });
+    }
     render() {
+        const {listDevice} = this.state;
+        console.log(listDevice)
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -33,12 +63,12 @@ export default class ListDevice extends Component {
                                     <div className="row p-b-20">
                                         <div className="col-md-6 col-sm-6 col-6">
                                             <div className="btn-group">
-                                                <Link to="/add-room" id="addRow" className="btn btn-info">
+                                                <Link to="/add-device" id="addRow" className="btn btn-info">
                                                     Thêm thiết bị <i className="fa fa-plus" />
                                                 </Link>
                                             </div>
                                             <div className="btn-group">
-                                                <button id="addRow" className="btn btn-success">
+                                                <button onClick={this.loadData} className="btn btn-success">
                                                     Làm mới <i className="fa fa-repeat" />
                                                 </button>
                                             </div>
@@ -50,15 +80,15 @@ export default class ListDevice extends Component {
                                                 </i>
                                                 <ul className="dropdown-menu pull-right">
                                                     <li>
-                                                        <a href="javascript:;">
+                                                        <a href=" ">
                                                             <i className="fa fa-print" /> Print </a>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:;">
+                                                        <a href=" ">
                                                             <i className="fa fa-file-pdf-o" /> Save as PDF </a>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:;">
+                                                        <a href=" ">
                                                             <i className="fa fa-file-excel-o" /> Export to Excel </a>
                                                     </li>
                                                 </ul>
@@ -83,20 +113,17 @@ export default class ListDevice extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr className="odd gradeX">
-                                                    <td className="center">Giường phụ</td>
-                                                    <td className="center">1000000</td>
-                                                    <td className="center">20</td>
-                                                    <td className="center">Còn</td>
-                                                    <td className="center">
-                                                        <a href="edit_room.html" className="btn btn-tbl-edit btn-xs">
-                                                            <i className="fa fa-pencil" />
-                                                        </a>
-                                                        <a className="btn btn-tbl-delete btn-xs">
-                                                            <i className="fa fa-trash-o " />
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                            {
+                                                    listDevice.length >0 ? listDevice.map((value,index)=>{
+                                                        return (
+                                                            <DeviceItem deleteItem={this.deleteItem} device={value} key={index}></DeviceItem>
+                                                        )
+                                                    }):(
+                                                        <tr className="spinner-border" role="status">
+                                                            <td className="sr-only">Loading...</td>
+                                                        </tr>
+                                                    )
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

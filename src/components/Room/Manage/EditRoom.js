@@ -1,31 +1,32 @@
 import React, { Component } from 'react'
-import * as CallAPI from "../../constanst/CallAPI";
-import { APIRoom, APITypeRoom } from '../../constanst/API';
+import * as CallAPI from "../../../constanst/CallAPI";
+import { APIRoom, APITypeRoom } from '../../../constanst/API';
 export default class EditRoom extends Component {
     constructor(props) {
         super(props);
         this.state = {
             nameRoom: "",
             description: "",
-            idTypeRoom: "",
+            id_type_room: "",
             listTypeRoom: [],
             message: 0
         }
     }
     componentDidMount() {
         CallAPI.GET(APITypeRoom).then(res => {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 this.setState({
                     listTypeRoom: res.data
                 })
             }
         });
         CallAPI.GET(APIRoom + "/" + this.props.match.params.idRoom).then(res=>{
-            if(res.status == 200){
+            if(res.status === 200){
+                console.log(res)
                 this.setState({
                     nameRoom:res.data.nameRoom,
                     description:res.data.description,
-                    idTypeRoom:res.data.idTypeRoom
+                    id_type_room:res.data.id_type_room
                 })
             }
             else{
@@ -41,10 +42,10 @@ export default class EditRoom extends Component {
         })
     }
     editRoom = (ev) => {
-        const { nameRoom, description, idTypeRoom } = this.state
+        const { nameRoom, description, id_type_room } = this.state
         const {history} = this.props
         ev.preventDefault();
-        if (nameRoom == "") {
+        if (nameRoom === "") {
             this.setState({
                 message: 1
             })
@@ -52,11 +53,12 @@ export default class EditRoom extends Component {
         else {
             const roomEdit = {
                 nameRoom,
-                description, idTypeRoom
+                description, idTypeRoom:id_type_room
             }
+            console.log(roomEdit, this.props.match.params.idRoom)
             CallAPI.PUT(APIRoom + "/" + this.props.match.params.idRoom, roomEdit).then(res => {
                 console.log(res)
-                if (res.status == 200) {
+                if (res.status === 200) {
                     history.push("/list-room");
                 }
                 else {
@@ -70,7 +72,7 @@ export default class EditRoom extends Component {
 
     }
     render() {
-        const { listTypeRoom, nameRoom, message, description,idTypeRoom } = this.state
+        const { listTypeRoom, nameRoom, message, description,id_type_room } = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -113,7 +115,7 @@ export default class EditRoom extends Component {
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width">
                                             <label htmlFor="list3" className="">Loại phòng</label>
-                                            <select value={idTypeRoom} name="idTypeRoom" onChange={this.onChange} className="mdl-textfield__input">
+                                            <select value={id_type_room} name="id_type_room" onChange={this.onChange} className="mdl-textfield__input">
                                             {listTypeRoom.length > 0 ? listTypeRoom.map((typeRoom, index) => {
                                                     return (
                                                         <option key={index} value={typeRoom.id}>{typeRoom.nameTypeRoom}</option>

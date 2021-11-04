@@ -45,8 +45,7 @@ export default class Login extends Component {
         })
     }
     componentDidMount() {
-        localStorage.removeItem("userLogin");
-        sessionStorage.removeItem("userLogin");
+
     }
     render() {
         let { email, password, messageError } = this.state;

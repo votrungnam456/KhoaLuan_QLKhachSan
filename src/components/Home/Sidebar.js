@@ -40,10 +40,6 @@ const sideBarQL = [
                 to: "/add-type-room",
                 title: "Thêm loại phòng"
             },
-            {
-                to: "/edit-type-room",
-                title: "Sửa thông tin loại phòng"
-            },
         ]
     },
     {
@@ -57,11 +53,7 @@ const sideBarQL = [
             {
                 to: "/list-employee",
                 title: "Xem danh sách nhân viên"
-            },
-            {
-                to: "/edit-employee",
-                title: "Sửa thông tin nhân viên"
-            },
+            }
         ]
     },
     {
@@ -77,11 +69,7 @@ const sideBarQL = [
                 title: "Xem danh sách khách hàng"
             },
             {
-                to: "/edit-customer",
-                title: "Sửa thông tin khách hàng"
-            },
-            {
-                to: "/delegation",
+                to: "/list-delegation",
                 title: "Khách đoàn"
             },
             {
@@ -105,10 +93,6 @@ const sideBarQL = [
             {
                 to: "/list-service",
                 title: "Xem danh sách dịch vụ"
-            },
-            {
-                to: "/edit-service",
-                title: "Sửa thông tin dịch vụ"
             },
         ]
     },
@@ -262,10 +246,6 @@ const sideBarNVTiepTan = [
                 to: "/add-type-room",
                 title: "Thêm loại phòng"
             },
-            {
-                to: "/edit-type-room",
-                title: "Sửa thông tin loại phòng"
-            },
         ]
     },
     {
@@ -281,11 +261,7 @@ const sideBarNVTiepTan = [
                 title: "Xem danh sách khách hàng"
             },
             {
-                to: "/edit-customer",
-                title: "Sửa thông tin khách hàng"
-            },
-            {
-                to: "/delegation",
+                to: "/list-delegation",
                 title: "Khách đoàn"
             },
             {
@@ -384,6 +360,11 @@ export default class Sidebar extends Component {
         }
         return result
     }
+    logOut(){
+        localStorage.removeItem("userLogin");
+        sessionStorage.removeItem("userLogin");
+        this.props.history.push("/login")
+    }
     render() {
         const { user } = this.props
         return (
@@ -407,19 +388,19 @@ export default class Sidebar extends Component {
                                         <div className="profile-usertitle-job">{user.nameRole} </div>
                                     </div>
                                     <div className="sidebar-userpic-btn">
-                                        <Link className="tooltips" to="/employee-profile" data-placement="top" data-original-title="Profile">
+                                        <Link className="tooltips" to={"/employee-profile/"+user.id} data-placement="top" data-original-title="Profile">
                                             <i className="material-icons">person_outline</i>
                                         </Link>
-                                        <Link className="tooltips" to="/login" data-placement="top" data-original-title="Logout">
+                                        <button className="tooltips" onClick={this.logOut} data-placement="top" data-original-title="Logout">
                                             <i className="material-icons">input</i>
-                                        </Link>
+                                        </button>
                                     </div>
                                 </div>
                             </li>
                             <li className="menu-heading">
                                 <span>Menu</span>
                             </li>
-                            {user.codeRole === "ADMIN" ? this.loadSideBar(sideBarQL) : user.roleId === "USER" ? this.loadSideBar(sideBarNVTiepTan) : this.loadSideBar(sideBarNVKho)}
+                            {user.codeRole === "ADMIN" ? this.loadSideBar(sideBarQL) : user.codeRole === "USER" ? this.loadSideBar(sideBarNVTiepTan) : this.loadSideBar(sideBarNVKho)}
                         </ul>
                     </div>
                 </div>
