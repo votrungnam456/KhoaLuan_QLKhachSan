@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { APIRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
+import Title from '../../Home/Title';
 import RoomItem from './RoomItem';
 export default class ListRoom extends Component {
     constructor(props) {
@@ -34,20 +35,7 @@ export default class ListRoom extends Component {
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Phòng</div>
-                            </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Booking</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">All Bookings</li>
-                            </ol> */}
-                        </div>
-                    </div>
+                <Title title="Phòng"></Title>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">

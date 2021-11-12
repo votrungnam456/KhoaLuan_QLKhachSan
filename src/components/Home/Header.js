@@ -187,7 +187,7 @@ export default class Header extends Component {
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-default animated jello">
                                     <li>
-                                        <Link to="/employee-profile">
+                                        <Link to={"/employee-profile/" + user.id}>
                                             <i className="icon-user" /> Profile </Link>
                                     </li>
                                     <li>

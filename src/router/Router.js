@@ -16,6 +16,8 @@ import ListService from "../components/Service/ListService"
 import EditService from "../components/Service/EditService"
 import ListTypeRoom from "../components/Room/TypeRoom/ListTypeRoom";
 import BookingRoom from "../components/Room/Booking/BookingRoom";
+import BookingDetailOne from "../components/Room/Booking/BookingDetailOne";
+import BookingDetailDelegation from "../components/Room/Booking/BookingDetailDelegation";
 import CheckInRoom from "../components/Room/Booking/CheckInRoom";
 import CheckoutRoom from "../components/Room/Booking/CheckoutRoom";
 import AddDevice from "../components/Device/AddDevice";
@@ -26,6 +28,11 @@ import EditTypeRoom from "../components/Room/TypeRoom/EditTypeRoom";
 import EditDelegation from "../components/Customer/Delegation/EditDelegation";
 import EmployeeProfile from "../components/Employee/EmployeeProfile";
 import RoomDetail from "../components/Room/RoomDetail";
+import DetailTypeRoom from "../components/Room/TypeRoom/DetailTypeRoom";
+import ListRole from "../components/Role/ListRole";
+import AddRole from "../components/Role/AddRole";
+import EditRole from "../components/Role/EditRole";
+import DelegationDetail from "../components/Customer/Delegation/DelegationDetail";
 const routes = [
     {
         path: "/",
@@ -73,9 +80,9 @@ const routes = [
         main: ({ history }) => <AddDelegation history={history} />
     },
     {
-        path: "/edit-delegation",
+        path: "/edit-delegation/:idDelegation",
         exact: true,
-        main: ({ history }) => <EditDelegation history={history} />
+        main: ({ history, match }) => <EditDelegation match={match} history={history} />
     },
     {
         path: "/add-employee",
@@ -128,6 +135,16 @@ const routes = [
         main: ({ history }) => <BookingRoom history={history} />
     },
     {
+        path: "/booking-room/booking-detail-one/:idRoom",
+        exact: true,
+        main: ({ history, match }) => <BookingDetailOne match={match} history={history} />
+    },
+    {
+        path: "/booking-room/booking-detail-delegation/:idRoom",
+        exact: true,
+        main: ({ history,match }) => <BookingDetailDelegation match={match} history={history} />
+    },
+    {
         path: "/check-in-room",
         exact: true,
         main: ({ history }) => <CheckInRoom history={history} />
@@ -158,9 +175,34 @@ const routes = [
         main: ({ history,match }) => <EmployeeProfile match={match} history={history} />
     },
     {
-        path: "/room-detail",
+        path: "/detail-room/:idRoom",
         exact: true,
         main: ({ history,match }) => <RoomDetail match={match} history={history} />
+    },
+    {
+        path: "/type-room/detail-type-room/:idTypeRoom",
+        exact: true,
+        main: ({ history,match }) => <DetailTypeRoom match={match} history={history} />
+    },
+    {
+        path: "/list-role",
+        exact: true,
+        main: ({ history }) => <ListRole history={history} />
+    },
+    {
+        path: "/add-role",
+        exact: true,
+        main: ({ history }) => <AddRole history={history} />
+    },
+    {
+        path: "/edit-role/:idRole",
+        exact: true,
+        main: ({ history,match }) => <EditRole history={history} match={match} />
+    },
+    {
+        path: "/detail-delegation/:idDelegation",
+        exact: true,
+        main: ({ history,match }) => <DelegationDetail history={history} match={match} />
     },
     {
         path: "",

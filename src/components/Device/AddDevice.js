@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../constanst/CallAPI";
 import { APIDevice } from '../../constanst/API';
+import Title from '../Home/Title';
 export default class AddDevice extends Component {
     constructor(props) {
         super(props);
@@ -62,20 +63,7 @@ export default class AddDevice extends Component {
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Thiết bị</div>
-                            </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Rooms</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">Add Room Details</li>
-                            </ol> */}
-                        </div>
-                    </div>
+                <Title title="Thiết bị"></Title>
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="card-box">

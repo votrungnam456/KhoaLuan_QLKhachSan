@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { APIDevice } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
+import Title from '../Home/Title';
 import DeviceItem from './DeviceItem';
 export default class ListDevice extends Component {
     constructor(props) {
@@ -35,20 +36,7 @@ export default class ListDevice extends Component {
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Thiết bị</div>
-                            </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Booking</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">All Bookings</li>
-                            </ol> */}
-                        </div>
-                    </div>
+                <Title title="Thiết bị"></Title>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">

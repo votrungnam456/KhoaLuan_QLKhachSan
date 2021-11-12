@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../constanst/CallAPI";
-import { APIEmployee } from '../../constanst/API';
+import { APIEmployee,APIRole } from '../../constanst/API';
+import Title from '../Home/Title';
 export default class AddEmployee extends Component {
     constructor(props) {
         super(props);
@@ -11,11 +12,22 @@ export default class AddEmployee extends Component {
             identityCard: "",
             nameEmployee: "",
             phoneNumber: "",
+            role:"",
+            listRole:[],
             message:0
         }
     }
     componentDidMount() {
-
+        CallAPI.GET(APIRole).then(res=>{
+            if(res.status === 200){
+                this.setState({
+                    listRole:res.data
+                })
+            }
+            else{
+                alert("Load data role failed");
+            }
+        })
     }
     onChange = (ev) => {
         this.setState({
@@ -23,6 +35,7 @@ export default class AddEmployee extends Component {
         })
         let name = ev.target.name;
         let value = ev.target.value;
+        console.log(name,value)
         this.setState({
             [name]: value
         })
@@ -38,9 +51,9 @@ export default class AddEmployee extends Component {
         })
     }
     addEmployee = (ev) => {
-        const { address, email, gender, identityCard, nameEmployee, phoneNumber } = this.state
+        const { address, email, gender, identityCard, nameEmployee, phoneNumber,role } = this.state
         ev.preventDefault();
-        if (address === "" || email === "" || identityCard === "" || nameEmployee === "" || phoneNumber === "") {
+        if (address === "" || email === "" || identityCard === "" || nameEmployee === "" || phoneNumber === "" || role === "") {
             this.setState({
                 message: 1
             })
@@ -49,7 +62,7 @@ export default class AddEmployee extends Component {
             if (identityCard.length === 9 || identityCard.length === 12) {
                 const employeeAdd = {
                     address,
-                    email, gender, identityCard, nameEmployee, phoneNumber
+                    email, gender, identityCard, nameEmployee, phoneNumber, idRole:role
                 }
                 CallAPI.POST(APIEmployee, employeeAdd).then(res => {
                     if (res.status === 200) {
@@ -73,24 +86,11 @@ export default class AddEmployee extends Component {
         }
     }
     render() {
-        const { address, email, gender, identityCard, nameEmployee, phoneNumber,message } = this.state
+        const { address, email, gender, identityCard, nameEmployee, phoneNumber,message,role,listRole } = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Nhân viên</div>
-                            </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Rooms</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">Add Room Details</li>
-                            </ol> */}
-                        </div>
-                    </div>
+                <Title title="Nhân viên"></Title>
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="card-box">
@@ -135,6 +135,19 @@ export default class AddEmployee extends Component {
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                                             <label className="">Chứng minh thư</label>
                                             <input className="mdl-textfield__input" type="text" name="identityCard" value={identityCard} onChange={this.onChange} />
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-6 p-t-20">
+                                        <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
+                                            <label className="">Chức vụ</label>
+                                            <select name="role" value={role} onChange={this.onChange} className="mdl-textfield__input">
+                                                <option value="">Chọn chức vụ</option>
+                                                {listRole.length > 0 ? listRole.map((role, index) => {
+                                                    return (
+                                                        <option key={index} value={role.id}>{role.nameRole}</option>
+                                                    )
+                                                }) : <option value="">Loading data....</option>}
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">

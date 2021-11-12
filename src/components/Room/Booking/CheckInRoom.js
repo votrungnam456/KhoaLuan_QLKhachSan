@@ -1,24 +1,12 @@
 import React, { Component } from 'react'
+import Title from '../../Home/Title'
 
 export default class CheckInRoom extends Component {
     render() {
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Nhận phòng</div>
-                            </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Booking</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">All Bookings</li>
-                            </ol> */}
-                        </div>
-                    </div>
+                <Title title="Nhận phòng"></Title>
                     <div className="row">
                         <div className="col-md-4">
                             <label>Tên khách hàng: </label>

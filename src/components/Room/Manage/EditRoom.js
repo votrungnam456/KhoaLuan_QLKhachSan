@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../../constanst/CallAPI";
 import { APIRoom, APITypeRoom } from '../../../constanst/API';
+import Title from '../../Home/Title';
 export default class EditRoom extends Component {
     constructor(props) {
         super(props);
@@ -22,11 +23,11 @@ export default class EditRoom extends Component {
         });
         CallAPI.GET(APIRoom + "/" + this.props.match.params.idRoom).then(res=>{
             if(res.status === 200){
-                console.log(res)
+                console.log(res.data)
                 this.setState({
                     nameRoom:res.data.nameRoom,
                     description:res.data.description,
-                    id_type_room:res.data.id_type_room
+                    id_type_room:res.data.idTypeRoom
                 })
             }
             else{
@@ -55,7 +56,6 @@ export default class EditRoom extends Component {
                 nameRoom,
                 description, idTypeRoom:id_type_room
             }
-            console.log(roomEdit, this.props.match.params.idRoom)
             CallAPI.PUT(APIRoom + "/" + this.props.match.params.idRoom, roomEdit).then(res => {
                 console.log(res)
                 if (res.status === 200) {
@@ -73,23 +73,11 @@ export default class EditRoom extends Component {
     }
     render() {
         const { listTypeRoom, nameRoom, message, description,id_type_room } = this.state
+        console.log(id_type_room)
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Phòng</div>
-                            </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Rooms</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">Add Room Details</li>
-                            </ol> */}
-                        </div>
-                    </div>
+                <Title title="Phòng"></Title>
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="card-box">
@@ -134,8 +122,6 @@ export default class EditRoom extends Component {
                     </div>
                 </div>
             </div>
-
-
         )
     }
 }

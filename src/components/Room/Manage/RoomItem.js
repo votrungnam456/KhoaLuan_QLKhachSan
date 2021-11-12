@@ -21,6 +21,9 @@ export default class ListRoomItem extends Component {
                     <Link to={"/edit-room/" + room.id} className="btn btn-tbl-edit btn-xs">
                         <i className="fa fa-pencil" />
                     </Link>
+                    <Link to={"/detail-room/" + room.id} className="btn bg-primary btn-tbl-edit btn-xs">
+                        <i class="fa fa-info-circle"/>
+                    </Link>
                     <button onClick={this.onDeleteItem} className="btn btn-tbl-delete btn-xs">
                         <i className="fa fa-trash-o " />
                     </button>

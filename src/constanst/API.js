@@ -7,4 +7,7 @@ const APIEmployee = API+"/user/"
 const APIService = API+"/manager/service";
 const APIDevice = API+"/manager/hotel-device";
 const APICustomer = API+"/manager/customer";
-export {APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer};
+const APIDetailType = API+"/manager/detail-type";
+const APIRole = API + "/manager/role";
+const APIDelegation = API + "/manager/delegation";
+export {APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation};

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { APIEmployee } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
+import Title from '../Home/Title';
 import EmloyeeItem from './EmloyeeItem';
 export default class ListEmployee extends Component {
     constructor(props) {
@@ -34,13 +35,7 @@ export default class ListEmployee extends Component {
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Nhân viên</div>
-                            </div>
-                        </div>
-                    </div>
+                <Title title="Nhân viên"></Title>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">

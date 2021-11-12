@@ -108,10 +108,20 @@ const sideBarQL = [
                 to: "/list-device",
                 title: "Xem danh sách thiết bị"
             },
+        ]
+    },
+    {
+        icon: "group",
+        title: "Phân quyền / Chức vụ",
+        subMenus: [
             {
-                to: "/edit-device",
-                title: "Sửa thông tin thiết bị"
+                to: "/add-role",
+                title: "Thêm quyền / chức vụ"
             },
+            {
+                to: "/list-role",
+                title: "Danh sách phân quyền / chức vụ"
+            }
         ]
     },
     {
@@ -275,6 +285,34 @@ const sideBarNVTiepTan = [
         ]
     },
     {
+        icon: "group",
+        title: "Nhân viên",
+        subMenus: [
+            {
+                to: "/add-employee",
+                title: "Thêm nhân viên"
+            },
+            {
+                to: "/list-employee",
+                title: "Xem danh sách nhân viên"
+            }
+        ]
+    },
+    {
+        icon: "group",
+        title: "Phân quyền / Chức vụ",
+        subMenus: [
+            {
+                to: "/add-role",
+                title: "Thêm quyền / chức vụ"
+            },
+            {
+                to: "/list-role",
+                title: "Danh sách phân quyền / chức vụ"
+            }
+        ]
+    },
+    {
         icon: "card_travel",
         title: "Dịch vụ",
         subMenus: [
@@ -351,7 +389,7 @@ export default class Sidebar extends Component {
 
         }
     }
-    loadSideBar(sideBarItem) {
+    loadSideBar = (sideBarItem) =>{
         let result = null
         if (sideBarItem.length > 0) {
             result = sideBarItem.map((item, index) => {
@@ -360,10 +398,11 @@ export default class Sidebar extends Component {
         }
         return result
     }
-    logOut(){
+    logOut = () =>{
         localStorage.removeItem("userLogin");
         sessionStorage.removeItem("userLogin");
         this.props.history.push("/login")
+        console.log(this.props.history)
     }
     render() {
         const { user } = this.props
@@ -391,16 +430,16 @@ export default class Sidebar extends Component {
                                         <Link className="tooltips" to={"/employee-profile/"+user.id} data-placement="top" data-original-title="Profile">
                                             <i className="material-icons">person_outline</i>
                                         </Link>
-                                        <button className="tooltips" onClick={this.logOut} data-placement="top" data-original-title="Logout">
+                                        <Link to="/login" className="tooltips" onClick={this.logOut} data-placement="top" data-original-title="Logout">
                                             <i className="material-icons">input</i>
-                                        </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </li>
                             <li className="menu-heading">
                                 <span>Menu</span>
                             </li>
-                            {user.codeRole === "ADMIN" ? this.loadSideBar(sideBarQL) : user.codeRole === "USER" ? this.loadSideBar(sideBarNVTiepTan) : this.loadSideBar(sideBarNVKho)}
+                            {user.codeRole === "ADMIN" ? this.loadSideBar(sideBarQL) : user.codeRole === "USER" ? this.loadSideBar(sideBarNVTiepTan) : user.codeRole === "USER_WAREHOUSE" ? this.loadSideBar(sideBarNVKho):""}
                         </ul>
                     </div>
                 </div>

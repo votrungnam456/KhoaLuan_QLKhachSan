@@ -1,32 +1,49 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { APIDelegation } from '../../../constanst/API';
+import * as CallAPI from "../../../constanst/CallAPI";
+import Title from '../../Home/Title';
+import DelegationItem from './DelegationItem';
 export default class ListDelegation extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listDelegation:[]
+        }
+    }
+    componentDidMount(){
+        this.loadData();
+    }
+    loadData = () =>{
+        CallAPI.GET(APIDelegation).then(res=>{
+            if(res.status === 200){
+                this.setState({
+                    listDelegation:res.data
+                })
+            }
+        });
+    }
+    deleteItem = (id) =>{
+        CallAPI.DELETE(APIDelegation + "/" + id).then(res=>{
+            if(res.status === 200){
+                this.loadData();
+            }
+        });
+    }
     render() {
+        const {listDelegation} = this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Khách đoàn</div>
-                            </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Booking</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">All Bookings</li>
-                            </ol> */}
-                        </div>
-                    </div>
+                <Title title="Khách đoàn"></Title>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">
                                 <div className="card-head">
                                     <header>Danh sách khách đoàn</header>
                                     <div className="tools">
-                                        <i className="fa fa-repeat btn-color box-refresh" href="javascript:;" />
-                                        <i className="t-collapse btn-color fa fa-chevron-down" href="javascript:;" />
+                                        <i className="fa fa-repeat btn-color box-refresh"/>
+                                        <i className="t-collapse btn-color fa fa-chevron-down"/>
                                     </div>
                                 </div>
                                 <div className="card-body ">
@@ -50,16 +67,16 @@ export default class ListDelegation extends Component {
                                                 </i>
                                                 <ul className="dropdown-menu pull-right">
                                                     <li>
-                                                        <a href="javascript:;">
-                                                            <i className="fa fa-print" /> Print </a>
+                                                        <button>
+                                                            <i className="fa fa-print" /> Print </button>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:;">
-                                                            <i className="fa fa-file-pdf-o" /> Save as PDF </a>
+                                                        <button>
+                                                            <i className="fa fa-file-pdf-o" /> Save as PDF </button>
                                                     </li>
                                                     <li>
-                                                        <a href="javascript:;">
-                                                            <i className="fa fa-file-excel-o" /> Export to Excel </a>
+                                                        <button>
+                                                            <i className="fa fa-file-excel-o" /> Export to Excel </button>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -83,20 +100,17 @@ export default class ListDelegation extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr className="odd gradeX">
-                                                    <td className="center">Đoàn khách 1</td>
-                                                    <td className="center">Tina Trần</td>
-                                                    <td className="center">Closers company</td>
-                                                    <td className="center">5</td>
-                                                    <td className="center">
-                                                        <a href="edit_room.html" className="btn btn-tbl-edit btn-xs">
-                                                            <i className="fa fa-pencil" />
-                                                        </a>
-                                                        <i className="btn btn-tbl-delete btn-xs">
-                                                            <i className="fa fa-trash-o " />
-                                                        </i>
-                                                    </td>
-                                                </tr>
+                                            {
+                                                    listDelegation.length > 0 ? listDelegation.map((value, index) => {
+                                                        return (
+                                                            <DelegationItem deleteItem={this.deleteItem} delegation={value} key={index}></DelegationItem>
+                                                        )
+                                                    }) : (
+                                                        <tr className="spinner-border" role="status">
+                                                            <td className="sr-only">Loading...</td>
+                                                        </tr>
+                                                    )
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

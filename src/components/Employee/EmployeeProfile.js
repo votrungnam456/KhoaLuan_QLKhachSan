@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as CallAPI from "../../constanst/CallAPI";
 import { APIEmployee } from '../../constanst/API';
+import Title from '../Home/Title';
 export default class EmployeeProfile extends Component {
     constructor(props) {
         super(props);
@@ -52,7 +53,7 @@ export default class EmployeeProfile extends Component {
         })
     }
     changePwd  = () =>{
-        const {newPwd,oldPwd,confirmNewPwd} = this.state;
+        const {newPwd,oldPwd,confirmNewPwd,email} = this.state;
         if(newPwd === ""||oldPwd==="" ||confirmNewPwd ===""){
             this.setState({
                 message:1
@@ -64,9 +65,19 @@ export default class EmployeeProfile extends Component {
             })
         }
         else{
-            alert("Đổi mật khẩu thành công");
-            this.setState({
-                isChangePassword : false
+            const dataPwd = {
+                email,
+                passwordNew:newPwd,
+                passwordOld:oldPwd
+            }
+            CallAPI.POST(APIEmployee+ "change-pass/",dataPwd).then(res => {
+                console.log(res)
+                if (res.status === 200) {
+                    alert("Đổi mật khẩu thành công");
+                    this.setState({
+                        isChangePassword : false
+                    })
+                }
             })
         }
     }
@@ -75,13 +86,7 @@ export default class EmployeeProfile extends Component {
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Nhân viên</div>
-                            </div>
-                        </div>
-                    </div>
+                <Title title="Nhân viên"></Title>
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="card-box">

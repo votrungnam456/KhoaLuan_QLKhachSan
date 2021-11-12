@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../../constanst/CallAPI";
 import { APITypeRoom } from '../../../constanst/API';
+import Title from '../../Home/Title';
 export default class EditTypeRoom extends Component {
     constructor(props) {
         super(props);
@@ -70,13 +71,7 @@ export default class EditTypeRoom extends Component {
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Phòng</div>
-                            </div>
-                        </div>
-                    </div>
+                <Title title="Loại phòng"></Title>
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="card-box">

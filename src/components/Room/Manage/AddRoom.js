@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../../constanst/CallAPI";
 import { APIRoom, APITypeRoom } from '../../../constanst/API';
+import Multiselect from 'multiselect-react-dropdown';
+import Title from '../../Home/Title';
 export default class AddRoom extends Component {
     constructor(props) {
         super(props);
@@ -60,27 +62,13 @@ export default class AddRoom extends Component {
                 }
             });
         }
-
     }
     render() {
         const { listTypeRoom, nameRoom, message, description } = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Phòng</div>
-                            </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Rooms</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">Add Room Details</li>
-                            </ol> */}
-                        </div>
-                    </div>
+                <Title title="Phòng"></Title>
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="card-box">
@@ -106,9 +94,11 @@ export default class AddRoom extends Component {
                                             <select name="idTypeRoom" onChange={this.onChange} className="mdl-textfield__input">
                                                 <option value="">Chọn loại phòng</option>
                                                 {listTypeRoom.length > 0 ? listTypeRoom.map((typeRoom, index) => {
-                                                    return (
-                                                        <option key={index} value={typeRoom.id}>{typeRoom.nameTypeRoom}</option>
-                                                    )
+                                                    if(typeRoom.details.length > 0){
+                                                        return (
+                                                            <option key={index} value={typeRoom.id}>{typeRoom.nameTypeRoom}</option>
+                                                        )
+                                                    }
                                                 }) : <option value="">Loading data....</option>}
                                             </select>
                                         </div>

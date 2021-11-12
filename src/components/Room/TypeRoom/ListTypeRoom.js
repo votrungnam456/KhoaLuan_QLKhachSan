@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { APITypeRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
+import Title from '../../Home/Title';
 import TypeRoomItem from './TypeRoomItem';
 export default class ListTypeRoom extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listTypeRoom: []
+            listTypeRoom: [],
         }
     }
     componentDidMount() {
@@ -36,20 +37,7 @@ export default class ListTypeRoom extends Component {
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Phòng</div>
-                            </div>
-                            {/* <ol className="breadcrumb page-breadcrumb pull-right">
-                                <li><i className="fa fa-home" />&nbsp;<a className="parent-item" href="index.html">Home</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li><a className="parent-item" href>Booking</a>&nbsp;<i className="fa fa-angle-right" />
-                                </li>
-                                <li className="active">All Bookings</li>
-                            </ol> */}
-                        </div>
-                    </div>
+                <Title title="Loại phòng"></Title>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">
@@ -101,7 +89,6 @@ export default class ListTypeRoom extends Component {
                                             Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
                                         </label>
                                     </div>
-
                                     <div className="table-scrollable">
                                         <table className="table table-hover table-checkable order-column full-width" id="example4">
                                             <thead>
@@ -109,6 +96,7 @@ export default class ListTypeRoom extends Component {
                                                     <th className="center"> Tên loại phòng </th>
                                                     <th className="center"> Giá </th>
                                                     <th className="center"> Mô tả </th>
+                                                    <th className="center"> Tình trạng </th>
                                                     <th className="center"></th>
                                                 </tr>
                                             </thead>

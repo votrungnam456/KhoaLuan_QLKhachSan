@@ -2,29 +2,30 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { APIService } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
+import Title from '../Home/Title';
 import ServiceItem from './ServiceItem';
 export default class ListService extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listService:[]
+            listService: []
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.loadService();
     }
-    loadService = () =>{
-        CallAPI.GET(APIService).then(res=>{
-            if(res.status === 200){
+    loadService = () => {
+        CallAPI.GET(APIService).then(res => {
+            if (res.status === 200) {
                 this.setState({
-                    listService:res.data
+                    listService: res.data
                 })
             }
         });
     }
-    deleteItem = (id) =>{
-        CallAPI.DELETE(APIService + "/" + id).then(res=>{
-            if(res.status === 200){
+    deleteItem = (id) => {
+        CallAPI.DELETE(APIService + "/" + id).then(res => {
+            if (res.status === 200) {
                 this.loadService();
             }
         });
@@ -32,17 +33,11 @@ export default class ListService extends Component {
 
 
     render() {
-        const {listService}= this.state;
+        const { listService } = this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                    <div className="page-bar">
-                        <div className="page-title-breadcrumb">
-                            <div className=" pull-left">
-                                <div className="page-title">Dịch vụ</div>
-                            </div>
-                        </div>
-                    </div>
+                    <Title title="Dịch vụ"></Title>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">
@@ -105,12 +100,12 @@ export default class ListService extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {
-                                                    listService.length >0 ? listService.map((value,index)=>{
+                                                {
+                                                    listService.length > 0 ? listService.map((value, index) => {
                                                         return (
                                                             <ServiceItem deleteItem={this.deleteItem} service={value} key={index}></ServiceItem>
                                                         )
-                                                    }):(
+                                                    }) : (
                                                         <tr className="spinner-border" role="status">
                                                             <td className="sr-only">Loading...</td>
                                                         </tr>

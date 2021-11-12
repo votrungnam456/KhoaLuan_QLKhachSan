@@ -27,9 +27,9 @@ export default class Login extends Component {
             email, passWord: password
         }
         CallAPI.POST(APILogin, userLogin).then(res => {
-            console.log(res)
             if (remember) {
                 localStorage.setItem("userLogin", JSON.stringify(res.data));
+                history.push("/");
             }
             else {
                 sessionStorage.setItem("userLogin", JSON.stringify(res.data));

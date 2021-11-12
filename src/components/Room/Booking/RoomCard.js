@@ -6,29 +6,55 @@ export default class RoomCard extends Component {
     super(props);
     this.state = {
     }
-}
+  }
+  convertStatus = (status) => {
+    switch (status) {
+      case 0:
+        return "Trống"
+      case 1:
+        return "Đã đặt"
+      case 2:
+        return "Đang ở"
+      case 3:
+        return "Đang sửa"
+      case 4:
+        return "Đang dọn dẹp"
+      default:
+        break;
+    }
+  }
+  toggleChose = () => {
+    const card = document.getElementById(this.props.room.id);
+    if (card.classList.contains("bg-b-purple")) {
+      card.classList.remove("bg-b-purple")
+      card.classList.add("bg-primary")
+    }
+    else if (card.classList.contains("bg-primary")) {
+      card.classList.add("bg-b-purple")
+      card.classList.remove("bg-primary")
+    }
+  }
   render() {
-    const {room} = this.props;
+    const { room } = this.props;
     return (
-      <div className="col-md-4">
+      <div className="room-card col-md-3">
         <div className="card">
-          <div className="m-b-20">
+          <div onClick={this.toggleChose} className="m-b-20">
             <div className="doctor-profile">
-              <div className="profile-header bg-b-purple">
+              <div id={room.id} className="profile-header bg-b-purple">
                 <div className="user-name">{room.nameRoom}</div>
-                {/* <div className="name-center">General Manager</div> */}
               </div>
               <img src="./assets/img/room.png" className="user-img" alt="" />
-              <p>
-              {room.description}
-              </p>
+              {/* <p>
+                {room.description}
+              </p> */}
               <div>
                 <p>
-                  Tình Trạng: {room.status === 1 ? "Trống" :room.status === 2 ? "Đang ở" :room.status === 3 ? "Đã đặt" : ""}
+                  Loại phòng: {room.nameTypeRoom}
                 </p>
-              </div>
-              <div className="profile-userbuttons">
-                <Link to={"/room-detail/"+ room.id} className="btn btn-circle deepPink-bgcolor btn-sm">Xem chi tiết</Link>
+                <p>
+                  Tình Trạng: {this.convertStatus(room.status)}
+                </p>
               </div>
             </div>
           </div>
