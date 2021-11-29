@@ -94,7 +94,7 @@ export default class ListRoom extends Component {
                                                 <tr>
                                                     <th className="center"> Tên phòng </th>
                                                     <th className="center"> Loại phòng </th>
-                                                    <th className="center"> Tình trạng phòng </th>
+                                                    <th className="center"> Tình trạng phòng hiện tại </th>
                                                     <th className="center"> Nhân viên dọn phòng </th>
                                                     <th className="center"> Phiếu đăng ký </th>
                                                     <th className="center"></th>

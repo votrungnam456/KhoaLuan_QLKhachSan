@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../constanst/CallAPI";
-import { APIRoom } from '../../constanst/API';
+import { APIRoom,APIDetailType } from '../../constanst/API';
 export default class RoomDetailItem extends Component {
   constructor(props) {
     super(props);
@@ -11,12 +11,13 @@ export default class RoomDetailItem extends Component {
       nameEmployee: "",
       nameRoom: "",
       nameTypeRoom: "",
+      listCustomer: [],
       status: 0
     }
   }
   componentDidMount() {
-    CallAPI.GET(APIRoom + "/" + this.props.idRoom).then(res => {
-      console.log(res.data.details)
+    CallAPI.GET(APIRoom + "/"+this.props.idRoom).then(res => {
+      console.log(res.data);
       if (res.status === 200) {
         this.setState({
           description: res.data.description,
@@ -25,7 +26,8 @@ export default class RoomDetailItem extends Component {
           nameEmployee: res.data.nameEmployee,
           nameRoom: res.data.nameRoom,
           nameTypeRoom: res.data.nameTypeRoom,
-          status: res.data.status
+          status: res.data.status,
+          listCustomer:res.data.infoCustomerBooking.customers
         })
       }
     })
@@ -46,8 +48,13 @@ export default class RoomDetailItem extends Component {
         break;
     }
   }
+  getCustomers = (customers)=>{
+    let result = "";
+    customers.map(x=> result+= x.name + ",")
+    return result;
+  }
   render() {
-    const { description, housekeepingOrder, nameEmployee, nameRoom, nameTypeRoom, status, details } = this.state;
+    const { description, housekeepingOrder, nameEmployee, nameRoom, nameTypeRoom, status, details,listCustomer} = this.state;
     return (
       <div className="col-sm-12">
         <div className="card-box">
@@ -82,7 +89,7 @@ export default class RoomDetailItem extends Component {
             </div>
             <div className="col-lg-6 p-t-20">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                <label className="">Thông tin khách đang ở: not have</label>
+                <label className="">Thông tin khách đang ở: {listCustomer.length > 0 ? this.getCustomers(listCustomer) : "không có"}</label>
               </div>
             </div>
             <div className="col-lg-6 p-t-20">

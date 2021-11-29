@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { APIRoom, APITypeRoom, APICustomer,APIDelegation } from '../../../constanst/API';
+import { APIRoom, APITypeRoom, APICustomer, APIDelegation } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 import Title from '../../Home/Title';
 import RoomCard from './RoomCard';
@@ -16,10 +15,15 @@ export default class BookingRoom extends Component {
             message: 0,
             listCustomer: [],
             listDelegation: [],
-            listChooseRoom:[]
+            listChooseRoom: [],
+            now: "",
         }
     }
     componentDidMount() {
+        const date = new Date();
+        this.setState({
+            now: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+        })
         this.loadData();
     }
     onChange = (ev) => {
@@ -28,7 +32,7 @@ export default class BookingRoom extends Component {
         })
         let name = ev.target.name;
         let value = ev.target.value;
-        console.log(name,value)
+        console.log(name, value)
         this.setState({
             [name]: value
         })
@@ -64,8 +68,8 @@ export default class BookingRoom extends Component {
         });
     }
     bookingAction = () => {
-        let {listChooseRoom} = this.state;
-        const {history} = this.props;
+        let { listChooseRoom,checkInDate,checkOutDate} = this.state;
+        const { history } = this.props;
         listChooseRoom = [];
         const rooms = document.getElementsByClassName("profile-header")
         Array.from(rooms).forEach(room => {
@@ -73,29 +77,30 @@ export default class BookingRoom extends Component {
                 listChooseRoom.push(room.id);
             }
         })
-        if(listChooseRoom.length <= 0){
+        localStorage.setItem("date", JSON.stringify({checkInDate,checkOutDate}));
+        if (listChooseRoom.length <= 0) {
             alert("Vui lòng chọn phòng để đặt");
-        }else if(listChooseRoom.length === 1){
-            history.push("/booking-room/booking-detail-one/"+listChooseRoom[0])
+        } else if (listChooseRoom.length === 1) {
+            history.push("/booking-room/booking-detail-one/" + listChooseRoom[0])
         }
-        else{
-            history.push("/booking-room/booking-detail-delegation/"+listChooseRoom.join(";"))
+        else {
+            history.push("/booking-room/booking-detail-delegation/" + listChooseRoom.join(";"))
         }
     }
     render() {
-        const { listRoom, listTypeRoom,checkInDate,checkOutDate } = this.state;
+        const { listRoom, listTypeRoom, checkInDate, checkOutDate, now } = this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                <Title title="Đặt phòng"></Title>
+                    <Title title="Đặt phòng"></Title>
                     <div className="row">
                         <div className="col-md-3">
                             <label>Ngày đến: </label>
-                            <input onChange={this.onChange} value={checkInDate} name="checkInDate" type="datetime-local" />
+                            <input onChange={this.onChange} value={checkInDate} name="checkInDate" type="date" min={now} />
                         </div>
                         <div className="col-md-3">
                             <label>Ngày đi: </label>
-                            <input onChange={this.onChange} value={checkOutDate} name="checkOutDate" type="datetime-local" />
+                            <input onChange={this.onChange} value={checkOutDate} name="checkOutDate" type="date" min={now} />
                         </div>
                         <div className="col-md-3">
                             <label>Loại phòng: </label>

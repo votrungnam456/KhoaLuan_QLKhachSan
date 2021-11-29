@@ -50,12 +50,12 @@ export default class ListDelegation extends Component {
                                     <div className="row p-b-20">
                                         <div className="col-md-6 col-sm-6 col-6">
                                             <div className="btn-group">
-                                                <Link to="/add-room" id="addRow" className="btn btn-info">
+                                                <Link to="/add-delegation" id="addRow" className="btn btn-info">
                                                     Thêm đoàn <i className="fa fa-plus" />
                                                 </Link>
                                             </div>
                                             <div className="btn-group">
-                                                <button id="addRow" className="btn btn-success">
+                                                <button onClick={this.loadData} id="addRow" className="btn btn-success">
                                                     Làm mới <i className="fa fa-repeat" />
                                                 </button>
                                             </div>

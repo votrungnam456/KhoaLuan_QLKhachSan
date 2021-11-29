@@ -76,10 +76,6 @@ const sideBarQL = [
                 to: "/add-delegation",
                 title: "Thêm khách đoàn"
             },
-            {
-                to: "/edit-delegation",
-                title: "Sửa thông tin khách đoàn"
-            },
         ]
     },
     {
@@ -93,6 +89,14 @@ const sideBarQL = [
             {
                 to: "/list-service",
                 title: "Xem danh sách dịch vụ"
+            },
+            {
+                to: "/register-room-service",
+                title: "Đăng ký dịch vụ theo phòng"
+            },
+            {
+                to: "/register-delegation-service",
+                title: "Đăng ký dịch vụ theo khách đoàn"
             },
         ]
     },
@@ -277,10 +281,6 @@ const sideBarNVTiepTan = [
             {
                 to: "/add-delegation",
                 title: "Thêm khách đoàn"
-            },
-            {
-                to: "/edit-delegation",
-                title: "Sửa thông tin khách đoàn"
             },
         ]
     },

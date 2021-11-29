@@ -7,7 +7,7 @@ export default class EditDelegation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            idTeamManager: "",
+            idManager: "",
             nameCompany: "",
             nameDelegations: "",
             chooseCustomers: [],
@@ -23,7 +23,7 @@ export default class EditDelegation extends Component {
                     chooseCustomers: res.data.customers,
                     nameDelegations: res.data.nameDelegations,
                     nameCompany:res.data.nameCompany,
-                    idTeamManager:res.data.idTeamManager,
+                    idManager:res.data.idManager,
                 })
             }
         })
@@ -39,33 +39,38 @@ export default class EditDelegation extends Component {
         })
     }
     editDelegation = (ev) => {
-        const { idTeamManager, nameCompany, nameDelegations,chooseCustomers } = this.state
+        const { idManager, nameCompany, nameDelegations,chooseCustomers } = this.state
         ev.preventDefault();
-        if (idTeamManager === "" || nameCompany === "" || nameDelegations === "") {
+        if (idManager === "" || nameCompany === "" || nameDelegations === "") {
             this.setState({
                 message: 1
             })
         }
         else {
+            let customersId = [];
+            chooseCustomers.forEach(customer=>{
+                customersId.push(customer.id)
+            })
+            const indexManager = customersId.indexOf(idManager);
+            if(indexManager !== -1){
+                customersId.splice(indexManager,1)
+            }
             const delegationEdit = {
-                idTeamManager,
+                idTeamManager:idManager,
                 nameCompany,
                 nameDelegations,
-                chooseCustomers
+                idCustomers:customersId
             }
-            // CallAPI.POST(APIEmployee, delegationAdd).then(res => {
-            //     if (res.status === 200) {
-            //         this.setState({
-            //             message: 4
-            //         })
-            //         this.clearData();
-            //     }
-            //     else {
-            //         this.setState({
-            //             message: 2
-            //         })
-            //     }
-            // });
+            CallAPI.PUT(APIDelegation + "/" + this.props.match.params.idDelegation, delegationEdit).then(res => {
+                if (res.status === 200) {
+                    this.props.history.push("/list-delegation");
+                }
+                else {
+                    this.setState({
+                        message: 2
+                    })
+                }
+            });
 
         }
     }
@@ -93,9 +98,7 @@ export default class EditDelegation extends Component {
         })
     }
     render() {
-        const { listCustomers,idTeamManager,nameCompany,nameDelegations,chooseCustomers } = this.state
-        console.log(listCustomers);
-        console.log(chooseCustomers)
+        const { listCustomers,idManager,nameCompany,nameDelegations,chooseCustomers,message } = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -122,7 +125,7 @@ export default class EditDelegation extends Component {
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                                             <label className="">Trưởng đoàn</label>
-                                            <select onChange={this.onChange} name="idTeamManager" className="mdl-textfield__input">
+                                            <select value={idManager} onChange={this.onChange} name="idManager" className="mdl-textfield__input">
                                                 <option value="">Chọn trưởng đoàn</option>
                                                 {
                                                     listCustomers.map((value, index) => {
@@ -139,7 +142,8 @@ export default class EditDelegation extends Component {
                                         </div>
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">
-                                        <button type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa đoàn khách</button>
+                                        <button onClick={this.editDelegation} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa đoàn khách</button>
+                                        <p style={{ color: "red" }} >{message === 1 ? "Thông tin không được để trống" : message === 2 ? "Sửa thông tin thất bại, vui lòng kiểm tra lại thông tin và thử lại" : ""}</p>
                                     </div>
                                 </div>
                             </div>

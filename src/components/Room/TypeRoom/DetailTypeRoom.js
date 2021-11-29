@@ -124,7 +124,7 @@ export default class DetailTypeRoom extends Component {
       else if (type === "edit") {
         const index = listDetail.findIndex(item => item.idType === selectType);
         if (index !== -1) {
-          CallAPI.PUT(APIDetailType, data).then(res => {
+          CallAPI.PUT(APIDetailType+"/" + selectType, data).then(res => {
             if (res.status === 200) {
               this.setState({
                 message: 3

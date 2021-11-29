@@ -33,6 +33,9 @@ import ListRole from "../components/Role/ListRole";
 import AddRole from "../components/Role/AddRole";
 import EditRole from "../components/Role/EditRole";
 import DelegationDetail from "../components/Customer/Delegation/DelegationDetail";
+import CheckInRoomDetail from "../components/Room/Booking/CheckInRoomDetail";
+import ServiceRoom from "../components/Service/ServiceRoom";
+import ServiceDelegation from "../components/Service/ServiceDelegation";
 const routes = [
     {
         path: "/",
@@ -150,6 +153,11 @@ const routes = [
         main: ({ history }) => <CheckInRoom history={history} />
     },
     {
+        path: "/check-in-room/detail/:idRegisterForm",
+        exact: true,
+        main: ({ history,match }) => <CheckInRoomDetail match={match} history={history} />
+    },
+    {
         path: "/check-out-room",
         exact: true,
         main: ({ history }) => <CheckoutRoom history={history} />
@@ -203,6 +211,16 @@ const routes = [
         path: "/detail-delegation/:idDelegation",
         exact: true,
         main: ({ history,match }) => <DelegationDetail history={history} match={match} />
+    },
+    {
+        path: "/register-room-service",
+        exact: true,
+        main: ({ history }) => <ServiceRoom history={history} />
+    },
+    {
+        path: "/register-delegation-service",
+        exact: true,
+        main: ({ history }) => <ServiceDelegation history={history} />
     },
     {
         path: "",

@@ -1,19 +1,20 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../../constanst/CallAPI";
-import { APICustomer, APIRole } from '../../../constanst/API';
+import { APICustomer, APIDelegation, APIRole } from '../../../constanst/API';
 import Multiselect from 'multiselect-react-dropdown';
 import Title from '../../Home/Title';
 export default class AddDelegation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            idTeamManager: "",
+            idManager: "",
             nameCompany: "",
             nameDelegations: "",
             chooseCustomers: [],
             listCustomers: [],
             message: 0
         }
+        this.multiselectRef = React.createRef();
     }
     componentDidMount() {
         CallAPI.GET(APICustomer).then(res => {
@@ -40,55 +41,64 @@ export default class AddDelegation extends Component {
     }
     clearData = () => {
         this.setState({
-
+            idManager: "",
+            nameCompany: "",
+            nameDelegations: "",
+            chooseCustomers: [],
         })
+        this.multiselectRef.current.resetSelectedValues();
     }
     addDelegation = (ev) => {
-        const { idTeamManager, nameCompany, nameDelegations,chooseCustomers } = this.state
+        const { idManager, nameCompany, nameDelegations,chooseCustomers } = this.state
         ev.preventDefault();
-        if (idTeamManager === "" || nameCompany === "" || nameDelegations === "") {
+        if (idManager === "" || nameCompany === "" || nameDelegations === "") {
             this.setState({
                 message: 1
             })
         }
         else {
+            let customersId = [];
+            chooseCustomers.forEach(customer=>{
+                customersId.push(customer.id)
+            })
+            const indexManager = customersId.indexOf(idManager);
+            if(indexManager !== -1){
+                customersId.splice(indexManager,1)
+            }
             const delegationAdd = {
-                idTeamManager,
+                idTeamManager:idManager,
                 nameCompany,
                 nameDelegations,
-                chooseCustomers
+                idCustomers:customersId
             }
-            // CallAPI.POST(APIEmployee, delegationAdd).then(res => {
-            //     if (res.status === 200) {
-            //         this.setState({
-            //             message: 4
-            //         })
-            //         this.clearData();
-            //     }
-            //     else {
-            //         this.setState({
-            //             message: 2
-            //         })
-            //     }
-            // });
-
+            CallAPI.POST(APIDelegation, delegationAdd).then(res => {
+                if (res.status === 200) {
+                    this.setState({
+                        message: 3
+                    })
+                    this.clearData();
+                }
+                else {
+                    this.setState({
+                        message: 2
+                    })
+                }
+            });
         }
     }
     onSelect = (selectedList) =>{
-        // console.log(selectedList)
         this.setState({
             chooseCustomers:selectedList
         })
     }
     
-    onRemove = (selectedList, removedItem) =>{
-        // console.log(selectedList)
+    onRemove = (selectedList) =>{
         this.setState({
             chooseCustomers:selectedList
         })
     }
     render() {
-        const { listCustomers,idTeamManager,nameCompany,nameDelegations } = this.state
+        const { listCustomers,nameCompany,nameDelegations,message,idManager } = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -115,7 +125,7 @@ export default class AddDelegation extends Component {
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                                             <label className="">Trưởng đoàn</label>
-                                            <select onChange={this.onChange} name="idTeamManager" className="mdl-textfield__input">
+                                            <select value={idManager} onChange={this.onChange} name="idManager" className="mdl-textfield__input">
                                                 <option value="">Chọn trưởng đoàn</option>
                                                 {
                                                     listCustomers.map((value, index) => {
@@ -128,11 +138,12 @@ export default class AddDelegation extends Component {
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                                             <label className="">Thành viên đoàn</label>
-                                            <Multiselect  onSelect={this.onSelect} options={listCustomers} displayValue="name" onRemove={this.onRemove}></Multiselect>
+                                            <Multiselect ref={this.multiselectRef} onSelect={this.onSelect} options={listCustomers} displayValue="name" onRemove={this.onRemove}></Multiselect>
                                         </div>
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">
                                         <button onClick={this.addDelegation} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Thêm đoàn khách mới</button>
+                                        <p style={message === 3 ? { color: "green" } : { color: "red" }}>{message === 1 ? "Thông tin không được để trống" : message === 2 ? "Thêm thất bại, có lỗi vui lòng thử lại" : message === 3 ? "Thêm thành công" :  ""}</p>
                                     </div>
                                 </div>
                             </div>

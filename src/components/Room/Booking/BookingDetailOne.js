@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Title from '../../Home/Title'
-import { APICustomer } from '../../../constanst/API';
+import { APICustomer, APIRoom, APITypeRoom,APIBookingRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 import RoomDetailItem from '../RoomDetailItem';
 export default class BookingDetailOne extends Component {
@@ -21,18 +21,47 @@ export default class BookingDetailOne extends Component {
       email2: "",
       idCustomer2: "",
       numOfChild: 0,
-      numOfBed: 0,
       checkInDate: "",
       checkOutDate: "",
       note: "",
-      message: 0
+      message: 0,
+      idTypeRoom: "",
+      price: 0,
+      now: "",
+      isProtect: false,
+      user: {}
     }
   }
   componentDidMount() {
+    const date = new Date();
+    const userLocal = JSON.parse(localStorage.getItem("userLogin"));
+    const userSession = JSON.parse(sessionStorage.getItem("userLogin"));
+    const checkDate = JSON.parse(localStorage.getItem("date"));
+    this.setState({
+      user: userLocal || userSession,
+      checkInDate:checkDate.checkInDate || "",
+      checkOutDate:checkDate.checkOutDate || "",
+      now: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+    })
     CallAPI.GET(APICustomer).then(res => {
       if (res.status === 200) {
         this.setState({
           listCustomer: res.data
+        })
+      }
+    });
+    CallAPI.GET(APIRoom + "/" + this.props.match.params.idRoom).then(res => {
+      if (res.status === 200) {
+        this.setState({
+          idTypeRoom: res.data.idTypeRoom
+        }, () => {
+          CallAPI.GET(APITypeRoom + "/" + this.state.idTypeRoom).then(res => {
+            if (res.status === 200) {
+              this.setState({
+                price: res.data.price
+              })
+            }
+          })
         })
       }
     });
@@ -95,8 +124,60 @@ export default class BookingDetailOne extends Component {
       }
     }
   }
+  handleChecked = (ev) => {
+    const name = ev.target.name;
+    const value = ev.target.checked;
+    this.setState({
+      [name]: value
+    })
+  }
+  bookingRoom = () => {
+    const { isProtect, user, idCustomer1, idCustomer2, numOfChild, note, checkOutDate, checkInDate } = this.state
+    const checkIn = new Date(checkInDate);
+    const checkOut = new Date(checkOutDate);
+    if (checkInDate === "" || checkOutDate === "") {
+      this.setState({
+        message: 1
+      })
+    }
+    else if (idCustomer1 === "" && idCustomer2 === "") {
+      this.setState({
+        message: 2
+      })
+    }
+    else if(checkIn.getTime() > checkOut.getTime()){
+      this.setState({
+        message: 3
+      })
+    }
+    else {
+      const dataBooking = {
+        bookingDate: Date.now(),
+        checkInDate: checkIn.getTime(),
+        checkOutDate: checkOut.getTime(),
+        idCustomer: [idCustomer1, idCustomer2],
+        idEmployee: user.id,
+        idRoom: [this.props.match.params.idRoom],
+        note,
+        numberOfChild:parseInt(numOfChild),
+        type: 1,
+        isGuaranteed: isProtect
+      }
+      CallAPI.POST(APIBookingRoom,dataBooking).then(res=>{
+        if(res.status === 200){
+          alert("Đặt phòng thành công");
+          this.props.history.push("/booking-room");
+        }
+        else{
+          this.setState({
+            message:4
+          })
+        }
+      })
+    }
+  }
   render() {
-    const { listCustomer, name1, card1, nationality1, phone1, email1, idCustomer1, name2, card2, nationality2, phone2, email2, idCustomer2, numOfChild, numOfBed, note, checkOutDate, checkInDate } = this.state
+    const { isProtect, message, now, listCustomer, name1, card1, nationality1, phone1, email1, idCustomer1, name2, card2, nationality2, phone2, email2, idCustomer2, numOfChild, note, checkOutDate, checkInDate, price } = this.state
     return (
       <div className="page-content-wrapper">
         <div className="page-content">
@@ -205,17 +286,7 @@ export default class BookingDetailOne extends Component {
                   </div>
                   <div className="col-lg-4 p-t-20">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                      <input className="mdl-textfield__input" type="text" onChange={this.onChange} name="numOfChild" value={numOfChild} />
-                    </div>
-                  </div>
-                  <div className="col-lg-2 p-t-20">
-                    <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width text-center">
-                      <label className="">Thêm giường phụ</label>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 p-t-20">
-                    <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                      <input className="mdl-textfield__input" type="number" onChange={this.onChange} name="numOfBed" value={numOfBed} />
+                      <input className="mdl-textfield__input" type="number" onChange={this.onChange} name="numOfChild" value={numOfChild} />
                     </div>
                   </div>
                 </div>
@@ -227,7 +298,7 @@ export default class BookingDetailOne extends Component {
                   </div>
                   <div className="col-lg-4 p-t-20">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                      <input onChange={this.onChange} value={checkInDate} name="checkInDate" type="datetime-local" />
+                      <input onChange={this.onChange} value={checkInDate} name="checkInDate" type="date" min={now} />
                     </div>
                   </div>
                   <div className="col-lg-2 p-t-20">
@@ -237,29 +308,37 @@ export default class BookingDetailOne extends Component {
                   </div>
                   <div className="col-lg-4 p-t-20">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                      <input onChange={this.onChange} value={checkOutDate} name="checkOutDate" type="datetime-local" />
+                      <input onChange={this.onChange} value={checkOutDate} name="checkOutDate" type="date" min={now} />
                     </div>
                   </div>
                 </div>
                 <div className="card-body row">
-                  <div className="col-lg-3 p-t-20">
+                  <div className="col-lg-2 p-t-20">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width text-center">
                       <label className="">Ghi chú</label>
                     </div>
                   </div>
-                  <div className="col-lg-7 p-t-20">
+                  <div className="col-lg-4 p-t-20">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                       <textarea rows="4" cols="50" style={{ border: "1px solid black" }} onChange={this.onChange} value={note} name="note" type="text" />
+                    </div>
+                  </div>
+                  <div className="col-lg-6 p-t-20">
+                    <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width text-center">
+                      <label className="">Số tiền:{price} đồng</label>
+                    </div>
+                    <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width text-center">
+                      <label className="">Đặt phòng đảm bảo: <input name="isProtect" onChange={this.handleChecked} type="checkbox" checked={isProtect}></input></label>
                     </div>
                   </div>
                 </div>
                 <div className="card-body row">
                   <RoomDetailItem idRoom={this.props.match.params.idRoom}></RoomDetailItem>
-                  </div>  
+                </div>
                 <div className="card-body row">
                   <div className="col-lg-12 p-t-20 text-center">
-                    <button type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Đặt phòng</button>
-                    {/* <p style={message === 4 ? { color: "green" } : { color: "red" }}>{message === 1 ? "Thông tin không được để trống" : message === 2 ? "Số điện thoại phải 10 số":message === 3 ? "Thêm phòng thất bại, vui lòng kiểm tra lại thông tin và thử lại" : message === 4 ? "Thêm thành công" : message === 5 ? "Sai định dạng email" : ""}</p> */}
+                    <button onClick={this.bookingRoom} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Đặt phòng</button>
+                    <p style={{ color: "red" }}>{message === 1 ? "Vui lòng nhập ngày check-in và check-out" : message === 2 ? "Vui lòng chọn khách hàng vào ở trong phòng" : message === 3 ? "Ngày check-in không được lớn hơn ngày check-out" : message === 4 ? "Có lỗi trong quá trình xử lý, vui lòng thử lại" : ""}</p>
                   </div>
                 </div>
               </div>
