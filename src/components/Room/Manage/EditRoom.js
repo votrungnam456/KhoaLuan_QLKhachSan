@@ -23,7 +23,6 @@ export default class EditRoom extends Component {
         });
         CallAPI.GET(APIRoom + "/" + this.props.match.params.idRoom).then(res=>{
             if(res.status === 200){
-                console.log(res.data)
                 this.setState({
                     nameRoom:res.data.nameRoom,
                     description:res.data.description,
@@ -57,7 +56,6 @@ export default class EditRoom extends Component {
                 description, idTypeRoom:id_type_room
             }
             CallAPI.PUT(APIRoom + "/" + this.props.match.params.idRoom, roomEdit).then(res => {
-                console.log(res)
                 if (res.status === 200) {
                     history.push("/list-room");
                 }
@@ -73,7 +71,6 @@ export default class EditRoom extends Component {
     }
     render() {
         const { listTypeRoom, nameRoom, message, description,id_type_room } = this.state
-        console.log(id_type_room)
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -114,7 +111,7 @@ export default class EditRoom extends Component {
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">
                                         <button onClick={this.editRoom} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa thông tin phòng</button>
-                                        <p style={{color:"red"}} >{message == 1 ? "Tên phòng không được để trống" : message == 2 ? "Sửa thông tin phòng thất bại, vui lòng kiểm tra lại thông tin và thử lại" : ""}</p>
+                                        <p style={{color:"red"}} >{message === 1 ? "Tên phòng không được để trống" : message === 2 ? "Sửa thông tin phòng thất bại, vui lòng kiểm tra lại thông tin và thử lại" : ""}</p>
                                     </div>
                                 </div>
                             </div>

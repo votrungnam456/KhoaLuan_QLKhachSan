@@ -54,7 +54,6 @@ export default class EditTypeRoom extends Component {
                 description
             }
             CallAPI.PUT(APITypeRoom + "/" + this.props.match.params.idTypeRoom, typeRoomEdit).then(res => {
-                console.log(res)
                 if (res.status === 200) {
                     history.push("/list-type-room");
                 }

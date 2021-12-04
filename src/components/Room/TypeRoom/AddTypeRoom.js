@@ -100,7 +100,7 @@ export default class AddTypeRoom extends Component {
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">
                                         <button onClick={this.addTypeRoom} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Thêm loại phòng</button>
-                                        <p style={message === 3 ? { color: "green" } : { color: "red" }}>{message === 1 ? "Thông tin không được để trống" : message === 4 ? "Giá phải lớn hơn 0" : message === 2 ? "Thêm thất bại, vui lòng kiểm tra lại thông tin và thử lại" : message == 3 ? "Thêm thành công" : ""}</p>
+                                        <p style={message === 3 ? { color: "green" } : { color: "red" }}>{message === 1 ? "Thông tin không được để trống" : message === 4 ? "Giá phải lớn hơn 0" : message === 2 ? "Thêm thất bại, vui lòng kiểm tra lại thông tin và thử lại" : message === 3 ? "Thêm thành công" : ""}</p>
                                     </div>
                                 </div>
                             </div>

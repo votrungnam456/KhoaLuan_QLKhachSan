@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../../constanst/CallAPI";
 import { APIRoom, APITypeRoom } from '../../../constanst/API';
-import Multiselect from 'multiselect-react-dropdown';
 import Title from '../../Home/Title';
 export default class AddRoom extends Component {
     constructor(props) {
@@ -99,6 +98,7 @@ export default class AddRoom extends Component {
                                                             <option key={index} value={typeRoom.id}>{typeRoom.nameTypeRoom}</option>
                                                         )
                                                     }
+                                                    return "";
                                                 }) : <option value="">Loading data....</option>}
                                             </select>
                                         </div>

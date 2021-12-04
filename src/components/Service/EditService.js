@@ -46,7 +46,6 @@ export default class EditService extends Component {
                 price
             }
             CallAPI.PUT(APIService + "/" + this.props.match.params.idService, serviceEdit).then(res => {
-                console.log(res)
                 if (res.status === 200) {
                     history.push("/list-service");
                 }

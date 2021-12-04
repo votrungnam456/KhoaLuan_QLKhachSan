@@ -14,16 +14,16 @@ export default class Header extends Component {
                 <div className="page-header-inner ">
                     {/* logo start */}
                     <div className="page-logo">
-                        <a href="index.html">
+                        <Link to="/">
                             <img alt="" src="assets/img/logo.png" />
-                            <span className="logo-default">LNĐ</span> </a>
+                            <span className="logo-default">LNĐ</span> </Link>
                     </div>
                     {/* logo end */}
                     <ul className="nav navbar-nav navbar-left in">
-                        <li><a href="#" className="menu-toggler sidebar-toggler"><i className="icon-menu" /></a></li>
+                        <li><a href=" " className="menu-toggler sidebar-toggler"><i className="icon-menu" /></a></li>
                     </ul>
                     {/* start mobile menu */}
-                    <a href="#" className="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <a href=" " className="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
                         <span />
                     </a>
                     {/* end mobile menu */}
@@ -32,7 +32,7 @@ export default class Header extends Component {
                         <ul className="nav navbar-nav pull-right">
                             {/* start notification dropdown */}
                             <li className="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <a href=" " className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <i className="fa fa-bell-o" />
                                     <span className="badge headerBadgeColor1"> 6 </span>
                                 </a>
@@ -200,12 +200,6 @@ export default class Header extends Component {
                                             <i className="icon-logout" /> Log Out </Link>
                                     </li>
                                 </ul>
-                            </li>
-                            {/* end manage user dropdown */}
-                            <li className="dropdown dropdown-quick-sidebar-toggler">
-                                <a href=" " id="headerSettingButton" className="mdl-button mdl-js-button mdl-button--icon pull-right" data-upgraded=",MaterialButton">
-                                    <i className="material-icons">settings</i>
-                                </a>
                             </li>
                         </ul>
                     </div>

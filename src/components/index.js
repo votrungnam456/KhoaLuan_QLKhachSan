@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import Footer from './Home/Footer.js'
 import Header from './Home/Header.js'
-import SettingTheme from './Home/SettingTheme.js'
 import Sidebar from './Home/Sidebar.js'
 import routes from '../router/Router.js';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Login from './Login/Login.js'
+import { Route, Switch } from 'react-router-dom';
 export default class index extends Component {
     constructor(props) {
         super(props);
@@ -46,9 +44,6 @@ export default class index extends Component {
                     </Switch>
                     {/* <ListRoom /> */}
                     {/* end page content */}
-                    {/* start chat sidebar */}
-                    <SettingTheme />
-                    {/* end chat sidebar */}
                 </div>
                 {/* end page container */}
                 {/* start footer */}

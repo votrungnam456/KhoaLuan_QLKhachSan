@@ -36,7 +36,6 @@ export default class Login extends Component {
                 history.push("/");
             }
         }).catch(er => {
-            console.log(er.response);
             this.setState({
                 messageError: er.response.data.message
             })

@@ -71,7 +71,6 @@ export default class EmployeeProfile extends Component {
                 passwordOld:oldPwd
             }
             CallAPI.POST(APIEmployee+ "change-pass/",dataPwd).then(res => {
-                console.log(res)
                 if (res.status === 200) {
                     alert("Đổi mật khẩu thành công");
                     this.setState({

@@ -32,7 +32,6 @@ export default class ListDevice extends Component {
     }
     render() {
         const {listDevice} = this.state;
-        console.log(listDevice)
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -43,8 +42,8 @@ export default class ListDevice extends Component {
                                 <div className="card-head">
                                     <header>Danh sách thiết bị</header>
                                     <div className="tools">
-                                        <i className="fa fa-repeat btn-color box-refresh" href="javascript:;" />
-                                        <i className="t-collapse btn-color fa fa-chevron-down" href="javascript:;" />
+                                        <i className="fa fa-repeat btn-color box-refresh" />
+                                        <i className="t-collapse btn-color fa fa-chevron-down"  />
                                     </div>
                                 </div>
                                 <div className="card-body ">

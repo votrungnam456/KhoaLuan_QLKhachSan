@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../../constanst/CallAPI";
-import { APICustomer, APIDelegation, APIRole } from '../../../constanst/API';
+import { APICustomer, APIDelegation } from '../../../constanst/API';
 import Multiselect from 'multiselect-react-dropdown';
 import Title from '../../Home/Title';
 export default class AddDelegation extends Component {

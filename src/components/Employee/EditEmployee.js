@@ -19,7 +19,6 @@ export default class EditEmployee extends Component {
     }
     componentDidMount() {
         CallAPI.GET(APIEmployee + this.props.match.params.idEmployee).then(res=>{
-            console.log(res.data)
             if(res.status === 200){
                 this.setState({
                     address: res.data.address,
@@ -92,7 +91,6 @@ export default class EditEmployee extends Component {
     }
     render() {
         const { address, email, gender, identityCard, nameEmployee, phoneNumber,message,role,listRole } = this.state
-        console.log(role)
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">

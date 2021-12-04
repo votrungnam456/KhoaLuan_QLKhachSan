@@ -41,7 +41,6 @@ export default class AddService extends Component {
                 price: parseInt(price)
             }
             CallAPI.POST(APIService, addService).then(res => {
-                console.log(res)
                 if (res.status === 200) {
                     if (res.data.code !== 1) {
                         this.setState({

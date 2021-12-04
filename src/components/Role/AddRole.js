@@ -43,7 +43,6 @@ export default class AddRole extends Component {
       const roleAdd = {
         nameRole, code
       }
-      console.log(roleAdd)
       CallAPI.POST(APIRole, roleAdd).then(res => {
         if (res.status === 200) {
           this.setState({

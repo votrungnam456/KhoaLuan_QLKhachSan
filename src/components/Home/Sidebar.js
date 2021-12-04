@@ -91,12 +91,8 @@ const sideBarQL = [
                 title: "Xem danh sách dịch vụ"
             },
             {
-                to: "/register-room-service",
-                title: "Đăng ký dịch vụ theo phòng"
-            },
-            {
-                to: "/register-delegation-service",
-                title: "Đăng ký dịch vụ theo khách đoàn"
+                to: "/register-service-device",
+                title: "Đăng ký dịch vụ/thiết bị cho khách"
             },
         ]
     },
@@ -402,7 +398,6 @@ export default class Sidebar extends Component {
         localStorage.removeItem("userLogin");
         sessionStorage.removeItem("userLogin");
         this.props.history.push("/login")
-        console.log(this.props.history)
     }
     render() {
         const { user } = this.props

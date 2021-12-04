@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
-
 export default class RoomCard extends Component {
   constructor(props) {
     super(props);
@@ -9,15 +7,17 @@ export default class RoomCard extends Component {
   }
   convertStatus = (status) => {
     switch (status) {
-      case 0:
+      case -1:
         return "Trống"
-      case 1:
+      case 0:
         return "Đã đặt"
-      case 2:
+      // case 1:
+      //   return "Đã đặt"
+      case 1:
         return "Đang ở"
-      case 3:
+      case 2:
         return "Đang sửa"
-      case 4:
+      case 3:
         return "Đang dọn dẹp"
       default:
         break;

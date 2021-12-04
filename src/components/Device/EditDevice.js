@@ -52,7 +52,6 @@ export default class EditDevice extends Component {
                 price:parseInt(price), quantity
             }
             CallAPI.PUT(APIDevice + "/" + this.props.match.params.idDevice, deviceEdit).then(res => {
-                console.log(res)
                 if (res.status === 200) {
                     history.goBack();
                 }

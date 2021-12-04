@@ -14,7 +14,6 @@ export default class EditRole extends Component {
   componentDidMount() {
     CallAPI.GET(APIRole + "/" + this.props.match.params.idRole).then(res => {
       if (res.status === 200) {
-        console.log(res.data)
         this.setState({
           code: res.data.codeRole,
           nameRole: res.data.nameRole
@@ -46,7 +45,6 @@ export default class EditRole extends Component {
         code, nameRole
       }
       CallAPI.PUT(APIRole + "/" + this.props.match.params.idRole, roleEdit).then(res => {
-        console.log(res)
         if (res.status === 200) {
           history.push("/list-role");
         }

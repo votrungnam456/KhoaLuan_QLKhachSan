@@ -26,7 +26,6 @@ export default class ListRoomItem extends Component {
     }
     render() {
         const { room } = this.props
-        console.log(room);
         return (
             <tr className="odd gradeX">
                 <td className="center">{room.nameRoom}</td>

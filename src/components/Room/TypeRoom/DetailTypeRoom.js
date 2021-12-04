@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../../constanst/CallAPI";
 import { APITypeRoom, APIDevice, APIService, APIDetailType } from '../../../constanst/API';
-import axios from 'axios';
 import Title from '../../Home/Title';
 export default class DetailTypeRoom extends Component {
   constructor(props) {
@@ -35,7 +34,6 @@ export default class DetailTypeRoom extends Component {
     }
     if (name === "selectType") {
       const index = listDetail.findIndex(item => item.idType === value);
-      console.log(listDetail)
       if (index !== -1) {
         const a = listDetail[index].quantity;
         this.setState({
@@ -103,7 +101,6 @@ export default class DetailTypeRoom extends Component {
         typeDetail: parseInt(typeDetail),
         idTypeRoom: this.props.match.params.idTypeRoom
       }
-      console.log(data)
       if (type === "add") {
         CallAPI.POST(APIDetailType, data).then(res => {
           if (res.status === 200) {

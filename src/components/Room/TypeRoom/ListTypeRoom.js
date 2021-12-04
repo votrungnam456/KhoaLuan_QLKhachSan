@@ -16,7 +16,6 @@ export default class ListTypeRoom extends Component {
     }
     loadTypeRoom = () => {
         CallAPI.GET(APITypeRoom).then(res => {
-            console.log(res.data)
             if (res.status === 200) {
                 this.setState({
                     listTypeRoom: res.data

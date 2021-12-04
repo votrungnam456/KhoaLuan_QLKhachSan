@@ -20,7 +20,6 @@ export default class CheckInRoomDetail extends Component {
   }
   componentDidMount() {
     CallAPI.GET(APIBookingRoom + "/" + this.props.match.params.idRegisterForm).then(res => {
-      console.log(res.data)
       if (res.status === 200) {
         this.setState({
           listCustomer: res.data.customers,

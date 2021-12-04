@@ -85,14 +85,12 @@ export default class EditDelegation extends Component {
         })
     }
     onSelect = (selectedList) =>{
-        // console.log(selectedList)
         this.setState({
             chooseCustomers:selectedList
         })
     }
     
-    onRemove = (selectedList, removedItem) =>{
-        // console.log(selectedList)
+    onRemove = (selectedList) =>{
         this.setState({
             chooseCustomers:selectedList
         })

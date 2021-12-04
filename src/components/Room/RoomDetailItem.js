@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../constanst/CallAPI";
-import { APIRoom,APIDetailType } from '../../constanst/API';
+import { APIRoom } from '../../constanst/API';
 export default class RoomDetailItem extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +17,6 @@ export default class RoomDetailItem extends Component {
   }
   componentDidMount() {
     CallAPI.GET(APIRoom + "/"+this.props.idRoom).then(res => {
-      console.log(res.data);
       if (res.status === 200) {
         this.setState({
           description: res.data.description,
@@ -27,8 +26,12 @@ export default class RoomDetailItem extends Component {
           nameRoom: res.data.nameRoom,
           nameTypeRoom: res.data.nameTypeRoom,
           status: res.data.status,
-          listCustomer:res.data.infoCustomerBooking.customers
         })
+        if(res.data.infoCustomerBooking){
+          this.setState({
+            listCustomer:res.data.infoCustomerBooking.customers
+          })
+        }
       }
     })
   }

@@ -32,7 +32,6 @@ export default class BookingRoom extends Component {
         })
         let name = ev.target.name;
         let value = ev.target.value;
-        console.log(name, value)
         this.setState({
             [name]: value
         })
@@ -112,6 +111,7 @@ export default class BookingRoom extends Component {
                                             <option key={index} value={typeRoom.id}>{typeRoom.nameTypeRoom}</option>
                                         )
                                     }
+                                    return true;
                                 }) : <option value="">Loading data....</option>}
                             </select>
                         </div>

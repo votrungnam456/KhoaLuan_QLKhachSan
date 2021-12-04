@@ -21,13 +21,13 @@ export default class CheckInRoom extends Component {
             listBookingOne: []
         })
         await CallAPI.GET(APIBookingRoom).then(res => {
-            console.log(res.data);
             if (res.status === 200) {
                 let filterData = [];
                 res.data.map(data =>{
                     if(data.status === 0){
                         filterData.push(data);
                     }
+                    return true;
                 })
                 this.setState({
                     listRegister: filterData
@@ -47,6 +47,7 @@ export default class CheckInRoom extends Component {
                     listBookingOne: [...this.state.listBookingOne, x]
                 })
             }
+            return true;
         })
     }
     convertDate = (longTime, type = true) => {
@@ -61,7 +62,8 @@ export default class CheckInRoom extends Component {
     convertDisplayCustomer = (data) => {
         let result = "";
         data.map((x, index) => {
-            index === data.length - 1 ? result += x.name : result += x.name + ",";;
+            index === data.length - 1 ? result += x.name : result += x.name + ",";
+            return true;
         });
         return result;
     }
@@ -79,8 +81,6 @@ export default class CheckInRoom extends Component {
     }
     render() {
         const { listBookingOne,listBookingDelegation } = this.state
-        // console.log(this.state.listBookingOne)
-        // console.log(this.state.listBookingDelegation)
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
