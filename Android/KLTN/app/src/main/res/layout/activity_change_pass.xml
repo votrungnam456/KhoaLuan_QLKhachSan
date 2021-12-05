@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Change_Pass_Activity">
+    tools:context=".Employee.Activitys.Change_Pass_Activity">
 
     <ImageView
         android:id="@+id/imageView7"
@@ -48,11 +48,11 @@
             android:layout_marginBottom="12dp"
             android:background="@drawable/button_background_green2">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_old_pass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mật Khẩu Cũ"
+                android:hint="Mật Khẩu Cũ"
                 android:textColor="#05ACA3"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -69,16 +69,17 @@
             android:layout_marginBottom="12dp"
             android:background="@drawable/button_background_green2">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_pass_new"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mật Khẩu Mới"
+                android:hint="Mật Khẩu Mới"
                 android:textColor="#05ACA3"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -90,11 +91,11 @@
             android:layout_marginBottom="12dp"
             android:background="@drawable/button_background_green2">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_re_new_pass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nhập Lại Mật Khẩu"
+                android:hint="Nhập Lại Mật Khẩu"
                 android:textColor="#05ACA3"
                 android:textSize="24sp"
                 android:textStyle="bold"

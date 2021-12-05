@@ -3,7 +3,6 @@ package com.example.kltn.Employee.Activitys;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.kltn.Employee.API.API_Request_Param.Requesr_GetOTP;
 import com.example.kltn.Employee.API.CallAPI;
-import com.example.kltn.Employee.Models.User;
+import com.example.kltn.Models.User;
 import com.example.kltn.R;
 
 import retrofit2.Call;

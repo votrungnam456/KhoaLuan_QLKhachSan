@@ -11,8 +11,9 @@ import android.widget.Toast;
 
 import com.example.kltn.Employee.API.API_Request_Param.Request_ChangePassword;
 import com.example.kltn.Employee.API.CallAPI;
-import com.example.kltn.Employee.Models.User;
+import com.example.kltn.Models.User;
 import com.example.kltn.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,9 +21,9 @@ import retrofit2.Response;
 
 public class Change_Pass_Activity extends AppCompatActivity {
     TextView txt_Home;
-    EditText edt_Old_Pass;
-    EditText edt_New_Pass;
-    EditText edt_Re_New_Pass;
+    TextInputEditText edt_Old_Pass;
+    TextInputEditText edt_New_Pass;
+    TextInputEditText edt_Re_New_Pass;
 
     private User user = Login_Activity.userLogin;
     @Override
@@ -33,13 +34,17 @@ public class Change_Pass_Activity extends AppCompatActivity {
         event();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private void event() {
         txt_Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CallAPI_Change_Pass();
-                Intent intent = new Intent(Change_Pass_Activity.this, Home_Activity.class);
-                startActivity(intent);
+                onBackPressed();
                 finish();
             }
         });

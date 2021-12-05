@@ -1,34 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.kltn">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
+        android:icon="@mipmap/ic_launcher_namok"
+        android:label="@string/name"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.KLTN">
+        android:theme="@style/Theme.KLTN"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activity.Change_Pass_Activity"
+            android:name=".Admin.Activitys_Admin.Admin_Profile_Activity"
             android:exported="true" />
         <activity
-            android:name=".Activity.Room_Activity"
+            android:name=".Admin.Activitys_Admin.Admin_Device_Activity"
             android:exported="true" />
         <activity
-            android:name=".Activity.Info_Emp_Activity"
+            android:name=".Admin.Activitys_Admin.Admin_Money_Activity"
             android:exported="true" />
         <activity
-            android:name=".Activity.Forgot_Password_Activity"
-            android:exported="true" />
-
-        <activity
-            android:name=".Activity.Home_Activity"
+            android:name=".Admin.Activitys_Admin.Admin_Tablet_Activity"
             android:exported="true" />
         <activity
-            android:name=".Activity.Login_Activity"
+            android:name=".Admin.Activitys_Admin.Admin_Employee_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Employee.Activitys.Reset_Password_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Admin.Activitys_Admin.Admin_Home_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Admin.Activitys_Admin.Admin_Service_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Admin.Activitys_Admin.Admin_Room_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Employee.Activitys.Service_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Employee.Activitys.Change_Pass_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Employee.Activitys.Room_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Employee.Activitys.Info_Emp_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Employee.Activitys.Forgot_Password_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Employee.Activitys.Home_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".Employee.Activitys.Login_Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

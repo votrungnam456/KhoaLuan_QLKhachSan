@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.example.kltn.Employee.Adapter.ServiceAdapter;
-import com.example.kltn.Employee.Models.Services;
+import com.example.kltn.Models.Services;
 import com.example.kltn.R;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class Service_Activity extends AppCompatActivity {
 
     ListView lv_list_service;
-    List<Services> servicesList = Home_Activity.ListServices;
+    List<Services> servicesList = Login_Activity.ListServices;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -13,10 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kltn.Admin.Activitys_Admin.Admin_Room_Activity;
 import com.example.kltn.Employee.API.CallAPI;
-import com.example.kltn.Employee.Models.Room;
-import com.example.kltn.Employee.Models.Services;
-import com.example.kltn.Employee.Models.WeatherMain;
+import com.example.kltn.Models.Room;
+import com.example.kltn.Models.Services;
+import com.example.kltn.Models.WeatherMain;
 import com.example.kltn.R;
 /*import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;*/
@@ -43,8 +44,7 @@ public class Home_Activity extends AppCompatActivity {
     /*private FusedLocationProviderClient fusedLocationClient;*/
 
     public static String MyUSER = "MYUSER";
-    public static List<Room> ListRoom;
-    public static List<Services> ListServices;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,75 +55,41 @@ public class Home_Activity extends AppCompatActivity {
         mapping();
         event();
         getData_Name_Home();
-        handleTimer();
-        loadWeather();
+        /*loadWeather();*/
 
-    }
-
-
-    private void handleTimer() {
         Calendar rightNow = Calendar.getInstance();
         int currentHourIn24Format = rightNow.get(Calendar.HOUR_OF_DAY);
-        if (currentHourIn24Format > 1) {
-            txt_helloDay.setText("Chào Buổi Sáng");
-        }
-        else if (currentHourIn24Format >= 12) {
-            txt_helloDay.setText("Chào Buổi Trưa");
-        }
-        else if (currentHourIn24Format >= 17) {
-            txt_helloDay.setText("Chào Buổi Chiều");
-        }
-        else if (currentHourIn24Format >= 21){
-            txt_helloDay.setText("Chào Buổi Tối");
-        }
+        txt_helloDay.setText(handelTimer(currentHourIn24Format));
+        Toast.makeText(Home_Activity.this,handelTimer(currentHourIn24Format) + String.valueOf(currentHourIn24Format),Toast.LENGTH_LONG).show();
     }
 
+    private String handelTimer(int time)
+    {
+        String timer ="";
+        if(time > 1 && time < 12)
+        {
+            timer = "Chào Buổi Khoong";
+        }
+        else if(time > 12 && time < 17)
+        {
+            timer = "Chào Buổi Trưa";
+        }
+        else if(time > 17 && time < 21)
+        {
+            timer = "Chào Buổi Chiều";
+        }
+        else /*if(time > 21)*/
+        {
+            timer = "Chào Buổi Tối";
+        }
+        return timer;
+    }
     private void callAPI() {
 
-        callGetRoom();
-        callGetServices();
-    }
-
-    private void callGetServices() {
-        Call<List<Services>> getAllService = CallAPI.getserviceAPI().GetServieces();
-        getAllService.enqueue(new Callback<List<Services>>() {
-            @Override
-            public void onResponse(Call<List<Services>> call, Response<List<Services>> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(Home_Activity.this, "Successful Call API Services", Toast.LENGTH_SHORT).show();
-                    ListServices = response.body();
-                } else {
-                    Toast.makeText(Home_Activity.this, "Error Service", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Services>> call, Throwable t) {
-                Toast.makeText(Home_Activity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void callGetRoom() {
-        Call<List<Room>> getAllRoom = CallAPI.getserviceAPI().GetRoom();
-        getAllRoom.enqueue(new Callback<List<Room>>() {
-            @Override
-            public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
-                if (response.isSuccessful()) {
-                    /*Toast.makeText(Home_Activity.this, "Successful Call API Room", Toast.LENGTH_SHORT).show();*/
-                    ListRoom = response.body();
-                } else {
-                    Toast.makeText(Home_Activity.this, "Error Room", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Room>> call, Throwable t) {
-                Toast.makeText(Home_Activity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
+
+
 
     private void getData_Name_Home() {
         Intent intent = getIntent();
@@ -166,6 +132,7 @@ public class Home_Activity extends AppCompatActivity {
                 String name = sharedPreferences.getString("FullName", "null");
                 if(name == "null")
                 {
+                    Toast.makeText(Home_Activity.this,"Delete Cache Success",Toast.LENGTH_LONG);
                     Intent intent = new Intent(Home_Activity.this, Login_Activity.class);
                     startActivity(intent);
                     finish();
@@ -182,7 +149,7 @@ public class Home_Activity extends AppCompatActivity {
     private void mapping() {
         imgView_Profile = findViewById(R.id.imageView_profile);
         txt_Name_Home = findViewById(R.id.textView_Name_Home);
-        txt_helloDay = findViewById(R.id.textView_Day);
+        txt_helloDay = findViewById(R.id.textView_DayNam);
         img_List_Room = findViewById(R.id.img_list_room);
         img_Log_Out = findViewById(R.id.img_log_out);
         troi = findViewById(R.id.troi);

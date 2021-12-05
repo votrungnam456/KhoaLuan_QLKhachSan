@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.kltn.Employee.Models.Services;
+import com.example.kltn.Models.Services;
 import com.example.kltn.R;
 
 import java.util.List;
@@ -55,11 +55,6 @@ public class ServiceAdapter extends BaseAdapter {
             viewHoldel = new ServiceAdapter.ViewHoldel();
             viewHoldel.txt_name= (TextView) convertView.findViewById(R.id.txt_Name_Service);
             viewHoldel.txt_price = (TextView) convertView.findViewById(R.id.txt_price_service);
-            viewHoldel.star1s = (ImageView) convertView.findViewById(R.id.star1s);
-            viewHoldel.star2s = (ImageView) convertView.findViewById(R.id.star2s);
-            viewHoldel.star3s = (ImageView) convertView.findViewById(R.id.star3s);
-            viewHoldel.star4s = (ImageView) convertView.findViewById(R.id.star4s);
-            viewHoldel.star5s = (ImageView) convertView.findViewById(R.id.star5s);
             convertView.setTag(viewHoldel);
         } else {
             viewHoldel = (ServiceAdapter.ViewHoldel) convertView.getTag();

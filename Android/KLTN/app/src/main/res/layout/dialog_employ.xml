@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/bg_radius_dialog"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/shape_dialog_title"
+        android:layout_height="50dp">
+
+        <TextView
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Nhân viên"
+            android:layout_marginTop="6dp"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_background_green2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_name_employee_update"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Tên Nhân Viên"
+                android:textColor="#05ACA3"
+                android:background="@null"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_background_green2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/update_gmail_emp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:hint="Gmail"
+                android:textColor="#05ACA3"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_background_green2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/update_emp_Phone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Số Phone"
+                android:textColor="#05ACA3"
+                android:background="@null"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_background_green2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/update_emp_Cmnd"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Trạng Thái"
+                android:textColor="#05ACA3"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:background="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_background_green2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/update_emp_Address"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Số Phone"
+                android:textColor="#05ACA3"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/button_background_green2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/update_emp_Gender"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Trạng Thái"
+                android:textColor="#05ACA3"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="60dp">
+        <Button
+            android:id="@+id/btn_cancel_emp_updae"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:text="Hủy"
+            android:textAlignment="center"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="3dp"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:background="@drawable/custom_btn_cancel" />
+
+        <Button
+            android:id="@+id/btn_svae_emp"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/custom_btn"
+            android:text="Lưu"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

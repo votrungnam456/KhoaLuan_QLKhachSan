@@ -1,6 +1,6 @@
 package com.example.kltn.Employee.API;
 
-import com.example.kltn.Employee.Models.WeatherMain;
+import com.example.kltn.Models.WeatherMain;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

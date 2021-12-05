@@ -31,12 +31,32 @@
 
         </View>
 
-        <ImageView
-            android:id="@+id/admin_imgv_logout"
-            android:layout_width="39dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="178dp"
-            android:src="@drawable/ic_baseline_power_settings_new_24" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="219dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/admin_imgv_logout"
+                android:layout_width="39dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_baseline_power_settings_new_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/user_profile"
+                android:layout_width="54dp"
+                android:layout_height="39dp"
+                android:layout_marginEnd="52dp"
+                android:src="@drawable/user"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 
@@ -57,9 +77,9 @@
         android:layout_marginTop="12dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg"
+            android:layout_width="373dp"
+            android:layout_height="162dp"
+            android:background="#1db7ae"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -128,7 +148,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -346,8 +366,8 @@
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="160dp"
-            android:layout_height="120dp"
+            android:layout_width="151dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             app:cardCornerRadius="8dp"
             app:cardElevation="2dp">
@@ -368,9 +388,10 @@
                 <ImageView
                     android:id="@+id/admin_imgv_room"
                     android:layout_width="173dp"
-                    android:layout_height="96dp"
+                    android:layout_height="79dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginRight="0dp"
                     android:layout_marginBottom="0dp"
                     android:src="@drawable/bed" />
 
@@ -401,8 +422,8 @@
 
                 <ImageView
                     android:id="@+id/admin_imgv_devices"
-                    android:layout_width="163dp"
-                    android:layout_height="83dp"
+                    android:layout_width="169dp"
+                    android:layout_height="77dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="0dp"
@@ -558,12 +579,12 @@
 
                 <ImageView
                     android:id="@+id/admin_imgv_money"
-                    android:layout_width="156dp"
+                    android:layout_width="166dp"
                     android:layout_height="73dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginRight="7dp"
-                    android:layout_marginBottom="0dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="8dp"
                     android:src="@drawable/money" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>

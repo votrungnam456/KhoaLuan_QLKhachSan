@@ -78,6 +78,7 @@ public class Info_Emp_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Info_Emp_Activity.this, Change_Pass_Activity.class);
                 startActivity(intent);
+                finish();
             }
         });
         btn_Home.setOnClickListener(new View.OnClickListener() {

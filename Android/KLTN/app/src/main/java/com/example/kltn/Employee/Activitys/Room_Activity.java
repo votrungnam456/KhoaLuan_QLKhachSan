@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.kltn.Employee.Adapter.RoomAdapter;
-import com.example.kltn.Employee.Models.Room;
+import com.example.kltn.Models.Room;
 import com.example.kltn.R;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 public class Room_Activity extends AppCompatActivity {
 
     ListView lv_listroom;
-    List<Room> roomList = Home_Activity.ListRoom;
+    List<Room> roomList = Login_Activity.ListRoom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

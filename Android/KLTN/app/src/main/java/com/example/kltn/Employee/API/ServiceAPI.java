@@ -5,9 +5,9 @@ import com.example.kltn.Employee.API.API_Request_Param.Requesr_GetOTP;
 import com.example.kltn.Employee.API.API_Request_Param.Request_ChangePassword;
 import com.example.kltn.Employee.API.API_Request_Param.Request_Login;
 import com.example.kltn.Employee.API.API_Request_Param.Request_RePass;
-import com.example.kltn.Employee.Models.Room;
-import com.example.kltn.Employee.Models.Services;
-import com.example.kltn.Employee.Models.User;
+import com.example.kltn.Models.Room;
+import com.example.kltn.Models.Services;
+import com.example.kltn.Models.User;
 
 import java.util.List;
 

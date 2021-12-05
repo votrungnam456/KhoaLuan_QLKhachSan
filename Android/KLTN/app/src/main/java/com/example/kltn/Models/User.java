@@ -6,6 +6,10 @@ public class User {
     private String id;
     private String gender;
     private String identityCard;
+    private String id_role;
+
+    public User() {
+    }
 
     public User(String nameEmployee, String email, String id, String gender, String identityCard, String address, String phoneNumber, String codeRole, String nameRole) {
         this.nameEmployee = nameEmployee;
@@ -17,6 +21,10 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.codeRole = codeRole;
         this.nameRole = nameRole;
+    }
+
+    public String getId_role() {
+        return id_role;
     }
 
     public String getNameEmployee() {

@@ -5,21 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kltn.Employee.API.API_Request_Param.Request_RePass;
 import com.example.kltn.Employee.API.CallAPI;
-import com.example.kltn.Employee.Models.User;
+import com.example.kltn.Models.User;
 import com.example.kltn.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Reset_Password_Activity extends AppCompatActivity {
-    EditText email,otp,new_pass,re_pass;
+    TextInputEditText email,otp,new_pass,re_pass;
     TextView btn_complete_reset;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class Reset_Password_Activity extends AppCompatActivity {
                     if(response.isSuccessful())
                     {
                         Toast.makeText(Reset_Password_Activity.this,"Successful Call API Reset_Pass",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Reset_Password_Activity.this, Reset_Password_Activity.class));
+                        startActivity(new Intent(Reset_Password_Activity.this, Login_Activity.class));
                     }
                     else
                     {
