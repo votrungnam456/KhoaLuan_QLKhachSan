@@ -38,11 +38,32 @@
                 android:id="@+id/add_Name_Emp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:hint="Tên Phòng"
+                android:hint="Tên Nhân Viên"
                 android:textColor="#05ACA3"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:background="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/item_emp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_background_green2">
+
+            <TextView
+                android:id="@+id/add_type_Emp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Chức Vụ"
+                android:textColor="#05ACA3"
+                android:background="@null"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,13 +76,13 @@
             android:background="@drawable/button_background_green2">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/add_type_Emp"
+                android:id="@+id/add_email"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:hint="Chức Vụ"
+                android:hint="Email"
                 android:textColor="#05ACA3"
-                android:background="@null"
                 android:textSize="24sp"
+                android:background="@null"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

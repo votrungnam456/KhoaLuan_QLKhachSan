@@ -7,13 +7,16 @@ import com.example.kltn.Admin.API_Admin.Param.Respone_Service;
 import com.example.kltn.Admin.API_Admin.Param.ServerResponse_Device;
 import com.example.kltn.Admin.API_Admin.Param.ServerResponse_Room;
 import com.example.kltn.Admin.API_Admin.Param.ServerResponse_Service;
+import com.example.kltn.Admin.API_Admin.Param.SeverResponse_Employee;
 import com.example.kltn.Models.Devices;
 import com.example.kltn.Models.Respone.GetRoomResponse;
 import com.example.kltn.Models.Room;
 import com.example.kltn.Models.Services;
+import com.example.kltn.Models.Type_Employee;
 import com.example.kltn.Models.Type_Room;
 import com.example.kltn.Models.User;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import retrofit2.Call;
@@ -88,4 +91,13 @@ public interface CallAPI_Admin {
 
     @PUT("/user/{id}")
     Call<User> Update_Employee(@Path("id") String id, @Body Response_Employee response_employee);
+
+    @GET("/manager/type-room")
+    Call<List<Type_Room>> GetList_Type_Room();
+
+    @GET("/manager/role")
+    Call<List<Type_Employee>> GetList_Type_Employee();
+
+    @POST("/user/")
+    Call<SeverResponse_Employee> Admin_Add_User(@Body Response_Employee add);
 }

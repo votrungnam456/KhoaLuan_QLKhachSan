@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:fontFamily="@font/roboto_bolditalic"
-            android:text="Phòng"
+            android:text="Nhân Viên"
             android:textColor="#1db7ae"
             android:textSize="32dp" />
 

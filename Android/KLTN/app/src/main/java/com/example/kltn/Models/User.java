@@ -23,6 +23,10 @@ public class User {
         this.nameRole = nameRole;
     }
 
+    public void setId_role(String id_role) {
+        this.id_role = id_role;
+    }
+
     public String getId_role() {
         return id_role;
     }

@@ -23,6 +23,7 @@ import com.example.kltn.Employee.API.API_Weather;
 import com.example.kltn.Models.Devices;
 import com.example.kltn.Models.Room;
 import com.example.kltn.Models.Services;
+import com.example.kltn.Models.Type_Employee;
 import com.example.kltn.Models.Type_Room;
 import com.example.kltn.Models.User;
 import com.example.kltn.Models.WeatherMain;
@@ -54,7 +55,8 @@ public class Login_Activity extends AppCompatActivity {
     public static List<Type_Room> type_room;
     public static List<Room> ListRoom;
     public static List<Services> ListServices;
-
+    public static List<Type_Room> typeRoomList;
+    public static List<Type_Employee> type_employees;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +135,38 @@ public class Login_Activity extends AppCompatActivity {
         callAPI_GetALL_Employee();
         callGetRoom();
         callGetServices();
+        callAPI_GetList_Type_Room();
+        callAPI_GetList_Type_Employee();
+    }
+
+    private void callAPI_GetList_Type_Employee() {
+        Call<List<Type_Employee>> call = Retrofit_Call.getserviceAPI().GetList_Type_Employee();
+        call.enqueue(new Callback<List<Type_Employee>>() {
+            @Override
+            public void onResponse(Call<List<Type_Employee>> call, Response<List<Type_Employee>> response) {
+                type_employees = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<Type_Employee>> call, Throwable t) {
+                Log.e("logAPI", t.getMessage());
+            }
+        });
+    }
+
+    private void callAPI_GetList_Type_Room() {
+        Call<List<Type_Room>> call = Retrofit_Call.getserviceAPI().GetList_Type_Room();
+        call.enqueue(new Callback<List<Type_Room>>() {
+            @Override
+            public void onResponse(Call<List<Type_Room>> call, Response<List<Type_Room>> response) {
+                typeRoomList = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<Type_Room>> call, Throwable t) {
+                Log.e("logAPI", t.getMessage());
+            }
+        });
     }
 
     private void callGetServices() {
