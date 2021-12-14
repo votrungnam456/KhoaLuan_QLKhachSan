@@ -35,6 +35,9 @@ import EditRole from "../components/Role/EditRole";
 import DelegationDetail from "../components/Customer/Delegation/DelegationDetail";
 import CheckInRoomDetail from "../components/Room/Booking/CheckInRoomDetail";
 import UseServiceDevice from "../components/Service/UseServiceDevice";
+import CheckOutRoomDetail from "../components/Room/Booking/CheckOutRoomDetail";
+import CleanOrderRoom from "../components/Room/Manage/CleanOrderRoom";
+import LogServiceDevice from "../components/History/LogServiceDevice";
 const routes = [
     {
         path: "/",
@@ -162,6 +165,11 @@ const routes = [
         main: ({ history }) => <CheckoutRoom history={history} />
     },
     {
+        path: "/check-out-room/detail/:idRegisterForm",
+        exact: true,
+        main: ({ history,match }) => <CheckOutRoomDetail history={history} match={match} />
+    },
+    {
         path: "/add-device",
         exact: true,
         main: ({ history }) => <AddDevice history={history} />
@@ -215,6 +223,16 @@ const routes = [
         path: "/register-service-device",
         exact: true,
         main: ({ history }) => <UseServiceDevice history={history} />
+    },
+    {
+        path: "/clean-order-room",
+        exact: true,
+        main: ({ history }) => <CleanOrderRoom history={history} />
+    },
+    {
+        path: "/log-service-device",
+        exact: true,
+        main: ({ history }) => <LogServiceDevice history={history} />
     },
     {
         path: "",

@@ -1,18 +1,121 @@
 import React, { Component } from 'react'
 import Title from '../../Home/Title'
-
+import { APIBookingRoom, APICustomer, APICheckOutRoom } from '../../../constanst/API';
+import * as CallAPI from "../../../constanst/CallAPI";
+import { Link } from 'react-router-dom';
 export default class CheckoutRoom extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            listRegister: [],
+            listBookingOne: [],
+            listBookingDelegation: [],
+            listCustomer: [],
+            idCustomer: ""
+        }
+    }
+    componentDidMount() {
+        this.getData();
+    }
+    getData = async () => {
+        this.setState({
+            listBookingDelegation: [],
+            listBookingOne: [],
+        })
+        await CallAPI.GET(APIBookingRoom).then(res => {
+            if (res.status === 200) {
+                let filterData = [];
+                res.data.map(data => {
+                    if (data.status === 1) {
+                        filterData.push(data);
+                    }
+                    return true;
+                })
+                this.setState({
+                    listRegister: filterData
+                })
+            }
+            else {
+                alert("Get data failed");
+            }
+        })
+        this.state.listRegister.map(x => {
+            if (x.type === 0) {
+                this.setState({
+                    listBookingDelegation: [...this.state.listBookingDelegation, x]
+                })
+            } else {
+                this.setState({
+                    listBookingOne: [...this.state.listBookingOne, x]
+                })
+            }
+            return true;
+        })
+        console.log(this.state.listBookingDelegation);
+        CallAPI.GET(APICustomer).then(res => {
+            if (res.status === 200) {
+                this.setState({
+                    listCustomer: res.data
+                })
+            }
+        })
+    }
+    convertDate = (longTime, type = true) => {
+        const date = new Date(longTime);
+        if (type) {
+            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        }
+        else {
+            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        }
+    }
+    convertDisplayCustomer = (data) => {
+        let result = "";
+        data.map((x, index) => {
+            index === data.length - 1 ? result += x.name : result += x.name + ",";
+            return true;
+        });
+        return result;
+    }
+    onChange = (ev) => {
+        this.setState({
+            message: 0
+        })
+        let name = ev.target.name;
+        let value = ev.target.value;
+        this.setState({
+            [name]: value
+        })
+    }
+    checkOutRoom = (idRegister) => {
+        CallAPI.POST(APICheckOutRoom + idRegister).then(res => {
+            if (res.status === 200) {
+                alert("Trả phòng thành công");
+                this.getData();
+            }
+            else {
+                alert("Thất bại")
+                this.getData();
+            }
+        })
+    }
     render() {
+        const { listBookingOne, listBookingDelegation, listCustomer, idCustomer } = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                <Title title="Trả phòng"></Title>
+                    <Title title="Trả phòng"></Title>
                     <div className="row">
                         <div className="col-md-4">
                             <label>Tên khách hàng: </label>
-                            <select className="mdl-textfield__input">
-                                <option value="1">Nguyễn Văn A</option>
-                                <option value="2">Cao Quang Sơn</option>
+                            <select name="idCustomer" value={idCustomer} onChange={this.onChange} className="mdl-textfield__input">
+                                {
+                                    listCustomer.map((customer, index) => {
+                                        return (
+                                            <option key={index} value={customer.id}>{customer.name}</option>
+                                        )
+                                    })
+                                }
                             </select>
                         </div>
                         <div className="col-md-4">
@@ -25,27 +128,110 @@ export default class CheckoutRoom extends Component {
                     </div>
                     <br />
                     <div className="row">
-                        <div className="col-md-4">
-                            <div className="card">
-                                <div className="m-b-20">
-                                    <div className="doctor-profile">
-                                        <div className="profile-header bg-b-purple">
-                                            <div className="user-name">Phòng 104</div>
-                                            {/* <div className="name-center">General Manager</div> */}
-                                        </div>
-                                        <img src="./assets/img/room.png" className="user-img" alt="room icon" />
-                                        <p>
-                                            Mô tả phòng 104 <br /> Khách hàng: Cao Quang Sơn
-                                        </p>
-                                        <div>
-                                            <p>
-                                                {/* ghi  thêm chi tiết cái gì vào cũng đc */}
-                                            </p>
-                                        </div>
-                                        <div className="profile-userbuttons">
-                                            <a href="staff_profile.html" className="btn btn-circle deepPink-bgcolor btn-sm">Xem chi tiết</a>
-                                            <a href="staff_profile.html" className="btn btn-circle deepPink-bgcolor btn-sm">Trả phòng</a>
-                                        </div>
+                        <div className="col-md-12">
+                            <div className="card card-box">
+                                <div className="card-head">
+                                    <header>Danh sách đặt phòng khách đơn</header>
+                                    <div className="tools">
+                                        <i className="t-collapse btn-color fa fa-chevron-down" />
+                                    </div>
+                                </div>
+                                <div className="card-body ">
+                                    <div className="table-scrollable">
+                                        <table className="table table-hover table-checkable order-column full-width" id="example4">
+                                            <thead>
+                                                <tr>
+                                                    <th className="center"> Phòng </th>
+                                                    <th className="center"> Nhân viên thực hiện </th>
+                                                    <th className="center"> Ngày đặt </th>
+                                                    <th className="center"> Ngày nhận phòng </th>
+                                                    <th className="center"> Ngày trả phòng </th>
+                                                    <th className="center"> Khách hàng </th>
+                                                    <th className="center"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    listBookingOne.length > 0 ? listBookingOne.map((value, index) => {
+                                                        return (
+                                                            <tr key={index} className="odd gradeX">
+                                                                <td className="center">{value.rooms[0].nameRoom}</td>
+                                                                <td className="center">{value.employee.nameEmployee}</td>
+                                                                <td className="center">{this.convertDate(value.bookingDate, false)}</td>
+                                                                <td className="center">{this.convertDate(value.checkInDate)}</td>
+                                                                <td className="center">{this.convertDate(value.checkOutDate)}</td>
+                                                                <td className="center">{this.convertDisplayCustomer(value.customers)}</td>
+                                                                <td className="center">
+                                                                    <Link to={"/check-out-room/detail/" + value.idRegistration} className="btn btn-success">
+                                                                        Trả phòng <i title="Trả phòng" className="fa fa-plus" />
+                                                                    </Link>
+                                                                    {/* <Link to={"/check-out-room/detail/" + value.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
+                                                                        <i className="fa fa-info" />
+                                                                    </Link> */}
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    }) : <tr>
+                                                        <td className="center" colSpan="7"> Không có phòng nào đang ở </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="card card-box">
+                                <div className="card-head">
+                                    <header>Danh sách đặt phòng khách đoàn</header>
+                                    <div className="tools">
+                                        <i className="t-collapse btn-color fa fa-chevron-down" />
+                                    </div>
+                                </div>
+                                <div className="card-body ">
+                                    <div className="table-scrollable">
+                                        <table className="table table-hover table-checkable order-column full-width" id="example4">
+                                            <thead>
+                                                <tr>
+                                                    <th className="center"> Phòng </th>
+                                                    <th className="center"> Nhân viên thực hiện </th>
+                                                    <th className="center"> Ngày đặt </th>
+                                                    <th className="center"> Ngày nhận phòng </th>
+                                                    <th className="center"> Ngày trả phòng </th>
+                                                    <th className="center"> Trưởng đoàn </th>
+                                                    <th className="center"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    listBookingDelegation.length > 0 ? listBookingDelegation.map((value, index) => {
+                                                        return (
+                                                            <tr key={index} className="odd gradeX">
+                                                                <td className="center">{value.rooms[0].nameRoom}</td>
+                                                                <td className="center">{value.employee.nameEmployee}</td>
+                                                                <td className="center">{this.convertDate(value.bookingDate, false)}</td>
+                                                                <td className="center">{this.convertDate(value.checkInDate)}</td>
+                                                                <td className="center">{this.convertDate(value.checkOutDate)}</td>
+                                                                <td className="center">{value.delegation.nameManager}</td>
+                                                                <td className="center">
+                                                                <Link to={"/check-out-room/detail/" + value.idRegistration} className="btn btn-success">
+                                                                        Trả phòng <i title="Trả phòng" className="fa fa-plus" />
+                                                                    </Link>
+                                                                    {/* <Link to={"/check-out-room/detail/" + value.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
+                                                                        <i className="fa fa-info" />
+                                                                    </Link> */}
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    }) : <tr>
+                                                        <td className="center" colSpan="7"> Không có phòng nào đã đặt </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

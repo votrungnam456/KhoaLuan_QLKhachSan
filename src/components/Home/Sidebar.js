@@ -40,6 +40,10 @@ const sideBarQL = [
                 to: "/add-type-room",
                 title: "Thêm loại phòng"
             },
+            {
+                to: "/clean-order-room",
+                title: "Xếp thứ tự dọn phòng"
+            },
         ]
     },
     {
@@ -53,7 +57,11 @@ const sideBarQL = [
             {
                 to: "/list-employee",
                 title: "Xem danh sách nhân viên"
-            }
+            },
+            {
+                to: "/",
+                title: "Xếp lịch dọn dẹp cho nhân viên"
+            },
         ]
     },
     {
@@ -75,7 +83,7 @@ const sideBarQL = [
             {
                 to: "/add-delegation",
                 title: "Thêm khách đoàn"
-            },
+            },       
         ]
     },
     {
@@ -140,6 +148,20 @@ const sideBarQL = [
                 to: "/timeline-3",
                 title: "Thống kê 3"
             },
+        ]
+    },
+    {
+        icon: "group",
+        title: "Lịch sử",
+        subMenus: [
+            {
+                to: "/add-role",
+                title: "Lịch sử đặt phòng"
+            },
+            {
+                to: "/log-service-device",
+                title: "Lịch sử sử dụng dịch vụ"
+            }
         ]
     },
     {

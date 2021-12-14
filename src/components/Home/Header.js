@@ -20,7 +20,7 @@ export default class Header extends Component {
                     </div>
                     {/* logo end */}
                     <ul className="nav navbar-nav navbar-left in">
-                        <li><a href=" " className="menu-toggler sidebar-toggler"><i className="icon-menu" /></a></li>
+                        <li><a className="menu-toggler sidebar-toggler"><i className="icon-menu" /></a></li>
                     </ul>
                     {/* start mobile menu */}
                     <a href=" " className="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">

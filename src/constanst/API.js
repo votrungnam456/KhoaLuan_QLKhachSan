@@ -12,5 +12,7 @@ const APIRole = API + "/manager/role";
 const APIDelegation = API + "/manager/delegation";
 const APIBookingRoom = API + "/manager/register";
 const APICheckInRoom = API + "/manager/check-in/"
+const APICancel = API + "/manager/cancel/"
+const APICheckOutRoom = API + "/manager/check-out/"
 const APIUseServiceDevice = API + "/manager/use/"
-export {APICheckInRoom,APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation,APIBookingRoom,APIUseServiceDevice};
+export {APICancel,APICheckInRoom,APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation,APIBookingRoom,APIUseServiceDevice,APICheckOutRoom};

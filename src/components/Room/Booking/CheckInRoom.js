@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Title from '../../Home/Title'
-import { APIBookingRoom,APICheckInRoom} from '../../../constanst/API';
+import { APIBookingRoom,APICancel,APICheckInRoom} from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 import { Link } from 'react-router-dom';
 export default class CheckInRoom extends Component {
@@ -10,7 +10,19 @@ export default class CheckInRoom extends Component {
             listRegister: [],
             listBookingOne: [],
             listBookingDelegation: [],
+            listCustomer:[],
+            idCustomer:""
         }
+    }
+    onChange = (ev) => {
+        this.setState({
+            message: 0
+        })
+        let name = ev.target.name;
+        let value = ev.target.value;
+        this.setState({
+            [name]: value
+        })
     }
     componentDidMount() {
         this.getData();
@@ -79,8 +91,20 @@ export default class CheckInRoom extends Component {
             }
         })
     }
+    cancelRoom = (idRegister) => {
+        CallAPI.POST(APICancel + idRegister).then(res=>{
+            if(res.status === 200){
+                alert("Huỷ phòng thành công");
+                this.getData();
+            }
+            else{
+                alert("Thất bại")
+                this.getData();
+            }
+        })
+    }
     render() {
-        const { listBookingOne,listBookingDelegation } = this.state
+        const { listBookingOne,listBookingDelegation,idCustomer,listCustomer } = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -88,9 +112,14 @@ export default class CheckInRoom extends Component {
                     <div className="row">
                         <div className="col-md-4">
                             <label>Tên khách hàng: </label>
-                            <select className="mdl-textfield__input">
-                                <option value="1">Nguyễn Văn A</option>
-                                <option value="2">Cao Quang Sơn</option>
+                            <select name="idCustomer" value={idCustomer} onChange={this.onChange} className="mdl-textfield__input">
+                                {
+                                    listCustomer.map((customer,index)=>{
+                                        return(
+                                            <option key={index} value={customer.id}>{customer.name}</option>
+                                        )
+                                    })
+                                }
                             </select>
                         </div>
                         <div className="col-md-4">
@@ -143,12 +172,11 @@ export default class CheckInRoom extends Component {
                                                                     <Link to={"/check-in-room/detail/"+ value.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
                                                                         <i className="fa fa-info" />
                                                                     </Link>
-                                                                    <button className="btn btn-tbl-delete btn-xs">
+                                                                    <button onClick={()=>this.cancelRoom(value.idRegistration)} className="btn btn-tbl-delete btn-xs">
                                                                         <i className="t-close btn-color fa fa-times" />
                                                                     </button>
                                                                 </td>
                                                             </tr>
-
                                                         )
                                                     }) : <tr>
                                                         <td className="center" colSpan="7"> Không có phòng nào đã đặt </td>
@@ -194,7 +222,7 @@ export default class CheckInRoom extends Component {
                                                                 <td className="center">{this.convertDate(value.bookingDate, false)}</td>
                                                                 <td className="center">{this.convertDate(value.checkInDate)}</td>
                                                                 <td className="center">{this.convertDate(value.checkOutDate)}</td>
-                                                                <td className="center">{this.convertDisplayCustomer(value.customers)}</td>
+                                                                <td className="center">{value.delegation.nameManager}</td>
                                                                 <td className="center">
                                                                     <button onClick={()=>this.checkInRoom(value.idRegistration)}  className="btn btn-success btn-tbl-edit btn-xs">
                                                                         <i title="Nhận phòng" className="fa fa-plus" />
@@ -202,7 +230,7 @@ export default class CheckInRoom extends Component {
                                                                     <Link to={"/check-in-room/detail/"+ value.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
                                                                         <i className="fa fa-info" />
                                                                     </Link>
-                                                                    <button className="btn btn-tbl-delete btn-xs">
+                                                                    <button onClick={()=>this.cancelRoom(value.idRegistration)} className="btn btn-tbl-delete btn-xs">
                                                                         <i className="t-close btn-color fa fa-times" />
                                                                     </button>
                                                                 </td>

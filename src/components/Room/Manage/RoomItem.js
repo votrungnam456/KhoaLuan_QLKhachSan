@@ -12,13 +12,13 @@ export default class ListRoomItem extends Component {
         switch (status) {
             case -1:
                 return "Trống"
-            case 1:
+            case 0:
                 return "Đã đặt"
-            case 2:
+            case 1:
                 return "Đang ở"
-            case 3:
+            case 2:
                 return "Đang sửa"
-            case 4:
+            case 3:
                 return "Đang dọn dẹp"
             default:
                 break;
@@ -32,7 +32,7 @@ export default class ListRoomItem extends Component {
                 <td className="center">{room.nameTypeRoom}</td>
                 <td className="center">{this.convertStatus(room.status)}</td>
                 <td className="center">{room.nameHousekeepingStaff}</td>
-                <td className="center">{room.idRegistationForm == null ? "" : room.idRegistationForm}</td>
+                <td className="center">{room.infoRegistration === null ? "" : room.infoRegistration.idRegistration}</td>
                 <td className="center">
                     <Link to={"/edit-room/" + room.id} className="btn btn-tbl-edit btn-xs">
                         <i className="fa fa-pencil" />
