@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Title from '../../Home/Title'
-import { APICheckOutRoom } from '../../../constanst/API';
-import * as CallAPI from "../../../constanst/CallAPI";
-import { convertDate,convertDisplayCustomer } from '../../../constanst/Methods';
-export default class CheckOutRoomDetail extends Component {
+import Title from '../Home/Title'
+import { APICheckOutRoom } from '../../constanst/API';
+import * as CallAPI from "../../constanst/CallAPI";
+
+export default class BillDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,13 +22,12 @@ export default class CheckOutRoomDetail extends Component {
   componentDidMount() {
     CallAPI.GET(APICheckOutRoom + "/" + this.props.match.params.idRegisterForm).then(res => {
       if (res.status === 200) {
-        console.log(res.data);
         this.setState({
           listCustomer: res.data.infoRegistration.customers,
           numberOfChild: res.data.infoRegistration.numberOfChild,
-          bookingDate: convertDate(res.data.infoRegistration.bookingDate, false),
-          checkInDate: convertDate(res.data.infoRegistration.checkInDate),
-          checkOutDate: convertDate(res.data.infoRegistration.checkOutDate),
+          bookingDate: this.convertDate(res.data.infoRegistration.bookingDate, false),
+          checkInDate: this.convertDate(res.data.infoRegistration.checkInDate),
+          checkOutDate: this.convertDate(res.data.infoRegistration.checkOutDate),
           note: res.data.infoRegistration.note,
           price: res.data.infoRegistration.intoMoney,
           rooms: res.data.infoRoom,
@@ -36,6 +35,14 @@ export default class CheckOutRoomDetail extends Component {
         })
       }
     })
+  }
+  convertDisplayCustomer = (data) => {
+    let result = "";
+    data.map((x, index) => {
+      index === data.length - 1 ? result += x.name : result += x.name + ",";
+      return true;
+    });
+    return result;
   }
   checkOutRoom = (idRegister) => {
     CallAPI.POST(APICheckOutRoom + idRegister).then(res => {
@@ -48,17 +55,26 @@ export default class CheckOutRoomDetail extends Component {
       }
     })
   }
+  convertDate = (longTime, type = true) => {
+    const date = new Date(longTime);
+    if (type) {
+      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    }
+    else {
+      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    }
+  }
   render() {
     const { numberOfChild, bookingDate, listCustomer, note, checkOutDate, checkInDate, price, rooms, totalPrice } = this.state
     return (
       <div className="page-content-wrapper">
         <div className="page-content">
-          <Title title="Trả phòng"></Title>
+          <Title title="Chi tiết phiếu thanh toán"></Title>
           <div className="row">
             <div className="col-sm-12">
               <div className="card-box">
                 <div className="card-head">
-                  <header>Trả phòng</header>
+                  <header>Phiếu thanh toán</header>
                 </div>
                 {
                   listCustomer.map((customer, index) => {
@@ -181,7 +197,7 @@ export default class CheckOutRoomDetail extends Component {
                             </div>
                             <div className="col-lg-6 p-t-20">
                               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                                <label className="">Khách ở: {convertDisplayCustomer(room.customers)}</label>
+                                <label className="">Khách ở: {this.convertDisplayCustomer(room.customers)}</label>
                               </div>
                             </div>
                             <div className="col-lg-6 p-t-20">
@@ -210,7 +226,7 @@ export default class CheckOutRoomDetail extends Component {
                                         <td>{log.name}</td>
                                         <td>{log.totalPrice}</td>
                                         <td>{log.quantity}</td>
-                                        <td>{convertDate(log.time, false)}</td>
+                                        <td>{this.convertDate(log.time, false)}</td>
                                       </tr>
                                     )
                                   }) : <tr>

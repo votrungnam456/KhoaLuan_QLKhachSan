@@ -38,6 +38,8 @@ import UseServiceDevice from "../components/Service/UseServiceDevice";
 import CheckOutRoomDetail from "../components/Room/Booking/CheckOutRoomDetail";
 import CleanOrderRoom from "../components/Room/Manage/CleanOrderRoom";
 import LogServiceDevice from "../components/History/LogServiceDevice";
+import BillHistory from "../components/History/BillHistory";
+import BillDetail from "../components/History/BillDetail";
 const routes = [
     {
         path: "/",
@@ -233,6 +235,16 @@ const routes = [
         path: "/log-service-device",
         exact: true,
         main: ({ history }) => <LogServiceDevice history={history} />
+    },
+    {
+        path: "/history-bill",
+        exact: true,
+        main: ({ history }) => <BillHistory history={history} />
+    },
+    {
+        path: "/history-bill-detail",
+        exact: true,
+        main: ({ history,match }) => <BillDetail match={match} history={history} />
     },
     {
         path: "",

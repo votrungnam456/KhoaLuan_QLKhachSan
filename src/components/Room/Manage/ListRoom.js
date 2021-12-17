@@ -43,7 +43,6 @@ export default class ListRoom extends Component {
                                 <div className="card-head">
                                     <header>Danh sách phòng</header>
                                     <div className="tools">
-                                        <i className="fa fa-repeat btn-color box-refresh" />
                                         <i className="t-collapse btn-color fa fa-chevron-down" />
                                     </div>
                                 </div>

@@ -3,6 +3,7 @@ import Title from '../../Home/Title'
 import { APIBookingRoom, APICustomer, APICheckOutRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 import { Link } from 'react-router-dom';
+import { convertDate, convertDisplayCustomer } from '../../../constanst/Methods';
 export default class CheckoutRoom extends Component {
     constructor(props) {
         super(props)
@@ -59,23 +60,6 @@ export default class CheckoutRoom extends Component {
                 })
             }
         })
-    }
-    convertDate = (longTime, type = true) => {
-        const date = new Date(longTime);
-        if (type) {
-            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        }
-        else {
-            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        }
-    }
-    convertDisplayCustomer = (data) => {
-        let result = "";
-        data.map((x, index) => {
-            index === data.length - 1 ? result += x.name : result += x.name + ",";
-            return true;
-        });
-        return result;
     }
     onChange = (ev) => {
         this.setState({
@@ -157,17 +141,14 @@ export default class CheckoutRoom extends Component {
                                                             <tr key={index} className="odd gradeX">
                                                                 <td className="center">{value.rooms[0].nameRoom}</td>
                                                                 <td className="center">{value.employee.nameEmployee}</td>
-                                                                <td className="center">{this.convertDate(value.bookingDate, false)}</td>
-                                                                <td className="center">{this.convertDate(value.checkInDate)}</td>
-                                                                <td className="center">{this.convertDate(value.checkOutDate)}</td>
-                                                                <td className="center">{this.convertDisplayCustomer(value.customers)}</td>
+                                                                <td className="center">{convertDate(value.bookingDate, false)}</td>
+                                                                <td className="center">{convertDate(value.checkInDate)}</td>
+                                                                <td className="center">{convertDate(value.checkOutDate)}</td>
+                                                                <td className="center">{convertDisplayCustomer(value.customers)}</td>
                                                                 <td className="center">
                                                                     <Link to={"/check-out-room/detail/" + value.idRegistration} className="btn btn-success">
                                                                         Trả phòng <i title="Trả phòng" className="fa fa-plus" />
                                                                     </Link>
-                                                                    {/* <Link to={"/check-out-room/detail/" + value.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
-                                                                        <i className="fa fa-info" />
-                                                                    </Link> */}
                                                                 </td>
                                                             </tr>
                                                         )
@@ -212,17 +193,14 @@ export default class CheckoutRoom extends Component {
                                                             <tr key={index} className="odd gradeX">
                                                                 <td className="center">{value.rooms[0].nameRoom}</td>
                                                                 <td className="center">{value.employee.nameEmployee}</td>
-                                                                <td className="center">{this.convertDate(value.bookingDate, false)}</td>
-                                                                <td className="center">{this.convertDate(value.checkInDate)}</td>
-                                                                <td className="center">{this.convertDate(value.checkOutDate)}</td>
+                                                                <td className="center">{convertDate(value.bookingDate, false)}</td>
+                                                                <td className="center">{convertDate(value.checkInDate)}</td>
+                                                                <td className="center">{convertDate(value.checkOutDate)}</td>
                                                                 <td className="center">{value.delegation.nameManager}</td>
                                                                 <td className="center">
-                                                                <Link to={"/check-out-room/detail/" + value.idRegistration} className="btn btn-success">
+                                                                    <Link to={"/check-out-room/detail/" + value.idRegistration} className="btn btn-success">
                                                                         Trả phòng <i title="Trả phòng" className="fa fa-plus" />
                                                                     </Link>
-                                                                    {/* <Link to={"/check-out-room/detail/" + value.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
-                                                                        <i className="fa fa-info" />
-                                                                    </Link> */}
                                                                 </td>
                                                             </tr>
                                                         )

@@ -43,8 +43,7 @@ export default class ListService extends Component {
                             <div className="card card-box">
                                 <div className="card-head">
                                     <header>Danh sách dịch vụ</header>
-                                    <div className="tools">
-                                        <i className="fa fa-repeat btn-color box-refresh" />
+                                    <div className="tools">                               
                                         <i className="t-collapse btn-color fa fa-chevron-down" />
                                     </div>
                                 </div>

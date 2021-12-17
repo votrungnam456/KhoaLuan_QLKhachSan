@@ -161,6 +161,10 @@ const sideBarQL = [
             {
                 to: "/log-service-device",
                 title: "Lịch sử sử dụng dịch vụ"
+            },
+            {
+                to: "/history-bill",
+                title: "Lịch sử thanh toán"
             }
         ]
     },

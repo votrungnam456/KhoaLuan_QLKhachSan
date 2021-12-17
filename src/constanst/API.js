@@ -15,4 +15,5 @@ const APICheckInRoom = API + "/manager/check-in/"
 const APICancel = API + "/manager/cancel/"
 const APICheckOutRoom = API + "/manager/check-out/"
 const APIUseServiceDevice = API + "/manager/use/"
-export {APICancel,APICheckInRoom,APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation,APIBookingRoom,APIUseServiceDevice,APICheckOutRoom};
+const APIBill = API + "/manager/bill/"
+export {APIBill,APICancel,APICheckInRoom,APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation,APIBookingRoom,APIUseServiceDevice,APICheckOutRoom};

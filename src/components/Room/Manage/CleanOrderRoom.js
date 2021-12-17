@@ -71,7 +71,6 @@ export default class CleanOrderRoom extends Component {
                 <div className="card-head">
                   <header>Thứ tự dọn phòng</header>
                   <div className="tools">
-                    <i className="fa fa-repeat btn-color box-refresh" />
                     <i className="t-collapse btn-color fa fa-chevron-down" />
                   </div>
                 </div>
