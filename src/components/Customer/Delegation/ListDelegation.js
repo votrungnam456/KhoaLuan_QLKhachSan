@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { APIDelegation } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
+import { getNow } from '../../../constanst/Methods';
+import ExportExcel from '../../Excel/ExportExcel';
 import Title from '../../Home/Title';
 import DelegationItem from './DelegationItem';
 export default class ListDelegation extends Component {
@@ -59,26 +61,8 @@ export default class ListDelegation extends Component {
                                                     Làm mới <i className="fa fa-repeat" />
                                                 </button>
                                             </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-6 col-6">
-                                            <div className="btn-group pull-right">
-                                                <i className="btn deepPink-bgcolor  btn-outline dropdown-toggle" data-toggle="dropdown">Tools
-                                                    <i className="fa fa-angle-down" />
-                                                </i>
-                                                <ul className="dropdown-menu pull-right">
-                                                    <li>
-                                                        <button>
-                                                            <i className="fa fa-print" /> Print </button>
-                                                    </li>
-                                                    <li>
-                                                        <button>
-                                                            <i className="fa fa-file-pdf-o" /> Save as PDF </button>
-                                                    </li>
-                                                    <li>
-                                                        <button>
-                                                            <i className="fa fa-file-excel-o" /> Export to Excel </button>
-                                                    </li>
-                                                </ul>
+                                            <div className="btn-group">
+                                                <ExportExcel tableName="table" fileName={"listDelegation" + getNow(true)}></ExportExcel>
                                             </div>
                                         </div>
                                     </div>
@@ -89,7 +73,7 @@ export default class ListDelegation extends Component {
                                     </div>
 
                                     <div className="table-scrollable">
-                                        <table className="table table-hover table-checkable order-column full-width" id="example4">
+                                        <table className="table table-hover table-checkable order-column full-width" id="table">
                                             <thead>
                                                 <tr>
                                                     <th className="center"> Tên đoàn khách </th>

@@ -11,13 +11,13 @@ export default class RoomCard extends Component {
         return "Trống"
       case 0:
         return "Đã đặt"
-      // case 1:
-      //   return "Đã đặt"
       case 1:
         return "Đang ở"
       case 2:
-        return "Đang sửa"
+        return "Đang dọn dẹp"
       case 3:
+        return "Đang sửa"
+      case 4:
         return "Đang dọn dẹp"
       default:
         break;

@@ -190,7 +190,7 @@ export default class CheckOutRoomDetail extends Component {
                               </div>
                             </div>
                             <div className="table-scrollable">
-                              <table className="table table-hover table-checkable order-column full-width" id="example4">
+                              <table className="table table-hover table-checkable order-column full-width" id="table">
                                 <thead>
                                   <tr>
                                     <th className="center"> Tên khách hàng </th>

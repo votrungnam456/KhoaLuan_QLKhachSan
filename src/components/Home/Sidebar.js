@@ -137,16 +137,8 @@ const sideBarQL = [
         title: "Thống kê",
         subMenus: [
             {
-                to: "/timeline-1",
-                title: "Thống kê 1"
-            },
-            {
-                to: "/timeline-2",
-                title: "Thống kê 2"
-            },
-            {
-                to: "/timeline-3",
-                title: "Thống kê 3"
+                to: "/turnover",
+                title: "Thống kê doanh thu"
             },
         ]
     },

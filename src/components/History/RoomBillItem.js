@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../constanst/CallAPI";
 import { APIRoom } from '../../constanst/API';
-export default class RoomDetailItem extends Component {
+import { convertDate,convertDisplayCustomer } from '../../constanst/Methods';
+export default class RoomBillItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,8 +17,9 @@ export default class RoomDetailItem extends Component {
     }
   }
   componentDidMount() {
-    CallAPI.GET(APIRoom + "/"+this.props.idRoom).then(res => {
+    CallAPI.GET(APIRoom + "/" + this.props.idRoom).then(res => {
       if (res.status === 200) {
+        console.log(res.data);
         this.setState({
           description: res.data.description,
           details: res.data.details,
@@ -27,37 +29,23 @@ export default class RoomDetailItem extends Component {
           nameTypeRoom: res.data.nameTypeRoom,
           status: res.data.status,
         })
-        if(res.data.infoCustomerBooking){
+        if (res.data.infoCustomerBooking) {
           this.setState({
-            listCustomer:res.data.infoCustomerBooking.customers
+            listCustomer: res.data.infoCustomerBooking.customers
           })
         }
       }
     })
   }
-  convertStatus = (status) => {
-    switch (status) {
-      case 0:
-        return "Trống"
-      case 1:
-        return "Đã đặt"
-      case 2:
-        return "Đang ở"
-      case 3:
-        return "Đang sửa"
-      case 4:
-        return "Đang dọn dẹp"
-      default:
-        break;
-    }
-  }
-  getCustomers = (customers)=>{
+  getCustomers = (customers) => {
     let result = "";
-    customers.map(x=> result+= x.name + ",")
+    customers.map(x => result += x.name + ",")
     return result;
   }
   render() {
-    const { description, housekeepingOrder, nameEmployee, nameRoom, nameTypeRoom, status, details,listCustomer} = this.state;
+    const { description, housekeepingOrder, nameEmployee, nameRoom, nameTypeRoom, status, details, listCustomer } = this.state;
+    const { logCustomer,customers } = this.props;
+    console.log(logCustomer)
     return (
       <div className="col-sm-12">
         <div className="card-box">
@@ -87,12 +75,7 @@ export default class RoomDetailItem extends Component {
             </div>
             <div className="col-lg-6 p-t-20">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                <label className="">Tình trạng: {this.convertStatus(status)}</label>
-              </div>
-            </div>
-            <div className="col-lg-6 p-t-20">
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                <label className="">Thông tin khách đang ở: {listCustomer.length > 0 ? this.getCustomers(listCustomer) : "không có"}</label>
+                <label className="">Tên khách ở: {customers.length > 0 ? convertDisplayCustomer(customers) : "không có"}</label>
               </div>
             </div>
             <div className="col-lg-6 p-t-20">
@@ -124,6 +107,43 @@ export default class RoomDetailItem extends Component {
                       </tr>
                     )
                   })}
+                </tbody>
+              </table>
+            </div>
+            <div className="col-lg-6 p-t-20">
+              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
+                <label className="">Log:</label>
+              </div>
+            </div>
+            <div className="table-scrollable">
+              <table className="table table-hover table-checkable order-column full-width" id="table">
+                <thead>
+                  <tr>
+                    <th className="center"> Tên khách hàng </th>
+                    <th className="center"> Dịch vụ/Thiết bị </th>
+                    <th className="center"> Số lượng </th>
+                    <th className="center"> Giá </th>
+                    <th className="center"> Ngày thực hiện </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    logCustomer.length > 0 ? logCustomer.map((value, index) => {
+                      return (
+                        <tr className="odd gradeX">
+                          <td className="center">{value.customer.name}</td>
+                          <td className="center">{value.name}</td>
+                          <td className="center">{value.quantity}</td>
+                          <td className="center">{value.totalPrice}</td>
+                          <td className="center">{convertDate(value.time, false)}</td>
+                        </tr>
+                      )
+                    }) : (
+                      <tr role="status">
+                        <td className="sr-only">Không có log nào</td>
+                      </tr>
+                    )
+                  }
                 </tbody>
               </table>
             </div>

@@ -3,6 +3,7 @@ import Title from '../../Home/Title'
 import { APIBookingRoom,APICancel,APICheckInRoom} from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 import { Link } from 'react-router-dom';
+import { convertDate,convertDisplayCustomer } from '../../../constanst/Methods';
 export default class CheckInRoom extends Component {
     constructor(props) {
         super(props)
@@ -61,23 +62,6 @@ export default class CheckInRoom extends Component {
             }
             return true;
         })
-    }
-    convertDate = (longTime, type = true) => {
-        const date = new Date(longTime);
-        if (type) {
-            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        }
-        else {
-            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        }
-    }
-    convertDisplayCustomer = (data) => {
-        let result = "";
-        data.map((x, index) => {
-            index === data.length - 1 ? result += x.name : result += x.name + ",";
-            return true;
-        });
-        return result;
     }
     checkInRoom = (idRegister) => {
         CallAPI.POST(APICheckInRoom + idRegister).then(res=>{
@@ -142,7 +126,7 @@ export default class CheckInRoom extends Component {
                                 </div>
                                 <div className="card-body ">
                                     <div className="table-scrollable">
-                                        <table className="table table-hover table-checkable order-column full-width" id="example4">
+                                        <table className="table table-hover table-checkable order-column full-width" id="table">
                                             <thead>
                                                 <tr>
                                                     <th className="center"> Phòng </th>
@@ -161,10 +145,10 @@ export default class CheckInRoom extends Component {
                                                             <tr key={index} className="odd gradeX">
                                                                 <td className="center">{value.rooms[0].nameRoom}</td>
                                                                 <td className="center">{value.employee.nameEmployee}</td>
-                                                                <td className="center">{this.convertDate(value.bookingDate, false)}</td>
-                                                                <td className="center">{this.convertDate(value.checkInDate)}</td>
-                                                                <td className="center">{this.convertDate(value.checkOutDate)}</td>
-                                                                <td className="center">{this.convertDisplayCustomer(value.customers)}</td>
+                                                                <td className="center">{convertDate(value.bookingDate, false)}</td>
+                                                                <td className="center">{convertDate(value.checkInDate)}</td>
+                                                                <td className="center">{convertDate(value.checkOutDate)}</td>
+                                                                <td className="center">{convertDisplayCustomer(value.customers)}</td>
                                                                 <td className="center">
                                                                     <button onClick={()=> this.checkInRoom(value.idRegistration)} className="btn btn-success btn-tbl-edit btn-xs">
                                                                         <i title="Nhận phòng" className="fa fa-plus" />
@@ -200,7 +184,7 @@ export default class CheckInRoom extends Component {
                                 </div>
                                 <div className="card-body ">
                                     <div className="table-scrollable">
-                                        <table className="table table-hover table-checkable order-column full-width" id="example4">
+                                        <table className="table table-hover table-checkable order-column full-width" id="table">
                                             <thead>
                                                 <tr>
                                                     <th className="center"> Phòng </th>
@@ -219,9 +203,9 @@ export default class CheckInRoom extends Component {
                                                             <tr key={index} className="odd gradeX">
                                                                 <td className="center">{value.rooms[0].nameRoom}</td>
                                                                 <td className="center">{value.employee.nameEmployee}</td>
-                                                                <td className="center">{this.convertDate(value.bookingDate, false)}</td>
-                                                                <td className="center">{this.convertDate(value.checkInDate)}</td>
-                                                                <td className="center">{this.convertDate(value.checkOutDate)}</td>
+                                                                <td className="center">{convertDate(value.bookingDate, false)}</td>
+                                                                <td className="center">{convertDate(value.checkInDate)}</td>
+                                                                <td className="center">{convertDate(value.checkOutDate)}</td>
                                                                 <td className="center">{value.delegation.nameManager}</td>
                                                                 <td className="center">
                                                                     <button onClick={()=>this.checkInRoom(value.idRegistration)}  className="btn btn-success btn-tbl-edit btn-xs">

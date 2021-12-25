@@ -3,6 +3,7 @@ import { APIRoom, APITypeRoom, APICustomer, APIDelegation } from '../../../const
 import * as CallAPI from "../../../constanst/CallAPI";
 import Title from '../../Home/Title';
 import RoomCard from './RoomCard';
+import { convertDate2 } from '../../../constanst/Methods';
 export default class BookingRoom extends Component {
     constructor(props) {
         super(props);
@@ -39,6 +40,7 @@ export default class BookingRoom extends Component {
     loadData = () => {
         CallAPI.GET(APIRoom).then(res => {
             if (res.status === 200) {
+                console.log(res.data);
                 this.setState({
                     listRoom: res.data
                 })
@@ -65,6 +67,30 @@ export default class BookingRoom extends Component {
                 })
             }
         });
+    }
+    search = ()=>{
+        const { checkInDate,checkOutDate,idTypeRoom} = this.state;
+        if(checkInDate === '' || checkOutDate === ''){
+            alert("Vui lòng chọn ngày để tìm kiếm");
+            return;
+        }
+        else if(convertDate2(checkInDate) >= convertDate2(checkOutDate)){
+            alert("Ngày đến không được lớn hơn hoặc bằng ngày đi");
+            return;
+        }
+        const data = {
+            dayCheckIn:convertDate2(checkInDate),
+            dayCheckOut:convertDate2(checkOutDate),
+            // idTypeRoom:idTypeRoom
+        }
+        CallAPI.POST(APIRoom +'/search',data).then(res => {
+            if (res.status === 200) {
+                this.setState({
+                    listRoom: res.data
+                })
+            }
+        });
+        // CallAPI.GET(APIRoom + '/search')
     }
     bookingAction = () => {
         let { listChooseRoom,checkInDate,checkOutDate} = this.state;
@@ -116,7 +142,7 @@ export default class BookingRoom extends Component {
                             </select>
                         </div>
                         <div className="col-md-3">
-                            <button className="btn btn-primary"> Tìm kiếm </button>
+                            <button onClick={this.search} className="btn btn-primary"> Tìm kiếm </button>
                         </div>
                         <div className="col-md-3">
                             <button onClick={this.bookingAction} className="btn btn-primary"> Đặt phòng </button>

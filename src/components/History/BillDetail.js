@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Title from '../Home/Title'
-import { APICheckOutRoom } from '../../constanst/API';
+import { APICheckOutRoom,APIBill } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
-
+import { convertDate } from '../../constanst/Methods';
+import RoomBillItem from './RoomBillItem';
 export default class BillDetail extends Component {
   constructor(props) {
     super(props);
@@ -17,32 +18,27 @@ export default class BillDetail extends Component {
       bookingDate: "",
       totalPrice: 0,
       rooms: [],
+      dataBill:{},
     }
   }
   componentDidMount() {
-    CallAPI.GET(APICheckOutRoom + "/" + this.props.match.params.idRegisterForm).then(res => {
+    CallAPI.GET(APIBill + "/" + this.props.match.params.idRegisterForm).then(res => {
       if (res.status === 200) {
+        console.log(res.data);
         this.setState({
-          listCustomer: res.data.infoRegistration.customers,
+          dataBill:res.data,
+          listCustomer:res.data.infoRegistration.customers,
           numberOfChild: res.data.infoRegistration.numberOfChild,
-          bookingDate: this.convertDate(res.data.infoRegistration.bookingDate, false),
-          checkInDate: this.convertDate(res.data.infoRegistration.checkInDate),
-          checkOutDate: this.convertDate(res.data.infoRegistration.checkOutDate),
+          bookingDate: convertDate(res.data.infoRegistration.bookingDate, false),
+          checkInDate: convertDate(res.data.infoRegistration.checkInDate),
+          checkOutDate: convertDate(res.data.infoRegistration.checkOutDate),
           note: res.data.infoRegistration.note,
           price: res.data.infoRegistration.intoMoney,
           rooms: res.data.infoRoom,
-          totalPrice: res.data.totalPrice,
+          totalPrice: res.data.totalMoney,
         })
       }
     })
-  }
-  convertDisplayCustomer = (data) => {
-    let result = "";
-    data.map((x, index) => {
-      index === data.length - 1 ? result += x.name : result += x.name + ",";
-      return true;
-    });
-    return result;
   }
   checkOutRoom = (idRegister) => {
     CallAPI.POST(APICheckOutRoom + idRegister).then(res => {
@@ -66,6 +62,7 @@ export default class BillDetail extends Component {
   }
   render() {
     const { numberOfChild, bookingDate, listCustomer, note, checkOutDate, checkInDate, price, rooms, totalPrice } = this.state
+    // console.log(rooms);
     return (
       <div className="page-content-wrapper">
         <div className="page-content">
@@ -178,66 +175,7 @@ export default class BillDetail extends Component {
                 <div className="card-body row">
                   {rooms.map((room, index) => {
                     return (
-                      // <RoomDetailItem key={index} idRoom={room.id}></RoomDetailItem>
-                      <div key={index} className="col-sm-12">
-                        <div className="card-box">
-                          <div className="card-head">
-                            <header>Chi tiết phòng</header>
-                          </div>
-                          <div className="card-body row">
-                            <div className="col-lg-6 p-t-20">
-                              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                                <label className="">Tên phòng: {room.nameRoom}</label>
-                              </div>
-                            </div>
-                            <div className="col-lg-6 p-t-20">
-                              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                                <label className="">Loại phòng: {room.nameTypeRoom}</label>
-                              </div>
-                            </div>
-                            <div className="col-lg-6 p-t-20">
-                              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                                <label className="">Khách ở: {this.convertDisplayCustomer(room.customers)}</label>
-                              </div>
-                            </div>
-                            <div className="col-lg-6 p-t-20">
-                              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                                <label className="">Log: </label>
-                              </div>
-                            </div>
-                            <div className="table-scrollable">
-                              <table className="table table-hover table-checkable order-column full-width" id="example4">
-                                <thead>
-                                  <tr>
-                                    <th className="center"> Tên khách hàng </th>
-                                    <th className="center"> Loại hình </th>
-                                    <th className="center"> Tên loại hình </th>
-                                    <th className="center"> Giá </th>
-                                    <th className="center"> Số lượng </th>
-                                    <th className="center"> Thời gian thực hiện </th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {room.logCustomers.length > 0 ? room.logCustomers.map((log, indexTemp) => {
-                                    return (
-                                      <tr key={indexTemp} className="center">
-                                        <td>{log.customer.name}</td>
-                                        <td>{log.type === 1 ? "Dịch vụ" : "Thiết bị"}</td>
-                                        <td>{log.name}</td>
-                                        <td>{log.totalPrice}</td>
-                                        <td>{log.quantity}</td>
-                                        <td>{this.convertDate(log.time, false)}</td>
-                                      </tr>
-                                    )
-                                  }) : <tr>
-                                    <td colSpan={6}>Không có dịch vụ hay thiết bị nào được sử dụng</td>
-                                  </tr>}
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <RoomBillItem customers={room.customers} logCustomer={room.logCustomers} key={index} idRoom={room.idRoom}></RoomBillItem>                     
                     )
                   })}
                 </div>
@@ -246,10 +184,7 @@ export default class BillDetail extends Component {
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                       <label className="">Tổng tiền: {totalPrice} đồng</label>
                     </div>
-                  </div>
-                  <div className="col-lg-12 p-t-20 text-center">
-                    <button onClick={() => this.checkOutRoom(this.props.match.params.idRegisterForm)} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Trả phòng</button>
-                  </div>
+                  </div>               
                 </div>
               </div>
             </div>

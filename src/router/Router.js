@@ -40,6 +40,7 @@ import CleanOrderRoom from "../components/Room/Manage/CleanOrderRoom";
 import LogServiceDevice from "../components/History/LogServiceDevice";
 import BillHistory from "../components/History/BillHistory";
 import BillDetail from "../components/History/BillDetail";
+import ListTurnover from "../components/Turnover/ListTurnover";
 const routes = [
     {
         path: "/",
@@ -242,9 +243,14 @@ const routes = [
         main: ({ history }) => <BillHistory history={history} />
     },
     {
-        path: "/history-bill-detail",
+        path: "/history-bill-detail/:idRegisterForm",
         exact: true,
         main: ({ history,match }) => <BillDetail match={match} history={history} />
+    },
+    {
+        path: "/turnover",
+        exact: true,
+        main: ({ history,match }) => <ListTurnover match={match} history={history} />
     },
     {
         path: "",

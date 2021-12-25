@@ -52,7 +52,6 @@ export default class CheckoutRoom extends Component {
             }
             return true;
         })
-        console.log(this.state.listBookingDelegation);
         CallAPI.GET(APICustomer).then(res => {
             if (res.status === 200) {
                 this.setState({
@@ -122,7 +121,7 @@ export default class CheckoutRoom extends Component {
                                 </div>
                                 <div className="card-body ">
                                     <div className="table-scrollable">
-                                        <table className="table table-hover table-checkable order-column full-width" id="example4">
+                                        <table className="table table-hover table-checkable order-column full-width" id="table">
                                             <thead>
                                                 <tr>
                                                     <th className="center"> Phòng </th>
@@ -174,7 +173,7 @@ export default class CheckoutRoom extends Component {
                                 </div>
                                 <div className="card-body ">
                                     <div className="table-scrollable">
-                                        <table className="table table-hover table-checkable order-column full-width" id="example4">
+                                        <table className="table table-hover table-checkable order-column full-width" id="table">
                                             <thead>
                                                 <tr>
                                                     <th className="center"> Phòng </th>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Title from '../../Home/Title'
-import { APIDelegation, APIRoom, APITypeRoom,APIBookingRoom } from '../../../constanst/API';
+import { APIDelegation, APIRoom, APITypeRoom, APIBookingRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 
 export default class BookingDetailDelegation extends Component {
@@ -10,8 +10,8 @@ export default class BookingDetailDelegation extends Component {
       listRoomId: this.props.match.params.idRoom.split(";"),
       listRoom: [],
       listDelegation: [],
-      listIdTypeRoom:[],
-      price:0,
+      listIdTypeRoom: [],
+      price: 0,
       nameCompany: "",
       nameManager: "",
       nameDelegation: "",
@@ -22,9 +22,9 @@ export default class BookingDetailDelegation extends Component {
       checkOutDate: "",
       note: "",
       message: 0,
-      isProtect:false,
+      isProtect: false,
       user: {},
-      now:"",
+      now: "",
     }
   }
   async componentDidMount() {
@@ -34,8 +34,8 @@ export default class BookingDetailDelegation extends Component {
     const checkDate = JSON.parse(localStorage.getItem("date"));
     this.setState({
       user: userLocal || userSession,
-      checkInDate:checkDate.checkInDate || "",
-      checkOutDate:checkDate.checkOutDate || "",
+      checkInDate: checkDate.checkInDate || "",
+      checkOutDate: checkDate.checkOutDate || "",
       now: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
     })
     CallAPI.GET(APIDelegation).then(res => {
@@ -46,26 +46,26 @@ export default class BookingDetailDelegation extends Component {
       }
     });
     await this.getData();
-    for(const id of this.state.listIdTypeRoom){
-      CallAPI.GET(APITypeRoom + "/" + id).then(res=>{
-        if(res.status===200){
+    for (const id of this.state.listIdTypeRoom) {
+      CallAPI.GET(APITypeRoom + "/" + id).then(res => {
+        if (res.status === 200) {
           this.setState({
-            price:this.state.price+res.data.price
+            price: this.state.price + res.data.price
           })
         }
       })
     }
     const list = this.state.listDelegation.filter(x => x.numberOfPeople <= this.state.listRoom.length * 2)
     this.setState({
-      listDelegation:list
+      listDelegation: list
     })
   }
-  async getData(){
-    for(const id of this.state.listRoomId){
-        await CallAPI.GET(APIRoom + "/" + id).then(res => {
+  async getData() {
+    for (const id of this.state.listRoomId) {
+      await CallAPI.GET(APIRoom + "/" + id).then(res => {
         this.setState({
-          listRoom:[...this.state.listRoom, res.data],
-          listIdTypeRoom:[...this.state.listIdTypeRoom,res.data.idTypeRoom]
+          listRoom: [...this.state.listRoom, res.data],
+          listIdTypeRoom: [...this.state.listIdTypeRoom, res.data.idTypeRoom]
         })
       })
     }
@@ -110,7 +110,7 @@ export default class BookingDetailDelegation extends Component {
     })
   }
   bookingRoom = () => {
-    const { isProtect, user, numOfChild, note, checkOutDate, checkInDate,listRoomId,idDelegation } = this.state
+    const { isProtect, user, numOfChild, note, checkOutDate, checkInDate, listRoomId, idDelegation } = this.state
     const checkIn = new Date(checkInDate);
     const checkOut = new Date(checkOutDate);
     if (checkInDate === "" || checkOutDate === "") {
@@ -123,7 +123,7 @@ export default class BookingDetailDelegation extends Component {
         message: 2
       })
     }
-    else if(checkIn.getTime() > checkOut.getTime()){
+    else if (checkIn.getTime() > checkOut.getTime()) {
       this.setState({
         message: 3
       })
@@ -137,18 +137,18 @@ export default class BookingDetailDelegation extends Component {
         idEmployee: user.id,
         idRoom: listRoomId,
         note,
-        numberOfChild:parseInt(numOfChild),
+        numberOfChild: parseInt(numOfChild),
         type: 0,
         isGuaranteed: isProtect
       }
-      CallAPI.POST(APIBookingRoom,dataBooking).then(res=>{
-        if(res.status === 200){
+      CallAPI.POST(APIBookingRoom, dataBooking).then(res => {
+        if (res.status === 200) {
           alert("Đặt phòng thành công");
           this.props.history.push("/booking-room");
         }
-        else{
+        else {
           this.setState({
-            message:4
+            message: 4
           })
         }
       })
@@ -156,22 +156,24 @@ export default class BookingDetailDelegation extends Component {
   }
   convertStatus = (status) => {
     switch (status) {
-        case 0:
-            return "Trống"
-        case 1:
-            return "Đã đặt"
-        case 2:
-            return "Đang ở"
-        case 3:
-            return "Đang sửa"
-        case 4:
-            return "Đang dọn dẹp"
-        default:
-            break;
+      case -1:
+        return "Trống"
+      case 0:
+        return "Đã đặt"
+      case 1:
+        return "Đang ởt"
+      case 2:
+        return "Đang sửa"
+      case 3:
+        return "Đang sửa"
+      case 4:
+        return "Đang dọn dẹp"
+      default:
+        break;
     }
-}
+  }
   render() {
-    const { now,message,isProtect,listDelegation, nameDelegation, nameManager, nameCompany, idDelegation, numOfChild, numbOfAdult, note, checkOutDate, checkInDate, listRoom,price } = this.state
+    const { now, message, isProtect, listDelegation, nameDelegation, nameManager, nameCompany, idDelegation, numOfChild, numbOfAdult, note, checkOutDate, checkInDate, listRoom, price } = this.state
     return (
       <div className="page-content-wrapper">
         <div className="page-content">
@@ -245,7 +247,7 @@ export default class BookingDetailDelegation extends Component {
                   </div>
                   <div className="col-lg-4 p-t-20">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                      <input onChange={this.onChange} value={checkInDate} name="checkInDate" type="date" min={now}/>
+                      <input onChange={this.onChange} value={checkInDate} name="checkInDate" type="date" min={now} />
                     </div>
                   </div>
                   <div className="col-lg-2 p-t-20">
@@ -281,7 +283,7 @@ export default class BookingDetailDelegation extends Component {
                 </div>
                 <div className="card-body row">
                   <div className="table-scrollable">
-                    <table className="table table-hover table-checkable order-column full-width" id="example4">
+                    <table className="table table-hover table-checkable order-column full-width" id="table">
                       <thead>
                         <tr>
                           <th className="center"> Tên phòng </th>
@@ -296,13 +298,13 @@ export default class BookingDetailDelegation extends Component {
                         {
                           listRoom.length > 0 ? listRoom.map((value, index) => {
                             return (
-                            <tr key={index} className="odd gradeX">
-                              <td className="center">{value.nameRoom}</td>
-                              <td className="center">{value.nameTypeRoom}</td>
-                              <td className="center">{this.convertStatus(value.status)}</td>
-                              <td className="center">{value.nameHousekeepingStaff}</td>
-                              <td className="center">{value.idRegistationForm == null ? "" : value.idRegistationForm}</td>
-                            </tr>
+                              <tr key={index} className="odd gradeX">
+                                <td className="center">{value.nameRoom}</td>
+                                <td className="center">{value.nameTypeRoom}</td>
+                                <td className="center">{this.convertStatus(value.status)}</td>
+                                <td className="center">{value.nameHousekeepingStaff}</td>
+                                <td className="center">{value.idRegistationForm == null ? "" : value.idRegistationForm}</td>
+                              </tr>
                             )
                           }) : (
                             <tr className="spinner-border" role="status">

@@ -7,6 +7,10 @@ const convertDate = (longTime, type = true) => {
     return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
   }
 }
+const convertDate2 = (time) => {
+  const date = new Date(time);
+  return date.getTime();
+}
 const convertDisplayCustomer = (data) => {
   let result = "";
   data.map((x, index) => {
@@ -39,4 +43,14 @@ const convertStatus = (status) => {
       break;
   }
 }
-export {convertDate,convertDisplayCustomer,convertStatus,convertDisplayRoomName}
+const getNow = (type = false) =>{
+  const date = new Date();
+  let now = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+  if(type){
+    now = convertDate(date.getTime(),false);
+  }
+  
+  return now;
+}
+
+export {convertDate,convertDisplayCustomer,convertStatus,convertDisplayRoomName,convertDate2,getNow}

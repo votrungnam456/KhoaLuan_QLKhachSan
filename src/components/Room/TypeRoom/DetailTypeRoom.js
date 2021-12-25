@@ -217,7 +217,7 @@ export default class DetailTypeRoom extends Component {
                 </div>
                 <div className="card-body ">
                   <div className="table-scrollable">
-                    <table className="table table-hover table-checkable order-column full-width" id="example4">
+                    <table className="table table-hover table-checkable order-column full-width" id="table">
                       <thead>
                         <tr>
                           <th className="center"> Tên </th>

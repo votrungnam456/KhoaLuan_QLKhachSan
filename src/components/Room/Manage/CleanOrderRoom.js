@@ -19,6 +19,7 @@ export default class CleanOrderRoom extends Component {
         room.housekeepingOrder = 0
       }
       listRoomConvert = [...listRoomConvert, room];
+      return true;
     })
     this.setState({
       listRoom: listRoomConvert

@@ -16,4 +16,5 @@ const APICancel = API + "/manager/cancel/"
 const APICheckOutRoom = API + "/manager/check-out/"
 const APIUseServiceDevice = API + "/manager/use/"
 const APIBill = API + "/manager/bill/"
-export {APIBill,APICancel,APICheckInRoom,APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation,APIBookingRoom,APIUseServiceDevice,APICheckOutRoom};
+const APITurnover = API + "/manager/turnover"
+export {APITurnover,APIBill,APICancel,APICheckInRoom,APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation,APIBookingRoom,APIUseServiceDevice,APICheckOutRoom};

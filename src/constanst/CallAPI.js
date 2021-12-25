@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 function GET(API) {
-  return axios.get(API);
+    return axios.get(API);
 }
 function POST(API,data) {
   return axios.post(API, data);

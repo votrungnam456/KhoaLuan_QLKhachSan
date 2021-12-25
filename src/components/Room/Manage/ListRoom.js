@@ -2,41 +2,43 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { APIRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
+import ExportExcel from '../../Excel/ExportExcel';
 import Title from '../../Home/Title';
 import RoomItem from './RoomItem';
+import { getNow } from '../../../constanst/Methods';
 export default class ListRoom extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listRoom:[]
+            listRoom: [],
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.loadData();
     }
-    loadData = () =>{
-        CallAPI.GET(APIRoom).then(res=>{
-            if(res.status === 200){
+    loadData = () => {
+        CallAPI.GET(APIRoom).then(res => {
+            if (res.status === 200) {
                 console.log(res.data)
                 this.setState({
-                    listRoom:res.data
+                    listRoom: res.data
                 })
             }
         });
     }
-    deleteItem = (id) =>{
-        CallAPI.DELETE(APIRoom + "/" + id).then(res=>{
-            if(res.status === 200){
+    deleteItem = (id) => {
+        CallAPI.DELETE(APIRoom + "/" + id).then(res => {
+            if (res.status === 200) {
                 this.loadData();
             }
         });
     }
     render() {
-        const {listRoom} = this.state;
+        const { listRoom } = this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                <Title title="Phòng"></Title>
+                    <Title title="Phòng"></Title>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">
@@ -59,27 +61,10 @@ export default class ListRoom extends Component {
                                                     Làm mới <i className="fa fa-repeat" />
                                                 </button>
                                             </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-6 col-6">
-                                            <div className="btn-group pull-right">
-                                                <i className="btn deepPink-bgcolor  btn-outline dropdown-toggle" data-toggle="dropdown">Tools
-                                                    <i className="fa fa-angle-down" />
-                                                </i>
-                                                <ul className="dropdown-menu pull-right">
-                                                    <li>
-                                                        <a href=" ">
-                                                            <i className="fa fa-print" /> Print </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href=" ">
-                                                            <i className="fa fa-file-pdf-o" /> Save as PDF </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href=" ">
-                                                            <i className="fa fa-file-excel-o" /> Export to Excel </a>
-                                                    </li>
-                                                </ul>
+                                            <div className="btn-group">
+                                                <ExportExcel tableName="table" fileName={"listRoom" + getNow(true)}></ExportExcel>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-sm-6 col-6">
@@ -89,7 +74,7 @@ export default class ListRoom extends Component {
                                     </div>
 
                                     <div className="table-scrollable">
-                                        <table className="table table-hover table-checkable order-column full-width" id="example4">
+                                        <table className="table table-hover table-checkable order-column full-width" id="table">
                                             <thead>
                                                 <tr>
                                                     <th className="center"> Tên phòng </th>
@@ -102,17 +87,17 @@ export default class ListRoom extends Component {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    listRoom.length >0 ? listRoom.map((value,index)=>{
+                                                    listRoom.length > 0 ? listRoom.map((value, index) => {
                                                         return (
                                                             <RoomItem deleteItem={this.deleteItem} room={value} key={index}></RoomItem>
                                                         )
-                                                    }):(
+                                                    }) : (
                                                         <tr className="spinner-border" role="status">
                                                             <td className="sr-only">Loading...</td>
                                                         </tr>
                                                     )
                                                 }
-                                            
+
                                             </tbody>
                                         </table>
                                     </div>

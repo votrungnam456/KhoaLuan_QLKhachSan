@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { APIBill, APICheckOutRoom } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
 import Title from '../Home/Title';
-import { convertDate, convertDisplayRoomName, convertDisplayCustomer } from '../../constanst/Methods';
+import { convertDate, convertDisplayRoomName, convertDisplayCustomer, getNow } from '../../constanst/Methods';
+import ExportExcel from '../Excel/ExportExcel';
 export default class BillHistory extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +48,7 @@ export default class BillHistory extends Component {
     })
   }
   testCall = (id) => {
-    CallAPI.GET(APICheckOutRoom + id).then(res => {
+    CallAPI.GET(APIBill + id).then(res => {
       if (res.status === 200) {
         console.log(res.data)
       }
@@ -73,17 +74,9 @@ export default class BillHistory extends Component {
                 </div>
                 <div className="card-body ">
                   <div className="row p-b-20">
-                    <div className="col-md-6 col-sm-6 col-6 offset-md-6 offset-sm-6 offset-6">
-                      <div className="btn-group pull-right">
-                        <i className="btn deepPink-bgcolor  btn-outline dropdown-toggle" data-toggle="dropdown">Tools
-                          <i className="fa fa-angle-down" />
-                        </i>
-                        <ul className="dropdown-menu pull-right">
-                          <li>
-                            <a href=" ">
-                              <i className="fa fa-file-excel-o" /> Export to Excel </a>
-                          </li>
-                        </ul>
+                    <div className="col-md-6 col-sm-6 col-6">
+                      <div className="btn-group">
+                        <ExportExcel tableName="table-one" fileName={"historyBillOne" + getNow(true)}></ExportExcel>
                       </div>
                     </div>
                   </div>
@@ -94,7 +87,7 @@ export default class BillHistory extends Component {
                   </div>
 
                   <div className="table-scrollable">
-                    <table className="table table-hover table-checkable order-column full-width" id="example4">
+                    <table className="table table-hover table-checkable order-column full-width" id="table-one">
                       <thead>
                         <tr>
                           <th className="center"> Khách hàng </th>
@@ -122,9 +115,9 @@ export default class BillHistory extends Component {
                                 <td>{bill.serviceFee}</td>
                                 <td>{bill.totalMoney}</td>
                                 <td>
-                                  <button onClick={() => this.testCall(bill.infoRegistration.idRegistration)} className="btn btn-primary btn-tbl-edit btn-xs">
+                                  <Link to={'/history-bill-detail/' + bill.infoRegistration.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
                                     <i className="fa fa-info" />
-                                  </button>
+                                  </Link>
                                 </td>
                               </tr>
                             )
@@ -150,17 +143,9 @@ export default class BillHistory extends Component {
                 </div>
                 <div className="card-body ">
                   <div className="row p-b-20">
-                    <div className="col-md-6 col-sm-6 col-6 offset-md-6 offset-sm-6 offset-6">
-                      <div className="btn-group pull-right">
-                        <i className="btn deepPink-bgcolor  btn-outline dropdown-toggle" data-toggle="dropdown">Tools
-                          <i className="fa fa-angle-down" />
-                        </i>
-                        <ul className="dropdown-menu pull-right">
-                          <li>
-                            <a href=" ">
-                              <i className="fa fa-file-excel-o" /> Export to Excel </a>
-                          </li>
-                        </ul>
+                    <div className="col-md-6 col-sm-6 col-6">
+                      <div className="btn-group">
+                        <ExportExcel tableName="table-delegation" fileName={"historyBillDelegation" + getNow(true)}></ExportExcel>
                       </div>
                     </div>
                   </div>
@@ -171,7 +156,7 @@ export default class BillHistory extends Component {
                   </div>
 
                   <div className="table-scrollable">
-                    <table className="table table-hover table-checkable order-column full-width" id="example4">
+                    <table className="table table-hover table-checkable order-column full-width" id="table-delegation">
                       <thead>
                         <tr>
                           <th className="center"> Khách đoàn </th>
@@ -197,9 +182,9 @@ export default class BillHistory extends Component {
                                 <td>{bill.serviceFee}</td>
                                 <td>{bill.totalMoney}</td>
                                 <td>
-                                  <button onClick={() => this.testCall(bill.infoRegistration.idRegistration)} className="btn btn-primary btn-tbl-edit btn-xs">
+                                  <Link to={'/history-bill-detail/' + bill.infoRegistration.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
                                     <i className="fa fa-info" />
-                                  </button>
+                                  </Link>
                                 </td>
                               </tr>
                             )
