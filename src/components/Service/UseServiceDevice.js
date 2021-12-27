@@ -105,7 +105,7 @@ export default class UseServiceDevice extends Component {
         idCustomer: idCustomer,
         idType,
         quantity: parseInt(quantity),
-        type: parseInt(quantity),
+        type: parseInt(type),
         description: "",
       }
       CallAPI.POST(APIUseServiceDevice, data).then(res => {

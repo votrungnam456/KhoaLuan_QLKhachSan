@@ -33,8 +33,8 @@ export default class ListTurnover extends Component {
       return;
     }
     const data = {
-      dayCheckIn: convertDate2(checkInDate),
-      dayCheckOut: convertDate2(checkOutDate),
+      dayStart: convertDate2(checkInDate),
+      dayEnd: convertDate2(checkOutDate),
     }
     CallAPI.POST(APITurnover, data).then(res => {
       if (res.status === 200) {
