@@ -59,8 +59,8 @@ const sideBarQL = [
                 title: "Xem danh sách nhân viên"
             },
             {
-                to: "/",
-                title: "Xếp lịch dọn dẹp cho nhân viên"
+                to: "/clean-scheduling",
+                title: "Lịch dọn phòng"
             },
         ]
     },
@@ -116,6 +116,10 @@ const sideBarQL = [
                 to: "/list-device",
                 title: "Xem danh sách thiết bị"
             },
+            {
+                to: "/broken-device",
+                title: "Báo hư thiết bị"
+            },
         ]
     },
     {
@@ -147,16 +151,16 @@ const sideBarQL = [
         title: "Lịch sử",
         subMenus: [
             {
-                to: "/add-role",
-                title: "Lịch sử đặt phòng"
-            },
-            {
                 to: "/log-service-device",
                 title: "Lịch sử sử dụng dịch vụ"
             },
             {
                 to: "/history-bill",
                 title: "Lịch sử thanh toán"
+            },
+            {
+                to: "/log-cleaning",
+                title: "Lịch sử dọn dẹp của nhân viên"
             }
         ]
     },
@@ -192,10 +196,6 @@ const sideBarNVKho = [
                 to: "/list-device",
                 title: "Xem danh sách thiết bị"
             },
-            {
-                to: "/edit-device",
-                title: "Sửa thông tin thiết bị"
-            },
         ]
     },
     {
@@ -203,16 +203,8 @@ const sideBarNVKho = [
         title: "Thống kê",
         subMenus: [
             {
-                to: "/timeline-1",
-                title: "Thống kê 1"
-            },
-            {
-                to: "/timeline-2",
-                title: "Thống kê 2"
-            },
-            {
-                to: "/timeline-3",
-                title: "Thống kê 3"
+                to: "/turnover",
+                title: "Thống kê doanh thu"
             },
         ]
     },
@@ -328,11 +320,19 @@ const sideBarNVTiepTan = [
     },
     {
         icon: "card_travel",
-        title: "Dịch vụ",
+        title: "Quản lý dịch vụ",
         subMenus: [
+            {
+                to: "/add-service",
+                title: "Thêm dịch vụ"
+            },
             {
                 to: "/list-service",
                 title: "Xem danh sách dịch vụ"
+            },
+            {
+                to: "/register-service-device",
+                title: "Đăng ký dịch vụ/thiết bị cho khách"
             },
         ]
     },
@@ -341,16 +341,8 @@ const sideBarNVTiepTan = [
         title: "Thống kê",
         subMenus: [
             {
-                to: "/timeline-1",
-                title: "Thống kê 1"
-            },
-            {
-                to: "/timeline-2",
-                title: "Thống kê 2"
-            },
-            {
-                to: "/timeline-3",
-                title: "Thống kê 3"
+                to: "/turnover",
+                title: "Thống kê doanh thu"
             },
         ]
     },

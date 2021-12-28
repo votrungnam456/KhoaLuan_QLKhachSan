@@ -124,6 +124,7 @@ export default class RoomBillItem extends Component {
                     <th className="center"> Số lượng </th>
                     <th className="center"> Giá </th>
                     <th className="center"> Ngày thực hiện </th>
+                    <th className="center"> Description </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -136,6 +137,7 @@ export default class RoomBillItem extends Component {
                           <td className="center">{value.quantity}</td>
                           <td className="center">{value.totalPrice}</td>
                           <td className="center">{convertDate(value.time, false)}</td>
+                          <td className="center">{value.description}</td>
                         </tr>
                       )
                     }) : (

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { convertStatus } from '../../../constanst/Methods';
 export default class ListRoomItem extends Component {
     constructor(props) {
         super(props);
@@ -8,29 +9,13 @@ export default class ListRoomItem extends Component {
     onDeleteItem = () => {
         this.props.deleteItem(this.props.room.id)
     }
-    convertStatus = (status) => {
-        switch (status) {
-            case -1:
-                return "Trống"
-            case 0:
-                return "Đã đặt"
-            case 1:
-                return "Đang ở"
-            case 2:
-                return "Đang sửa"
-            case 3:
-                return "Đang dọn dẹp"
-            default:
-                break;
-        }
-    }
     render() {
         const { room } = this.props
         return (
             <tr className="odd gradeX">
                 <td className="center">{room.nameRoom}</td>
                 <td className="center">{room.nameTypeRoom}</td>
-                <td className="center">{this.convertStatus(room.status)}</td>
+                <td className="center">{convertStatus(room.status)}</td>
                 <td className="center">{room.nameHousekeepingStaff}</td>
                 <td className="center">{room.infoRegistration === null ? "" : room.infoRegistration.idRegistration}</td>
                 <td className="center">

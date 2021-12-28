@@ -41,6 +41,9 @@ import LogServiceDevice from "../components/History/LogServiceDevice";
 import BillHistory from "../components/History/BillHistory";
 import BillDetail from "../components/History/BillDetail";
 import ListTurnover from "../components/Turnover/ListTurnover";
+import ReportBrokenDevice from "../components/Device/ReportBrokenDevice";
+import CleanScheduling from "../components/Employee/CleanScheduling";
+import LogCleaning from "../components/History/LogCleaning";
 const routes = [
     {
         path: "/",
@@ -251,6 +254,21 @@ const routes = [
         path: "/turnover",
         exact: true,
         main: ({ history,match }) => <ListTurnover match={match} history={history} />
+    },
+    {
+        path: "/broken-device",
+        exact: true,
+        main: ({ history,match }) => <ReportBrokenDevice match={match} history={history} />
+    },
+    {
+        path: "/clean-scheduling",
+        exact: true,
+        main: ({ history,match }) => <CleanScheduling match={match} history={history} />
+    },
+    {
+        path: "/log-cleaning",
+        exact: true,
+        main: ({ history,match }) => <LogCleaning match={match} history={history} />
     },
     {
         path: "",

@@ -1,5 +1,5 @@
-const API = "http://107.167.80.37:8000";
-// const API = "https://hotel.loca.lt"
+// const API = "http://107.167.80.37:8000";
+const API = "https://hufi.loca.lt"
 const APIRoom = API+"/manager/room"
 const APILogin = API+"/user/login"
 const APITypeRoom = API+"/manager/type-room";
@@ -17,4 +17,5 @@ const APICheckOutRoom = API + "/manager/check-out/"
 const APIUseServiceDevice = API + "/manager/use/"
 const APIBill = API + "/manager/bill/"
 const APITurnover = API + "/manager/turnover"
-export {APITurnover,APIBill,APICancel,APICheckInRoom,APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation,APIBookingRoom,APIUseServiceDevice,APICheckOutRoom};
+const APIClean = API + "/manager/scheduling"
+export {APIClean,APITurnover,APIBill,APICancel,APICheckInRoom,APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation,APIBookingRoom,APIUseServiceDevice,APICheckOutRoom};

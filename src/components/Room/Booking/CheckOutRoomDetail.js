@@ -199,6 +199,7 @@ export default class CheckOutRoomDetail extends Component {
                                     <th className="center"> Giá </th>
                                     <th className="center"> Số lượng </th>
                                     <th className="center"> Thời gian thực hiện </th>
+                                    <th className="center"> Description </th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -211,10 +212,11 @@ export default class CheckOutRoomDetail extends Component {
                                         <td>{log.totalPrice}</td>
                                         <td>{log.quantity}</td>
                                         <td>{convertDate(log.time, false)}</td>
+                                        <td>{log.description}</td>
                                       </tr>
                                     )
                                   }) : <tr>
-                                    <td colSpan={6}>Không có dịch vụ hay thiết bị nào được sử dụng</td>
+                                    <td colSpan={7}>Không có dịch vụ hay thiết bị nào được sử dụng hoặc báo hư</td>
                                   </tr>}
                                 </tbody>
                               </table>

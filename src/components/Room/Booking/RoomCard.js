@@ -1,26 +1,9 @@
 import React, { Component } from 'react'
+import { convertStatus } from '../../../constanst/Methods';
 export default class RoomCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    }
-  }
-  convertStatus = (status) => {
-    switch (status) {
-      case -1:
-        return "Trống"
-      case 0:
-        return "Đã đặt"
-      case 1:
-        return "Đang ở"
-      case 2:
-        return "Đang dọn dẹp"
-      case 3:
-        return "Đang sửa"
-      case 4:
-        return "Đang dọn dẹp"
-      default:
-        break;
     }
   }
   toggleChose = () => {
@@ -53,7 +36,7 @@ export default class RoomCard extends Component {
                   Loại phòng: {room.nameTypeRoom}
                 </p>
                 <p>
-                  Tình Trạng: {this.convertStatus(room.status)}
+                  Tình Trạng: {convertStatus(room.status)}
                 </p>
               </div>
             </div>

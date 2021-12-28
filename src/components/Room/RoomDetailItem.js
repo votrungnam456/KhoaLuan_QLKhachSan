@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as CallAPI from "../../constanst/CallAPI";
 import { APIRoom } from '../../constanst/API';
+import { convertDisplayCustomer,convertStatus } from '../../constanst/Methods';
 export default class RoomDetailItem extends Component {
   constructor(props) {
     super(props);
@@ -35,27 +36,6 @@ export default class RoomDetailItem extends Component {
       }
     })
   }
-  convertStatus = (status) => {
-    switch (status) {
-      case 0:
-        return "Trống"
-      case 1:
-        return "Đã đặt"
-      case 2:
-        return "Đang ở"
-      case 3:
-        return "Đang sửa"
-      case 4:
-        return "Đang dọn dẹp"
-      default:
-        break;
-    }
-  }
-  getCustomers = (customers)=>{
-    let result = "";
-    customers.map(x=> result+= x.name + ",")
-    return result;
-  }
   render() {
     const { description, housekeepingOrder, nameEmployee, nameRoom, nameTypeRoom, status, details,listCustomer} = this.state;
     return (
@@ -87,12 +67,12 @@ export default class RoomDetailItem extends Component {
             </div>
             <div className="col-lg-6 p-t-20">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                <label className="">Tình trạng: {this.convertStatus(status)}</label>
+                <label className="">Tình trạng: {convertStatus(status)}</label>
               </div>
             </div>
             <div className="col-lg-6 p-t-20">
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                <label className="">Thông tin khách đang ở: {listCustomer.length > 0 ? this.getCustomers(listCustomer) : "không có"}</label>
+                <label className="">Thông tin khách đang ở: {listCustomer.length > 0 ? convertDisplayCustomer(listCustomer) : "không có"}</label>
               </div>
             </div>
             <div className="col-lg-6 p-t-20">

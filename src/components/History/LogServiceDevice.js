@@ -26,6 +26,7 @@ export default class LogServiceDevice extends Component {
     });
     CallAPI.GET(APIUseServiceDevice).then(res => {
       if (res.status === 200) {
+        console.log(res.data);
         this.setState({
           listLogServiceDevice: res.data
         })
@@ -40,13 +41,6 @@ export default class LogServiceDevice extends Component {
     else {
       return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     }
-  }
-  deleteItem = (id) => {
-    CallAPI.DELETE(APIRoom + "/" + id).then(res => {
-      if (res.status === 200) {
-        this.loadData();
-      }
-    });
   }
   render() {
     const { listLogServiceDevice } = this.state;
@@ -88,21 +82,22 @@ export default class LogServiceDevice extends Component {
                           <th className="center"> Số lượng </th>
                           <th className="center"> Giá </th>
                           <th className="center"> Ngày thực hiện </th>
+                          <th className="center"> Description </th>
                         </tr>
                       </thead>
                       <tbody>
                         {
                           listLogServiceDevice.length > 0 ? listLogServiceDevice.map((value, index) => {
                             return (
-                              <tr className="odd gradeX">
+                              <tr key={index} className="odd gradeX">
                                 <td className="center">{value.infoCustomer.name}</td>
                                 <td className="center">{value.infoRoom.nameRoom}</td>
                                 <td className="center">{value.name}</td>
                                 <td className="center">{value.quantity}</td>
                                 <td className="center">{value.totalPrice}</td>
                                 <td className="center">{this.convertDate(value.time, false)}</td>
+                                <td className="center">{value.description}</td>                              
                               </tr>
-                              // <RoomItem deleteItem={this.deleteItem} room={value} key={index}></RoomItem>
                             )
                           }) : (
                             <tr role="status">
