@@ -44,6 +44,7 @@ import ListTurnover from "../components/Turnover/ListTurnover";
 import ReportBrokenDevice from "../components/Device/ReportBrokenDevice";
 import CleanScheduling from "../components/Employee/CleanScheduling";
 import LogCleaning from "../components/History/LogCleaning";
+import ChangeRoom from "../components/Room/Booking/ChangeRoom";
 const routes = [
     {
         path: "/",
@@ -269,6 +270,11 @@ const routes = [
         path: "/log-cleaning",
         exact: true,
         main: ({ history,match }) => <LogCleaning match={match} history={history} />
+    },
+    {
+        path: "/change-room",
+        exact: true,
+        main: ({ history,match }) => <ChangeRoom match={match} history={history} />
     },
     {
         path: "",

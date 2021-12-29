@@ -44,6 +44,10 @@ const sideBarQL = [
                 to: "/clean-order-room",
                 title: "Xếp thứ tự dọn phòng"
             },
+            {
+                to: "/change-room",
+                title: "Đổi phòng"
+            },
         ]
     },
     {
@@ -164,24 +168,6 @@ const sideBarQL = [
             }
         ]
     },
-    {
-        icon: "info",
-        title: "Thông tin nhóm",
-        subMenus: [
-            {
-                to: "/vtn",
-                title: "Võ Trung Nam"
-            },
-            {
-                to: "/ntl",
-                title: "Nguyễn Thành Long"
-            },
-            {
-                to: "/dvd",
-                title: "Dương Văn Đại"
-            },
-        ]
-    },
 ]
 const sideBarNVKho = [
     {
@@ -205,24 +191,6 @@ const sideBarNVKho = [
             {
                 to: "/turnover",
                 title: "Thống kê doanh thu"
-            },
-        ]
-    },
-    {
-        icon: "info",
-        title: "Thông tin nhóm",
-        subMenus: [
-            {
-                to: "/vtn",
-                title: "Võ Trung Nam"
-            },
-            {
-                to: "/ntl",
-                title: "Nguyễn Thành Long"
-            },
-            {
-                to: "/dvd",
-                title: "Dương Văn Đại"
             },
         ]
     },
@@ -343,24 +311,6 @@ const sideBarNVTiepTan = [
             {
                 to: "/turnover",
                 title: "Thống kê doanh thu"
-            },
-        ]
-    },
-    {
-        icon: "info",
-        title: "Thông tin nhóm",
-        subMenus: [
-            {
-                to: "/vtn",
-                title: "Võ Trung Nam"
-            },
-            {
-                to: "/ntl",
-                title: "Nguyễn Thành Long"
-            },
-            {
-                to: "/dvd",
-                title: "Dương Văn Đại"
             },
         ]
     },

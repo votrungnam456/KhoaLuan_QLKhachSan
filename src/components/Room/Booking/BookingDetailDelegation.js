@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Title from '../../Home/Title'
 import { APIDelegation, APIRoom, APITypeRoom, APIBookingRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
-
+import { convertStatus } from '../../../constanst/Methods';
 export default class BookingDetailDelegation extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +40,9 @@ export default class BookingDetailDelegation extends Component {
     })
     CallAPI.GET(APIDelegation).then(res => {
       if (res.status === 200) {
+        console.log(this.state.listRoomId);
+        console.log(res.data);
+        const listFilterDelegation = [];
         this.setState({
           listDelegation: res.data
         })
@@ -152,24 +155,6 @@ export default class BookingDetailDelegation extends Component {
           })
         }
       })
-    }
-  }
-  convertStatus = (status) => {
-    switch (status) {
-      case -1:
-        return "Trống"
-      case 0:
-        return "Đã đặt"
-      case 1:
-        return "Đang ởt"
-      case 2:
-        return "Đang sửa"
-      case 3:
-        return "Đang sửa"
-      case 4:
-        return "Đang dọn dẹp"
-      default:
-        break;
     }
   }
   render() {
@@ -301,7 +286,7 @@ export default class BookingDetailDelegation extends Component {
                               <tr key={index} className="odd gradeX">
                                 <td className="center">{value.nameRoom}</td>
                                 <td className="center">{value.nameTypeRoom}</td>
-                                <td className="center">{this.convertStatus(value.status)}</td>
+                                <td className="center">{convertStatus(value.status)}</td>
                                 <td className="center">{value.nameHousekeepingStaff}</td>
                                 <td className="center">{value.idRegistationForm == null ? "" : value.idRegistationForm}</td>
                               </tr>
