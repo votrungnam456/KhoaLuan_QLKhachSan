@@ -10,42 +10,63 @@ export default class ListDelegation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listDelegation:[]
+            listDelegation: [],
+            baseListDelegation: []
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.loadData();
     }
-    loadData = () =>{
-        CallAPI.GET(APIDelegation).then(res=>{
-            if(res.status === 200){
+    loadData = () => {
+        CallAPI.GET(APIDelegation).then(res => {
+            if (res.status === 200) {
                 this.setState({
-                    listDelegation:res.data
+                    listDelegation: res.data,
+                    baseListDelegation: res.data
                 })
             }
         });
     }
-    deleteItem = (id) =>{
-        CallAPI.DELETE(APIDelegation + "/" + id).then(res=>{
-            if(res.status === 200){
+    deleteItem = (id) => {
+        CallAPI.DELETE(APIDelegation + "/" + id).then(res => {
+            if (res.status === 200) {
                 this.loadData();
             }
         });
     }
+    search = (ev) => {
+        const keySearch = ev.target.value
+        if (keySearch === '') {
+            this.setState({
+                listDelegation: this.state.baseListDelegation
+            })
+            return;
+        }
+        const listSearch = [];
+        this.state.baseListDelegation.map(list => {
+            if (list.nameDelegations.includes(keySearch) || list.nameManager.includes(keySearch) || list.nameCompany.includes(keySearch)) {
+                listSearch.push(list);
+            }
+            return true
+        })
+        this.setState({
+            listDelegation: listSearch
+        })
+    }
     render() {
-        const {listDelegation} = this.state;
+        const { listDelegation } = this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                <Title title="Khách đoàn"></Title>
+                    <Title title="Khách đoàn"></Title>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">
                                 <div className="card-head">
                                     <header>Danh sách khách đoàn</header>
                                     <div className="tools">
-                                        <i className="fa fa-repeat btn-color box-refresh"/>
-                                        <i className="t-collapse btn-color fa fa-chevron-down"/>
+                                        <i className="fa fa-repeat btn-color box-refresh" />
+                                        <i className="t-collapse btn-color fa fa-chevron-down" />
                                     </div>
                                 </div>
                                 <div className="card-body ">
@@ -68,7 +89,7 @@ export default class ListDelegation extends Component {
                                     </div>
                                     <div className="col-md-6 col-sm-6 col-6">
                                         <label className="search-bar">
-                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} onChange={this.search} className="form-control form-control-sm" />
                                         </label>
                                     </div>
 
@@ -84,14 +105,14 @@ export default class ListDelegation extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {
+                                                {
                                                     listDelegation.length > 0 ? listDelegation.map((value, index) => {
                                                         return (
                                                             <DelegationItem deleteItem={this.deleteItem} delegation={value} key={index}></DelegationItem>
                                                         )
                                                     }) : (
-                                                        <tr className="spinner-border" role="status">
-                                                            <td className="sr-only">Loading...</td>
+                                                        <tr>
+                                                            <td colSpan={5} className="center">Không tìm thây dữ liệu</td>
                                                         </tr>
                                                     )
                                                 }

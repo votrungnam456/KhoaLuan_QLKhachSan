@@ -13,7 +13,6 @@ const convertDate2 = (time) => {
 }
 const convertDisplayCustomer = (data) => {
   let result = "";
-  console.log(data);
   data.map((x, index) => {
     if (x) {
       index === data.length - 1 ? result += x.name : result += x.name + ",";

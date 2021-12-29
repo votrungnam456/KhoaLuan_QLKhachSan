@@ -10,41 +10,62 @@ export default class ListDevice extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listDevice:[]
+            listDevice: [],
+            baseListDevice: [],
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.loadData();
     }
-    loadData = () =>{
-        CallAPI.GET(APIDevice).then(res=>{
-            if(res.status === 200){
+    loadData = () => {
+        CallAPI.GET(APIDevice).then(res => {
+            if (res.status === 200) {
                 this.setState({
-                    listDevice:res.data
+                    listDevice: res.data,
+                    baseListDevice: res.data
                 })
             }
         });
     }
-    deleteItem = (id) =>{
-        CallAPI.DELETE(APIDevice + "/" + id).then(res=>{
-            if(res.status === 200){
+    deleteItem = (id) => {
+        CallAPI.DELETE(APIDevice + "/" + id).then(res => {
+            if (res.status === 200) {
                 this.loadData();
             }
         });
     }
+    search = (ev) => {
+        const keySearch = ev.target.value
+        if (keySearch === '') {
+            this.setState({
+                listDevice: this.state.baseListDevice
+            })
+            return;
+        }
+        const listSearch = [];
+        this.state.baseListDevice.map(list => {
+            if (list.nameHotelDevice.includes(keySearch)) {
+                listSearch.push(list);
+            }
+            return true
+        })
+        this.setState({
+            listDevice: listSearch
+        })
+    }
     render() {
-        const {listDevice} = this.state;
+        const { listDevice } = this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
-                <Title title="Thiết bị"></Title>
+                    <Title title="Thiết bị"></Title>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">
                                 <div className="card-head">
                                     <header>Danh sách thiết bị</header>
                                     <div className="tools">
-                                        <i className="t-collapse btn-color fa fa-chevron-down"  />
+                                        <i className="t-collapse btn-color fa fa-chevron-down" />
                                     </div>
                                 </div>
                                 <div className="card-body ">
@@ -67,7 +88,7 @@ export default class ListDevice extends Component {
                                     </div>
                                     <div className="col-md-6 col-sm-6 col-6">
                                         <label className="search-bar">
-                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} onChange={this.search} className="form-control form-control-sm" />
                                         </label>
                                     </div>
 
@@ -83,14 +104,14 @@ export default class ListDevice extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {
-                                                    listDevice.length >0 ? listDevice.map((value,index)=>{
+                                                {
+                                                    listDevice.length > 0 ? listDevice.map((value, index) => {
                                                         return (
                                                             <DeviceItem deleteItem={this.deleteItem} device={value} key={index}></DeviceItem>
                                                         )
-                                                    }):(
-                                                        <tr className="spinner-border" role="status">
-                                                            <td className="sr-only">Loading...</td>
+                                                    }) : (
+                                                        <tr>
+                                                            <td colSpan={5} className="center">Không tìm thây dữ liệu</td>
                                                         </tr>
                                                     )
                                                 }

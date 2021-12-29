@@ -40,7 +40,7 @@ export default class BookingRoom extends Component {
     loadData = () => {
         CallAPI.GET(APIRoom).then(res => {
             if (res.status === 200) {
-                console.log(res.data);
+
                 this.setState({
                     listRoom: res.data
                 })
@@ -69,7 +69,7 @@ export default class BookingRoom extends Component {
         });
     }
     search = ()=>{
-        const { checkInDate,checkOutDate,idTypeRoom} = this.state;
+        const { checkInDate,checkOutDate} = this.state;
         if(checkInDate === '' || checkOutDate === ''){
             alert("Vui lòng chọn ngày để tìm kiếm");
             return;
@@ -113,7 +113,7 @@ export default class BookingRoom extends Component {
         }
     }
     render() {
-        const { listRoom, listTypeRoom, checkInDate, checkOutDate, now } = this.state;
+        const { listRoom, checkInDate, checkOutDate, now } = this.state;
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -126,20 +126,6 @@ export default class BookingRoom extends Component {
                         <div className="col-md-3">
                             <label>Ngày đi: </label>
                             <input onChange={this.onChange} value={checkOutDate} name="checkOutDate" type="date" min={now} />
-                        </div>
-                        <div className="col-md-3">
-                            <label>Loại phòng: </label>
-                            <select name="idTypeRoom" onChange={this.onChange} className="mdl-textfield__input">
-                                <option value="">Chọn loại phòng</option>
-                                {listTypeRoom.length > 0 ? listTypeRoom.map((typeRoom, index) => {
-                                    if (typeRoom.details.length > 0) {
-                                        return (
-                                            <option key={index} value={typeRoom.id}>{typeRoom.nameTypeRoom}</option>
-                                        )
-                                    }
-                                    return true;
-                                }) : <option value="">Loading data....</option>}
-                            </select>
                         </div>
                         <div className="col-md-3">
                             <button onClick={this.search} className="btn btn-primary"> Tìm kiếm </button>
@@ -155,8 +141,8 @@ export default class BookingRoom extends Component {
                                     <RoomCard room={value} index={index} key={index}></RoomCard>
                                 )
                             }) : (
-                                <div className="spinner-border" role="status">
-                                    <i className="sr-only">Loading...</i>
+                                <div role="status">
+                                    <span>Không có thông tin phòng</span>
                                 </div>
                             )
                         }

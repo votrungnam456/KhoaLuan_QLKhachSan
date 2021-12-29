@@ -10,7 +10,8 @@ export default class ListCustomer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listCustomer:[]
+            listCustomer:[],
+            baseListCustomer:[]
         }
     }
     componentDidMount(){
@@ -20,7 +21,8 @@ export default class ListCustomer extends Component {
         CallAPI.GET(APICustomer).then(res=>{
             if(res.status === 200){
                 this.setState({
-                    listCustomer:res.data
+                    listCustomer:res.data,
+                    baseListCustomer:res.data
                 })
             }
         });
@@ -31,6 +33,25 @@ export default class ListCustomer extends Component {
                 this.loadData();
             }
         });
+    }
+    search = (ev)=>{
+        const keySearch = ev.target.value
+        if(keySearch === '') {
+            this.setState({
+                listCustomer:this.state.baseListCustomer
+            })
+            return;
+        }
+        const listSearch = [];
+        this.state.baseListCustomer.map(list =>{
+            if(list.name.includes(keySearch) || list.card.includes(keySearch) || list.phone.includes(keySearch)  || list.email.includes(keySearch)){
+                listSearch.push(list);
+            }
+            return true
+        })
+        this.setState({
+            listCustomer:listSearch
+        })
     }
     render() {
         const {listCustomer} = this.state;
@@ -67,7 +88,7 @@ export default class ListCustomer extends Component {
                                     </div>
                                     <div className="col-md-6 col-sm-6 col-6">
                                         <label className="search-bar">
-                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} onChange={this.search} className="form-control form-control-sm" />
                                         </label>
                                     </div>
 
@@ -90,8 +111,8 @@ export default class ListCustomer extends Component {
                                                             <CustomerItem deleteItem={this.deleteItem} customer={value} key={index}></CustomerItem>
                                                         )
                                                     }):(
-                                                        <tr className="spinner-border" role="status">
-                                                            <td className="sr-only">Loading...</td>
+                                                        <tr >
+                                                            <td colSpan={6} className="center">Không tìm thây dữ liệu</td>
                                                         </tr>
                                                     )
                                                 }

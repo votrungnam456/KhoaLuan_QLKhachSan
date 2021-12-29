@@ -43,7 +43,6 @@ export default class ListTurnover extends Component {
     }
     CallAPI.POST(APITurnover, data).then(res => {
       if (res.status === 200) {
-        console.log(res.data);
         let total = 0;
         res.data.map(data => total += data.totalPrice)
         this.setState({
@@ -55,11 +54,9 @@ export default class ListTurnover extends Component {
   }
   loadData = () =>{
     CallAPI.GET(APIRoom).then(res=>{
-      console.log(res);
       if(res.status === 200){
-        console.log(res.data);
         this.setState({
-          listRoom:this.res.data
+          listRoom:res.data
         })
       }
     })

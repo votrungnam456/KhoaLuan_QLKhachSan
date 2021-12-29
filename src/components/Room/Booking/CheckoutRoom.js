@@ -12,7 +12,9 @@ export default class CheckoutRoom extends Component {
             listBookingOne: [],
             listBookingDelegation: [],
             listCustomer: [],
-            idCustomer: ""
+            idCustomer: "",
+            baseListBookingOne: [],
+            baseListBookingDelegation: [],
         }
     }
     componentDidMount() {
@@ -43,11 +45,13 @@ export default class CheckoutRoom extends Component {
         this.state.listRegister.map(x => {
             if (x.type === 0) {
                 this.setState({
-                    listBookingDelegation: [...this.state.listBookingDelegation, x]
+                    listBookingDelegation: [...this.state.listBookingDelegation, x],
+                    baseListBookingDelegation:[...this.state.baseListBookingDelegation, x],
                 })
             } else {
                 this.setState({
-                    listBookingOne: [...this.state.listBookingOne, x]
+                    listBookingOne: [...this.state.listBookingOne, x],
+                    baseListBookingOne:[...this.state.baseListBookingOne, x],
                 })
             }
             return true;
@@ -82,34 +86,53 @@ export default class CheckoutRoom extends Component {
             }
         })
     }
+    search = (ev)=>{
+        const keySearch = ev.target.value
+        const name = ev.target.name;
+        if(name === "one"){
+            if(keySearch === '') {
+                this.setState({
+                    listBookingOne:this.state.baseListBookingOne
+                })
+                return;
+            }
+            const listSearch = [];
+            this.state.baseListBookingOne.map(list =>{
+                const customer = convertDisplayCustomer(list.customers)
+                if(customer.includes(keySearch)){
+                    listSearch.push(list);
+                }
+                return true
+            })
+            this.setState({
+                listBookingOne:listSearch
+            })
+        }
+        else if(name === "delegation"){
+            if(keySearch === '') {
+                this.setState({
+                    listBookingDelegation:this.state.baseListBookingDelegation
+                })
+                return;
+            }
+            const listSearch = [];
+            this.state.baseListBookingDelegation.map(list =>{
+                if(list.delegation.nameManager.includes(keySearch)){
+                    listSearch.push(list);
+                }
+                return true
+            })
+            this.setState({
+                listBookingDelegation:listSearch
+            })
+        }
+    }
     render() {
-        const { listBookingOne, listBookingDelegation, listCustomer, idCustomer } = this.state
+        const { listBookingOne, listBookingDelegation} = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
                     <Title title="Trả phòng"></Title>
-                    <div className="row">
-                        <div className="col-md-4">
-                            <label>Tên khách hàng: </label>
-                            <select name="idCustomer" value={idCustomer} onChange={this.onChange} className="mdl-textfield__input">
-                                {
-                                    listCustomer.map((customer, index) => {
-                                        return (
-                                            <option key={index} value={customer.id}>{customer.name}</option>
-                                        )
-                                    })
-                                }
-                            </select>
-                        </div>
-                        <div className="col-md-4">
-                            <label>CMND: </label>
-                            <input className="form-control" type="text" />
-                        </div>
-                        <div className="col-md-4">
-                            <button className="btn btn-primary"> Tìm kiếm </button>
-                        </div>
-                    </div>
-                    <br />
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">
@@ -120,6 +143,11 @@ export default class CheckoutRoom extends Component {
                                     </div>
                                 </div>
                                 <div className="card-body ">
+                                <div className="col-md-6 col-sm-6 col-6">
+                                        <label className="search-bar">
+                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} name="one" onChange={this.search} className="form-control form-control-sm" />
+                                        </label>
+                                    </div>
                                     <div className="table-scrollable">
                                         <table className="table table-hover table-checkable order-column full-width" id="table">
                                             <thead>
@@ -171,7 +199,12 @@ export default class CheckoutRoom extends Component {
                                         <i className="t-collapse btn-color fa fa-chevron-down" />
                                     </div>
                                 </div>
-                                <div className="card-body ">
+                                <div className="card-body">
+                                <div className="col-md-6 col-sm-6 col-6">
+                                        <label className="search-bar">
+                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} name="delegation" onChange={this.search} className="form-control form-control-sm" />
+                                        </label>
+                                    </div>
                                     <div className="table-scrollable">
                                         <table className="table table-hover table-checkable order-column full-width" id="table">
                                             <thead>

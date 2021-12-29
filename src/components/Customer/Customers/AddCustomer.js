@@ -20,7 +20,6 @@ export default class AddCustomer extends Component {
         })
         let name = ev.target.name;
         let value = ev.target.value;
-        console.log(name,value)
         this.setState({
             [name]: value
         })

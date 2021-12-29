@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { APIRoom,APIClean } from '../../../constanst/API';
 import Title from '../../Home/Title'
 import * as CallAPI from "../../../constanst/CallAPI";
@@ -27,7 +26,6 @@ export default class CleanOrderRoom extends Component {
   loadData = async () => {
     await CallAPI.GET(APIRoom).then(res => {
       if (res.status === 200) {
-        console.log(res.data);
         this.setState({
           listRoom: res.data
         })

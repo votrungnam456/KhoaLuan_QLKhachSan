@@ -11,6 +11,7 @@ export default class ListRoom extends Component {
         super(props);
         this.state = {
             listRoom: [],
+            baseListRoom: []
         }
     }
     componentDidMount() {
@@ -19,9 +20,9 @@ export default class ListRoom extends Component {
     loadData = () => {
         CallAPI.GET(APIRoom).then(res => {
             if (res.status === 200) {
-                console.log(res.data)
                 this.setState({
-                    listRoom: res.data
+                    listRoom: res.data,
+                    baseListRoom: res.data
                 })
             }
         });
@@ -32,6 +33,25 @@ export default class ListRoom extends Component {
                 this.loadData();
             }
         });
+    }
+    search = (ev) => {
+        const keySearch = ev.target.value
+        if (keySearch === '') {
+            this.setState({
+                listRoom: this.state.baseListRoom
+            })
+            return;
+        }
+        const listSearch = [];
+        this.state.baseListRoom.map(list => {
+            if (list.nameRoom.includes(keySearch)) {
+                listSearch.push(list);
+            }
+            return true;
+        })
+        this.setState({
+            listRoom: listSearch
+        })
     }
     render() {
         const { listRoom } = this.state;
@@ -57,19 +77,19 @@ export default class ListRoom extends Component {
                                                 </Link>
                                             </div>
                                             <div className="btn-group">
-                                                <button id="addRow" className="btn btn-success">
+                                                <button onClick={this.loadData} id="addRow" className="btn btn-success">
                                                     Làm mới <i className="fa fa-repeat" />
                                                 </button>
                                             </div>
                                             <div className="btn-group">
                                                 <ExportExcel tableName="table" fileName={"listRoom" + getNow(true)}></ExportExcel>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-sm-6 col-6">
                                         <label className="search-bar">
-                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} onChange={this.search} className="form-control form-control-sm" />
                                         </label>
                                     </div>
 
@@ -92,8 +112,8 @@ export default class ListRoom extends Component {
                                                             <RoomItem deleteItem={this.deleteItem} room={value} key={index}></RoomItem>
                                                         )
                                                     }) : (
-                                                        <tr className="spinner-border" role="status">
-                                                            <td className="sr-only">Loading...</td>
+                                                        <tr>
+                                                            <td colSpan={6} className="center">Không tìm thây dữ liệu</td>
                                                         </tr>
                                                     )
                                                 }

@@ -10,7 +10,8 @@ export default class ListEmployee extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listEmployee:[]
+            listEmployee:[],
+            baseListEmployee:[]
         }
     }
     componentDidMount(){
@@ -20,7 +21,8 @@ export default class ListEmployee extends Component {
         CallAPI.GET(APIEmployee).then(res=>{
             if(res.status === 200){
                 this.setState({
-                    listEmployee:res.data
+                    listEmployee:res.data,
+                    baseListEmployee:res.data
                 })
             }
         });
@@ -31,6 +33,24 @@ export default class ListEmployee extends Component {
                 this.loadData();
             }
         });
+    }
+    search = (ev)=>{
+        const keySearch = ev.target.value
+        if(keySearch === '') {
+            this.setState({
+                listEmployee:this.state.baseListEmployee
+            })
+            return;
+        }
+        const listSearch = [];
+        this.state.baseListEmployee.map(list =>{
+            if(list.nameEmployee.includes(keySearch)){
+                listSearch.push(list);
+            }
+        })
+        this.setState({
+            listEmployee:listSearch
+        })
     }
     render() {
         const {listEmployee} = this.state;
@@ -67,7 +87,7 @@ export default class ListEmployee extends Component {
                                     </div>
                                     <div className="col-md-6 col-sm-6 col-6">
                                         <label className="search-bar">
-                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} onChange={this.search} className="form-control form-control-sm" />
                                         </label>
                                     </div>
 
@@ -91,8 +111,8 @@ export default class ListEmployee extends Component {
                                                             <EmloyeeItem deleteItem={this.deleteItem} employee={value} key={index}></EmloyeeItem>
                                                         )
                                                     }):(
-                                                        <tr className="spinner-border" role="status">
-                                                            <td className="sr-only">Loading...</td>
+                                                        <tr >
+                                                            <td colSpan={7} className="center">Không tìm thây dữ liệu</td>
                                                         </tr>
                                                     )
                                                 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Title from '../../Home/Title'
-import { APICustomer, APIRoom, APITypeRoom,APIBookingRoom } from '../../../constanst/API';
+import { APICustomer, APIRoom, APITypeRoom, APIBookingRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 import RoomDetailItem from '../RoomDetailItem';
 export default class BookingDetailOne extends Component {
@@ -39,8 +39,8 @@ export default class BookingDetailOne extends Component {
     const checkDate = JSON.parse(localStorage.getItem("date"));
     this.setState({
       user: userLocal || userSession,
-      checkInDate:checkDate.checkInDate || "",
-      checkOutDate:checkDate.checkOutDate || "",
+      checkInDate: checkDate.checkInDate || "",
+      checkOutDate: checkDate.checkOutDate || "",
       now: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
     })
     CallAPI.GET(APICustomer).then(res => {
@@ -145,7 +145,7 @@ export default class BookingDetailOne extends Component {
         message: 2
       })
     }
-    else if(checkIn.getTime() > checkOut.getTime()){
+    else if (checkIn.getTime() > checkOut.getTime()) {
       this.setState({
         message: 3
       })
@@ -159,18 +159,18 @@ export default class BookingDetailOne extends Component {
         idEmployee: user.id,
         idRoom: [this.props.match.params.idRoom],
         note,
-        numberOfChild:parseInt(numOfChild),
+        numberOfChild: parseInt(numOfChild),
         type: 1,
         isGuaranteed: isProtect
       }
-      CallAPI.POST(APIBookingRoom,dataBooking).then(res=>{
-        if(res.status === 200){
+      CallAPI.POST(APIBookingRoom, dataBooking).then(res => {
+        if (res.status === 200) {
           alert("Đặt phòng thành công");
           this.props.history.push("/booking-room");
         }
-        else{
+        else {
           this.setState({
-            message:4
+            message: 4
           })
         }
       })
@@ -194,11 +194,11 @@ export default class BookingDetailOne extends Component {
                       <label className="">Khách hàng 1</label>
                       <select name="idCustomer1" value={idCustomer1} onChange={this.onChange} className="mdl-textfield__input">
                         <option value="">Chọn khách hàng</option>
-                        {listCustomer.length > 0 ? listCustomer.map((customer, index) => {
+                        {listCustomer.map((customer, index) => {
                           return (
                             <option key={index} value={customer.id}>{customer.name}</option>
                           )
-                        }) : <option value="">Loading data....</option>}
+                        })}
                       </select>
                     </div>
                   </div>
@@ -239,11 +239,11 @@ export default class BookingDetailOne extends Component {
                       <label className="">Khách hàng 2</label>
                       <select name="idCustomer2" value={idCustomer2} onChange={this.onChange} className="mdl-textfield__input">
                         <option value="">Chọn khách hàng</option>
-                        {listCustomer.length > 0 ? listCustomer.map((customer, index) => {
+                        {listCustomer.map((customer, index) => {
                           return (
                             <option key={index} value={customer.id}>{customer.name}</option>
                           )
-                        }) : <option value="">Loading data....</option>}
+                        })}
                       </select>
                     </div>
                   </div>

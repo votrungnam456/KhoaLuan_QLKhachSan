@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { APIBill, APICheckOutRoom } from '../../constanst/API';
+import { APIBill } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
 import Title from '../Home/Title';
 import { convertDate, convertDisplayRoomName, convertDisplayCustomer, getNow } from '../../constanst/Methods';
@@ -12,25 +12,27 @@ export default class BillHistory extends Component {
       listBill: [],
       listBillOne: [],
       listBillDelegation: [],
+      baseListBillOne: [],
+      baseListBillDelegation: [],
     }
   }
   async componentDidMount() {
     await this.loadData();
-
   }
   loadData = async () => {
     this.clearData();
     await CallAPI.GET(APIBill).then(res => {
       if (res.status === 200) {
-        console.log(res.data);
         res.data.map(bill => {
           if (bill.infoRegistration.type === 0) {
             this.setState({
-              listBillDelegation: [...this.state.listBillDelegation, bill]
+              listBillDelegation: [...this.state.listBillDelegation, bill],
+              baseListBillDelegation: [...this.state.baseListBillDelegation, bill],
             })
           } else if (bill.infoRegistration.type === 1) {
             this.setState({
-              listBillOne: [...this.state.listBillOne, bill]
+              listBillOne: [...this.state.listBillOne, bill],
+              baseListBillOne: [...this.state.baseListBillOne, bill],
             })
           }
           return true;
@@ -45,17 +47,53 @@ export default class BillHistory extends Component {
     this.setState({
       listBillOne: [],
       listBillDelegation: [],
+      baseListBillOne: [],
+      baseListBillDelegation: [],
     })
   }
-  testCall = (id) => {
-    CallAPI.GET(APIBill + id).then(res => {
-      if (res.status === 200) {
-        console.log(res.data)
+  search = (ev) => {
+    const keySearch = ev.target.value
+    const name = ev.target.name;
+    if (name === "one") {
+      if (keySearch === '') {
+        this.setState({
+          listBillOne: this.state.baseListBillOne
+        })
+        return;
       }
-      else {
-        alert('get data failed')
+      const listSearch = [];
+      this.state.baseListBillOne.map(list => {
+        let dataFilter = {
+          customers: convertDisplayCustomer(list.infoRegistration.customers),
+          rooms: convertDisplayRoomName(list.infoRoom)
+        }
+        if (dataFilter.customers.includes(keySearch) || dataFilter.rooms.includes(keySearch)) {
+          listSearch.push(list);
+        }
+        return true
+      })
+      this.setState({
+        listBillOne: listSearch
+      })
+    }
+    else if (name === "delegation") {
+      if (keySearch === '') {
+        this.setState({
+          listBillDelegation: this.state.baseListBillDelegation
+        })
+        return;
       }
-    });
+      const listSearch = [];
+      this.state.baseListBillDelegation.map(list => {
+        if (list.infoRegistration.delegation.nameDelegations.includes(keySearch)) {
+          listSearch.push(list);
+        }
+        return true
+      })
+      this.setState({
+        listBillDelegation: listSearch
+      })
+    }
   }
   render() {
     const { listBillDelegation, listBillOne } = this.state;
@@ -82,7 +120,7 @@ export default class BillHistory extends Component {
                   </div>
                   <div className="col-md-6 col-sm-6 col-6">
                     <label className="search-bar">
-                      Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                      Search: <input type="text" style={{ display: "inline-block", width: "80%" }} name="one" onChange={this.search} className="form-control form-control-sm" />
                     </label>
                   </div>
 
@@ -151,7 +189,7 @@ export default class BillHistory extends Component {
                   </div>
                   <div className="col-md-6 col-sm-6 col-6">
                     <label className="search-bar">
-                      Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                      Search: <input type="text" style={{ display: "inline-block", width: "80%" }} name="delegation" onChange={this.search} className="form-control form-control-sm" />
                     </label>
                   </div>
 
@@ -159,7 +197,7 @@ export default class BillHistory extends Component {
                     <table className="table table-hover table-checkable order-column full-width" id="table-delegation">
                       <thead>
                         <tr>
-                          <th className="center"> Khách đoàn </th>
+                          <th className="center"> Tên đoàn </th>
                           <th className="center"> Ngày nhận phòng </th>
                           <th className="center"> Ngày trả phòng </th>
                           <th className="center"> Ngày thanh toán </th>

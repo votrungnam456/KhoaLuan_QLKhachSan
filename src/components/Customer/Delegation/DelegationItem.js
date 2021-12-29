@@ -22,7 +22,7 @@ export default class DelegationItem extends Component {
             <i className="fa fa-pencil" />
           </Link>
           <Link to={"/detail-delegation/" + delegation.id} className="btn btn-primary btn-tbl-edit btn-xs">
-            <i class="fa fa-info-circle"/>
+            <i className="fa fa-info-circle"/>
           </Link>
           <button onClick={this.onDeleteItem} className="btn btn-tbl-delete btn-xs">
             <i className="fa fa-trash-o " />

@@ -1,5 +1,5 @@
-// const API = "http://107.167.80.37:8000";
-const API = "https://hufi.loca.lt"
+const API = "http://107.167.80.37:8000";
+// const API = "https://hufi.loca.lt"
 const APIRoom = API+"/manager/room"
 const APILogin = API+"/user/login"
 const APITypeRoom = API+"/manager/type-room";

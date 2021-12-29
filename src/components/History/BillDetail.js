@@ -24,7 +24,6 @@ export default class BillDetail extends Component {
   componentDidMount() {
     CallAPI.GET(APIBill + "/" + this.props.match.params.idRegisterForm).then(res => {
       if (res.status === 200) {
-        console.log(res.data);
         this.setState({
           dataBill:res.data,
           listCustomer:res.data.infoRegistration.customers,
@@ -62,7 +61,6 @@ export default class BillDetail extends Component {
   }
   render() {
     const { numberOfChild, bookingDate, listCustomer, note, checkOutDate, checkInDate, price, rooms, totalPrice } = this.state
-    // console.log(rooms);
     return (
       <div className="page-content-wrapper">
         <div className="page-content">

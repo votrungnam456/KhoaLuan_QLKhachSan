@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { APIRoom, APIUseServiceDevice } from '../../constanst/API';
+import { APIUseServiceDevice } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
 import { getNow } from '../../constanst/Methods';
 import ExportExcel from '../Excel/ExportExcel';
@@ -9,29 +9,41 @@ export default class LogServiceDevice extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listRoom: [],
       listLogServiceDevice: [],
+      baseListLogServiceDevice:[],
     }
   }
   componentDidMount() {
     this.loadData();
   }
   loadData = () => {
-    CallAPI.GET(APIRoom).then(res => {
-      if (res.status === 200) {
-        this.setState({
-          listRoom: res.data
-        })
-      }
-    });
     CallAPI.GET(APIUseServiceDevice).then(res => {
       if (res.status === 200) {
-        console.log(res.data);
         this.setState({
-          listLogServiceDevice: res.data
+          listLogServiceDevice: res.data,
+          baseListLogServiceDevice:res.data
         })
       }
     });
+  }
+  search = (ev) => {
+    const keySearch = ev.target.value
+    if (keySearch === '') {
+      this.setState({
+        listLogServiceDevice: this.state.baseListLogServiceDevice
+      })
+      return;
+    }
+    const listSearch = [];
+    this.state.baseListLogServiceDevice.map(list => {
+      if (list.infoCustomer.name.includes(keySearch) || list.infoRoom.nameRoom.includes(keySearch) || list.name.includes(keySearch)|| list.description.includes(keySearch)) {
+        listSearch.push(list);
+      }
+      return true;
+    })
+    this.setState({
+      listLogServiceDevice: listSearch
+    })
   }
   convertDate = (longTime, type = true) => {
     const date = new Date(longTime);
@@ -42,9 +54,9 @@ export default class LogServiceDevice extends Component {
       return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     }
   }
+x
   render() {
     const { listLogServiceDevice } = this.state;
-    console.log(listLogServiceDevice);
     return (
       <div className="page-content-wrapper">
         <div className="page-content">
@@ -68,7 +80,7 @@ export default class LogServiceDevice extends Component {
                   </div>
                   <div className="col-md-6 col-sm-6 col-6">
                     <label className="search-bar">
-                      Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                      Search: <input type="text" style={{ display: "inline-block", width: "80%" }} onChange={this.search} className="form-control form-control-sm" />
                     </label>
                   </div>
 
@@ -96,7 +108,7 @@ export default class LogServiceDevice extends Component {
                                 <td className="center">{value.quantity}</td>
                                 <td className="center">{value.totalPrice}</td>
                                 <td className="center">{this.convertDate(value.time, false)}</td>
-                                <td className="center">{value.description}</td>                              
+                                <td className="center">{value.description}</td>
                               </tr>
                             )
                           }) : (

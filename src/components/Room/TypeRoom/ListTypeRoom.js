@@ -11,16 +11,18 @@ export default class ListTypeRoom extends Component {
         super(props);
         this.state = {
             listTypeRoom: [],
+            baseListTypeRoom:[]
         }
     }
     componentDidMount() {
-        this.loadTypeRoom();
+        this.loadData();
     }
-    loadTypeRoom = () => {
+    loadData = () => {
         CallAPI.GET(APITypeRoom).then(res => {
             if (res.status === 200) {
                 this.setState({
-                    listTypeRoom: res.data
+                    listTypeRoom: res.data,
+                    baseListTypeRoom:res.data
                 })
             }
         });
@@ -28,13 +30,31 @@ export default class ListTypeRoom extends Component {
     deleteItem = (id) => {
         CallAPI.DELETE(APITypeRoom + "/" + id).then(res => {
             if (res.status === 200) {
-                this.loadTypeRoom();
+                this.loadData();
             }
         });
     }
+    search = (ev)=>{
+        const keySearch = ev.target.value
+        if(keySearch === '') {
+            this.setState({
+                listTypeRoom:this.state.baseListTypeRoom
+            })
+            return;
+        }
+        const listSearch = [];
+        this.state.baseListTypeRoom.map(list =>{
+            if(list.nameTypeRoom.includes(keySearch)){
+                listSearch.push(list);
+            }
+            return true;
+        })
+        this.setState({
+            listTypeRoom:listSearch
+        })
+    }
     render() {
         const { listTypeRoom } = this.state;
-
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
@@ -57,7 +77,7 @@ export default class ListTypeRoom extends Component {
                                                 </Link>
                                             </div>
                                             <div className="btn-group">
-                                                <button id="" className="btn btn-success">
+                                                <button onClick={this.loadData} id="" className="btn btn-success">
                                                     Làm mới <i className="fa fa-repeat" />
                                                 </button>
                                             </div>
@@ -68,7 +88,7 @@ export default class ListTypeRoom extends Component {
                                     </div>
                                     <div className="col-md-6 col-sm-6 col-6">
                                         <label className="search-bar">
-                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} onChange={this.search} className="form-control form-control-sm" />
                                         </label>
                                     </div>
                                     <div className="table-scrollable">
@@ -89,8 +109,8 @@ export default class ListTypeRoom extends Component {
                                                             <TypeRoomItem deleteItem={this.deleteItem} typeRoom={value} key={index}></TypeRoomItem>
                                                         )
                                                     }) : (
-                                                        <tr className="spinner-border" role="status">
-                                                            <td className="sr-only">Loading...</td>
+                                                        <tr >
+                                                            <td colSpan={5} className="center">Không tìm thây dữ liệu</td>
                                                         </tr>
                                                     )
                                                 }

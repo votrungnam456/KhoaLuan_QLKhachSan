@@ -10,7 +10,8 @@ export default class ListService extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listService: []
+            listService: [],
+            baseListService:[]
         }
     }
     componentDidMount() {
@@ -20,7 +21,8 @@ export default class ListService extends Component {
         CallAPI.GET(APIService).then(res => {
             if (res.status === 200) {
                 this.setState({
-                    listService: res.data
+                    listService: res.data,
+                    baseListService:res.data
                 })
             }
         });
@@ -32,7 +34,25 @@ export default class ListService extends Component {
             }
         });
     }
-
+    search = (ev) => {
+        const keySearch = ev.target.value
+        if (keySearch === '') {
+            this.setState({
+                listService: this.state.baseListService
+            })
+            return;
+        }
+        const listSearch = [];
+        this.state.baseListService.map(list => {
+            if (list.nameService.includes(keySearch)) {
+                listSearch.push(list);
+            }
+            return true
+        })
+        this.setState({
+            listService: listSearch
+        })
+    }
 
     render() {
         const { listService } = this.state;
@@ -69,7 +89,7 @@ export default class ListService extends Component {
                                     </div>
                                     <div className="col-md-6 col-sm-6 col-6">
                                         <label className="search-bar">
-                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                                            Search: <input type="text" style={{ display: "inline-block", width: "80%" }} onChange={this.search} className="form-control form-control-sm" />
                                         </label>
                                     </div>
 
@@ -89,8 +109,8 @@ export default class ListService extends Component {
                                                             <ServiceItem deleteItem={this.deleteItem} service={value} key={index}></ServiceItem>
                                                         )
                                                     }) : (
-                                                        <tr className="spinner-border" role="status">
-                                                            <td className="sr-only">Loading...</td>
+                                                        <tr >
+                                                            <td colSpan={3} className="center">Không tìm thây dữ liệu</td>
                                                         </tr>
                                                     )
                                                 }

@@ -40,12 +40,21 @@ export default class BookingDetailDelegation extends Component {
     })
     CallAPI.GET(APIDelegation).then(res => {
       if (res.status === 200) {
-        console.log(this.state.listRoomId);
-        console.log(res.data);
+        const lengthId = this.state.listRoomId.length;
         const listFilterDelegation = [];
-        this.setState({
-          listDelegation: res.data
+        res.data.map(data => {
+          if (data.numberOfPeople + 1 <= lengthId * 2 && data.numberOfPeople + 1 >= lengthId) {
+            listFilterDelegation.push(data);
+          }
+          return true;
         })
+        if (listFilterDelegation.length === 0) {
+          alert('Không có đoàn khách nào có số lượng đủ yêu cầu theo số phòng');
+        } else {
+          this.setState({
+            listDelegation: listFilterDelegation
+          })
+        }
       }
     });
     await this.getData();
@@ -175,11 +184,11 @@ export default class BookingDetailDelegation extends Component {
                       <label className="">Đoàn khách</label>
                       <select name="idDelegation" value={idDelegation} onChange={this.onChange} className="mdl-textfield__input">
                         <option value="">Chọn đoàn khách</option>
-                        {listDelegation.length > 0 ? listDelegation.map((delegation, index) => {
+                        {listDelegation.map((delegation, index) => {
                           return (
                             <option key={index} value={delegation.id}>{delegation.nameDelegations}</option>
                           )
-                        }) : <option value="">Loading data....</option>}
+                        })}
                       </select>
                     </div>
                   </div>
@@ -220,7 +229,7 @@ export default class BookingDetailDelegation extends Component {
                   </div>
                   <div className="col-lg-4 p-t-20">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                      <input className="mdl-textfield__input" type="number" onChange={this.onChange} name="numbOfAdult" value={numbOfAdult} disabled={true} />
+                      <input className="mdl-textfield__input" type="number" onChange={this.onChange} name="numbOfAdult" value={numbOfAdult === 0 ? 0 : numbOfAdult + 1} disabled={true} />
                     </div>
                   </div>
                 </div>
@@ -292,8 +301,8 @@ export default class BookingDetailDelegation extends Component {
                               </tr>
                             )
                           }) : (
-                            <tr className="spinner-border" role="status">
-                              <td className="sr-only">Loading...</td>
+                            <tr >
+                              <td colSpan={5} className="center">Không tìm thây dữ liệu</td>
                             </tr>
                           )
                         }

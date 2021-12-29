@@ -22,7 +22,6 @@ export default class CheckOutRoomDetail extends Component {
   componentDidMount() {
     CallAPI.GET(APICheckOutRoom + "/" + this.props.match.params.idRegisterForm).then(res => {
       if (res.status === 200) {
-        console.log(res.data);
         this.setState({
           listCustomer: res.data.infoRegistration.customers,
           numberOfChild: res.data.infoRegistration.numberOfChild,

@@ -10,7 +10,8 @@ export default class ListRole extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listRole: []
+      listRole: [],
+      baseListRole: []
     }
   }
   componentDidMount() {
@@ -20,7 +21,8 @@ export default class ListRole extends Component {
     CallAPI.GET(APIRole).then(res => {
       if (res.status === 200) {
         this.setState({
-          listRole: res.data
+          listRole: res.data,
+          baseListRole: res.data
         })
       }
     });
@@ -31,6 +33,25 @@ export default class ListRole extends Component {
         this.loadData();
       }
     });
+  }
+  search = (ev) => {
+    const keySearch = ev.target.value
+    if (keySearch === '') {
+      this.setState({
+        listRole: this.state.baseListRole
+      })
+      return;
+    }
+    const listSearch = [];
+    this.state.baseListRole.map(list => {
+      if (list.nameRole.includes(keySearch) || list.codeRole.includes(keySearch)) {
+        listSearch.push(list);
+      }
+      return true
+    })
+    this.setState({
+      listRole: listSearch
+    })
   }
   render() {
     const { listRole } = this.state;
@@ -67,7 +88,7 @@ export default class ListRole extends Component {
                   </div>
                   <div className="col-md-6 col-sm-6 col-6">
                     <label className="search-bar">
-                      Search: <input type="text" style={{ display: "inline-block", width: "80%" }} className="form-control form-control-sm" />
+                      Search: <input type="text" style={{ display: "inline-block", width: "80%" }} onChange={this.search} className="form-control form-control-sm" />
                     </label>
                   </div>
 
@@ -87,8 +108,8 @@ export default class ListRole extends Component {
                               <RoleItem deleteItem={this.deleteItem} role={value} key={index}></RoleItem>
                             )
                           }) : (
-                            <tr className="spinner-border" role="status">
-                              <td className="sr-only">Loading...</td>
+                            <tr>
+                              <td colSpan={3} className="center">Không tìm thây dữ liệu</td>
                             </tr>
                           )
                         }

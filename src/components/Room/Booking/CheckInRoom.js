@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Title from '../../Home/Title'
-import { APIBookingRoom,APICancel,APICheckInRoom} from '../../../constanst/API';
+import { APIBookingRoom, APICancel, APICheckInRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 import { Link } from 'react-router-dom';
-import { convertDate,convertDisplayCustomer } from '../../../constanst/Methods';
+import { convertDate, convertDisplayCustomer } from '../../../constanst/Methods';
 export default class CheckInRoom extends Component {
     constructor(props) {
         super(props)
@@ -11,8 +11,10 @@ export default class CheckInRoom extends Component {
             listRegister: [],
             listBookingOne: [],
             listBookingDelegation: [],
-            listCustomer:[],
-            idCustomer:""
+            listCustomer: [],
+            idCustomer: "",
+            baseListBookingOne: [],
+            baseListBookingDelegation: [],
         }
     }
     onChange = (ev) => {
@@ -31,13 +33,15 @@ export default class CheckInRoom extends Component {
     getData = async () => {
         this.setState({
             listBookingDelegation: [],
-            listBookingOne: []
+            listBookingOne: [],
+            baseListBookingOne: [],
+            baseListBookingDelegation: [],
         })
         await CallAPI.GET(APIBookingRoom).then(res => {
             if (res.status === 200) {
                 let filterData = [];
-                res.data.map(data =>{
-                    if(data.status === 0){
+                res.data.map(data => {
+                    if (data.status === 0) {
                         filterData.push(data);
                     }
                     return true;
@@ -53,68 +57,89 @@ export default class CheckInRoom extends Component {
         this.state.listRegister.map(x => {
             if (x.type === 0) {
                 this.setState({
-                    listBookingDelegation: [...this.state.listBookingDelegation, x]
+                    listBookingDelegation: [...this.state.listBookingDelegation, x],
+                    baseListBookingDelegation:[...this.state.baseListBookingDelegation, x],
                 })
             } else {
                 this.setState({
-                    listBookingOne: [...this.state.listBookingOne, x]
+                    listBookingOne: [...this.state.listBookingOne, x],
+                    baseListBookingOne:[...this.state.baseListBookingOne, x],
                 })
             }
             return true;
         })
     }
     checkInRoom = (idRegister) => {
-        CallAPI.POST(APICheckInRoom + idRegister).then(res=>{
-            if(res.status === 200){
+        CallAPI.POST(APICheckInRoom + idRegister).then(res => {
+            if (res.status === 200) {
                 alert("Nhận phòng thành công");
                 this.getData();
             }
-            else{
+            else {
                 alert("Thất bại")
                 this.getData();
             }
         })
     }
     cancelRoom = (idRegister) => {
-        CallAPI.POST(APICancel + idRegister).then(res=>{
-            if(res.status === 200){
+        CallAPI.POST(APICancel + idRegister).then(res => {
+            if (res.status === 200) {
                 alert("Huỷ phòng thành công");
                 this.getData();
             }
-            else{
+            else {
                 alert("Thất bại")
                 this.getData();
             }
         })
     }
+    search = (ev)=>{
+        const keySearch = ev.target.value
+        const name = ev.target.name;
+        if(name === "one"){
+            if(keySearch === '') {
+                this.setState({
+                    listBookingOne:this.state.baseListBookingOne
+                })
+                return;
+            }
+            const listSearch = [];
+            this.state.baseListBookingOne.map(list =>{
+                const customer = convertDisplayCustomer(list.customers)
+                if(customer.includes(keySearch)){
+                    listSearch.push(list);
+                }
+                return true
+            })
+            this.setState({
+                listBookingOne:listSearch
+            })
+        }
+        else if(name === "delegation"){
+            if(keySearch === '') {
+                this.setState({
+                    listBookingDelegation:this.state.baseListBookingDelegation
+                })
+                return;
+            }
+            const listSearch = [];
+            this.state.baseListBookingDelegation.map(list =>{
+                if(list.delegation.nameManager.includes(keySearch)){
+                    listSearch.push(list);
+                }
+                return true
+            })
+            this.setState({
+                listBookingDelegation:listSearch
+            })
+        }
+    }
     render() {
-        const { listBookingOne,listBookingDelegation,idCustomer,listCustomer } = this.state
+        const { listBookingOne, listBookingDelegation} = this.state
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
                     <Title title="Nhận phòng"></Title>
-                    <div className="row">
-                        <div className="col-md-4">
-                            <label>Tên khách hàng: </label>
-                            <select name="idCustomer" value={idCustomer} onChange={this.onChange} className="mdl-textfield__input">
-                                {
-                                    listCustomer.map((customer,index)=>{
-                                        return(
-                                            <option key={index} value={customer.id}>{customer.name}</option>
-                                        )
-                                    })
-                                }
-                            </select>
-                        </div>
-                        <div className="col-md-4">
-                            <label>CMND: </label>
-                            <input className="form-control" type="text" />
-                        </div>
-                        <div className="col-md-4">
-                            <button className="btn btn-primary"> Tìm kiếm </button>
-                        </div>
-                    </div>
-                    <br />
                     <div className="row">
                         <div className="col-md-12">
                             <div className="card card-box">
@@ -125,6 +150,13 @@ export default class CheckInRoom extends Component {
                                     </div>
                                 </div>
                                 <div className="card-body ">
+                                    <div className="row">
+                                        <div className="col-md-6 col-sm-6 col-6">
+                                            <label className="search-bar">
+                                                Search: <input type="text" style={{ display: "inline-block", width: "80%" }} name="one" onChange={this.search} className="form-control form-control-sm" />
+                                            </label>
+                                        </div>
+                                    </div>
                                     <div className="table-scrollable">
                                         <table className="table table-hover table-checkable order-column full-width" id="table">
                                             <thead>
@@ -150,13 +182,13 @@ export default class CheckInRoom extends Component {
                                                                 <td className="center">{convertDate(value.checkOutDate)}</td>
                                                                 <td className="center">{convertDisplayCustomer(value.customers)}</td>
                                                                 <td className="center">
-                                                                    <button onClick={()=> this.checkInRoom(value.idRegistration)} className="btn btn-success btn-tbl-edit btn-xs">
+                                                                    <button onClick={() => this.checkInRoom(value.idRegistration)} className="btn btn-success btn-tbl-edit btn-xs">
                                                                         <i title="Nhận phòng" className="fa fa-plus" />
                                                                     </button>
-                                                                    <Link to={"/check-in-room/detail/"+ value.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
+                                                                    <Link to={"/check-in-room/detail/" + value.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
                                                                         <i className="fa fa-info" />
                                                                     </Link>
-                                                                    <button onClick={()=>this.cancelRoom(value.idRegistration)} className="btn btn-tbl-delete btn-xs">
+                                                                    <button onClick={() => this.cancelRoom(value.idRegistration)} className="btn btn-tbl-delete btn-xs">
                                                                         <i className="t-close btn-color fa fa-times" />
                                                                     </button>
                                                                 </td>
@@ -183,6 +215,13 @@ export default class CheckInRoom extends Component {
                                     </div>
                                 </div>
                                 <div className="card-body ">
+                                <div className="row">
+                                        <div className="col-md-6 col-sm-6 col-6">
+                                            <label className="search-bar">
+                                                Search: <input type="text" style={{ display: "inline-block", width: "80%" }} onChange={this.search} name="delegation" className="form-control form-control-sm" />
+                                            </label>
+                                        </div>
+                                    </div>
                                     <div className="table-scrollable">
                                         <table className="table table-hover table-checkable order-column full-width" id="table">
                                             <thead>
@@ -208,13 +247,13 @@ export default class CheckInRoom extends Component {
                                                                 <td className="center">{convertDate(value.checkOutDate)}</td>
                                                                 <td className="center">{value.delegation.nameManager}</td>
                                                                 <td className="center">
-                                                                    <button onClick={()=>this.checkInRoom(value.idRegistration)}  className="btn btn-success btn-tbl-edit btn-xs">
+                                                                    <button onClick={() => this.checkInRoom(value.idRegistration)} className="btn btn-success btn-tbl-edit btn-xs">
                                                                         <i title="Nhận phòng" className="fa fa-plus" />
                                                                     </button>
-                                                                    <Link to={"/check-in-room/detail/"+ value.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
+                                                                    <Link to={"/check-in-room/detail/" + value.idRegistration} className="btn btn-primary btn-tbl-edit btn-xs">
                                                                         <i className="fa fa-info" />
                                                                     </Link>
-                                                                    <button onClick={()=>this.cancelRoom(value.idRegistration)} className="btn btn-tbl-delete btn-xs">
+                                                                    <button onClick={() => this.cancelRoom(value.idRegistration)} className="btn btn-tbl-delete btn-xs">
                                                                         <i className="t-close btn-color fa fa-times" />
                                                                     </button>
                                                                 </td>

@@ -19,7 +19,6 @@ export default class RoomBillItem extends Component {
   componentDidMount() {
     CallAPI.GET(APIRoom + "/" + this.props.idRoom).then(res => {
       if (res.status === 200) {
-        console.log(res.data);
         this.setState({
           description: res.data.description,
           details: res.data.details,
@@ -43,9 +42,8 @@ export default class RoomBillItem extends Component {
     return result;
   }
   render() {
-    const { description, housekeepingOrder, nameEmployee, nameRoom, nameTypeRoom, status, details, listCustomer } = this.state;
+    const { description, housekeepingOrder, nameEmployee, nameRoom, nameTypeRoom, details } = this.state;
     const { logCustomer,customers } = this.props;
-    console.log(logCustomer)
     return (
       <div className="col-sm-12">
         <div className="card-box">
