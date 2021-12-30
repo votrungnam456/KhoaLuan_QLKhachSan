@@ -40,7 +40,6 @@ export default class BookingRoom extends Component {
     loadData = () => {
         CallAPI.GET(APIRoom).then(res => {
             if (res.status === 200) {
-
                 this.setState({
                     listRoom: res.data
                 })

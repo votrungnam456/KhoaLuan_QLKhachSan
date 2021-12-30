@@ -49,6 +49,7 @@ export default class CheckOutRoomDetail extends Component {
   }
   render() {
     const { numberOfChild, bookingDate, listCustomer, note, checkOutDate, checkInDate, price, rooms, totalPrice } = this.state
+    console.log(rooms);
     return (
       <div className="page-content-wrapper">
         <div className="page-content">
@@ -161,7 +162,6 @@ export default class CheckOutRoomDetail extends Component {
                 <div className="card-body row">
                   {rooms.map((room, index) => {
                     return (
-                      // <RoomDetailItem key={index} idRoom={room.id}></RoomDetailItem>
                       <div key={index} className="col-sm-12">
                         <div className="card-box">
                           <div className="card-head">

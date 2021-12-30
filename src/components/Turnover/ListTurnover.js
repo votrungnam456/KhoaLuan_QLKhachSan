@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { APITurnover, APIRoom } from '../../constanst/API';
+import { APITurnover, APIRoom,APIBill } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
 import Title from '../Home/Title';
 import { convertDate2, getNow, convertDate } from '../../constanst/Methods';
@@ -15,6 +15,8 @@ export default class ListTurnover extends Component {
       total: 0,
       listRoom : [],
       idRoom:"",
+      listBill:[],
+      baseListBill:[],
     }
   }
   componentDidMount = ()=>{
@@ -60,6 +62,33 @@ export default class ListTurnover extends Component {
         })
       }
     })
+    CallAPI.GET(APIBill).then(res=>{
+      if(res.status === 200){
+        console.log(res.data);
+        this.setState({
+          baseListBill:res.data
+        })
+      }
+    })
+  }
+  searchFE = (type) =>{
+    const {baseListBill,idRoom} = this.state;
+    const listSearch = [];
+    switch (type) {
+      case 'name':
+        baseListBill.map(bill =>{
+          let check = false;
+          bill.infoRoom.map(room =>{
+            if(room.idRoom === idRoom){
+              // listSearch.push()
+            }
+          })
+        })
+        break;
+    
+      default:
+        break;
+    }
   }
   render() {
     const { listTurnover, checkInDate, checkOutDate, total,listRoom,idRoom } = this.state;

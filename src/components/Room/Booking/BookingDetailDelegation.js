@@ -43,7 +43,7 @@ export default class BookingDetailDelegation extends Component {
         const lengthId = this.state.listRoomId.length;
         const listFilterDelegation = [];
         res.data.map(data => {
-          if (data.numberOfPeople + 1 <= lengthId * 2 && data.numberOfPeople + 1 >= lengthId) {
+          if (data.numberOfPeople <= lengthId * 2 && data.numberOfPeople >= lengthId) {
             listFilterDelegation.push(data);
           }
           return true;
@@ -229,7 +229,7 @@ export default class BookingDetailDelegation extends Component {
                   </div>
                   <div className="col-lg-4 p-t-20">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                      <input className="mdl-textfield__input" type="number" onChange={this.onChange} name="numbOfAdult" value={numbOfAdult === 0 ? 0 : numbOfAdult + 1} disabled={true} />
+                      <input className="mdl-textfield__input" type="number" onChange={this.onChange} name="numbOfAdult" value={numbOfAdult} disabled={true} />
                     </div>
                   </div>
                 </div>
