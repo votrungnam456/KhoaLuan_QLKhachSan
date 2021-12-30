@@ -1,75 +1,90 @@
-import React, { Component } from 'react'
-import { APIRoom,APIBookingRoom } from '../../../constanst/API';
+import React, { Component } from "react";
+import {
+  APIRoom,
+  APIBookingRoom,
+  APIChangeRoom,
+  APIRoomOld,
+  APIRoomNew,
+} from "../../../constanst/API";
 import * as CallAPI from "../../../constanst/CallAPI";
-import Title from '../../Home/Title';
+import Title from "../../Home/Title";
 
 export default class ChangeRoom extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      listRoom: [],
-      listRegistation: [],
-      idRoomOld:'',
-      idRoomNew:'',
-    }
+      listRoomNew: [],
+      listRoomOld: [],
+      idRoomOld: "",
+      idRoomNew: "",
+      idRegister: "",
+      idCustomer: "",
+    };
   }
   componentDidMount() {
     this.getData();
   }
   getData = async () => {
-    this.setState({
-      listRoomHasCheckIn: [],
-    })
-    CallAPI.GET(APIRoom).then(res => {
+    CallAPI.GET(APIRoomOld).then((res) => {
       if (res.status === 200) {
         this.setState({
-          listRoom: res.data
-        })
-      }
-      else {
+          listRoomOld: res.data,
+        });
+      } else {
         alert("get data device failed");
       }
-    })
-    await CallAPI.GET(APIBookingRoom).then(res => {
+    });
+    await CallAPI.GET(APIRoomNew).then((res) => {
       if (res.status === 200) {
-        let filterData = [];
-        res.data.map(data => {
-          if (data.status === 1) {
-            filterData.push(data);
-          }
-          return true;
-        })
         this.setState({
-          listFilterData: filterData
-        })
-      }
-      else {
+          listRoomNew: res.data,
+        });
+      } else {
         alert("Get data failed");
       }
-    })
-    this.state.listFilterData.map(data => {
-      data.rooms.map(room => {
-        this.setState({
-          listRoom: [...this.state.listRoom, room]
-        })
+    });
+  };
+  changeRoomAction = () => {
+    const { listRoomNew, listRoomOld, idRoomNew, idRoomOld } = this.state;
+    
+    if (idRoomNew === "") {
+      alert("Vui lòng chọn phòng mới");
+    } else if (idRoomOld === "") {
+      alert("Vui lòng chọn phòng cũ");
+    } else {
+      //Change room
+      let idRegister = "";
+      listRoomOld.map(item => {
+        let index = item.infoRegistration.rooms.findIndex(itemRoom => itemRoom.id === idRoomOld)
+        if (index !== -1) {
+          idRegister = item.infoRegistration.idRegistration;
+        }
         return true;
       })
-      return true;
-    })
-  }
-  changeRoomAction = () => {
-   
-    
-  }
+      const data = {
+        idRegistration: idRegister,
+        idRoomOld,
+        idRoomNew,
+      }
+      console.log(data);
+      CallAPI.POST(APIChangeRoom, data).then(res => {
+        if (res.status === 200) {
+          alert("Thay đổi phòng thành công");
+        } else {
+          alert("Thay đổi phòng thất bại");
+        }
+      })
+    }
+  };
   onChange = (ev) => {
     const name = ev.target.name;
     const value = ev.target.value;
     this.setState({
-      [name]: value
-    })
-  }
+      [name]: value,
+    });
+  };
   render() {
-    const { listRoom, listCustomers, quantity, listDevice, idCustomer, idRoom, idType } = this.state;
+    const { listRoomNew, listRoomOld, idRoomNew, idRoomOld } = this.state;
     return (
       <div className="page-content-wrapper">
         <div className="page-content">
@@ -78,42 +93,63 @@ export default class ChangeRoom extends Component {
             <div className="col-sm-12">
               <div className="card-box">
                 <div className="card-header ">
-                  <p className="text-center font-bold" style={{ fontSize: "20px" }}>Đổi phòng</p>
+                  <p
+                    className="text-center font-bold"
+                    style={{ fontSize: "20px" }}
+                  >
+                    Đổi phòng
+                  </p>
                 </div>
                 <div className="card-body ">
                   <div className="row">
                     <div className="col-6 p-t-20">
-                      <label className="">Phòng</label>
-                      <select name="idRoom" onChange={this.onChange} value={idRoom} className="mdl-textfield__input">
+                      <label className="">Phòng cũ</label>
+                      <select
+                        name="idRoomOld"
+                        onChange={this.onChange}
+                        value={idRoomOld}
+                        className="mdl-textfield__input"
+                      >
                         <option value="">Chọn phòng</option>
-                        {/* {
-                          listRoom.map((room, index) => {
-                            return (
-                              <option key={index} value={room.id}>{room.nameRoom}</option>
-                            )
-                          })
-                        } */}
+                        {listRoomOld.map((room, index) => {
+                          return (
+                            <option key={index} value={room.id}>
+                              {room.nameRoom}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="col-6 p-t-20">
-                      <label className="">Khách hàng</label>
-                      <select name="idCustomer" onChange={this.onChange} value={idCustomer} className="mdl-textfield__input">
-                        <option value="">Chọn khách hàng</option>
-                        {/* {
-                          listCustomers.map((customer, index) => {
-                            if(customer){
-                              return (
-                                <option key={index} value={customer.id}>{customer.name}</option>
-                              )
-                            }
-                            return true;
-                          })
-                        } */}
+                      <label className="">Phòng mới</label>
+                      <select
+                        name="idRoomNew"
+                        onChange={this.onChange}
+                        value={idRoomNew}
+                        className="mdl-textfield__input"
+                      >
+                        <option value="">Chọn phòng</option>
+                        {listRoomNew.map((room, index) => {
+                          if (room) {
+                            return (
+                              <option key={index} value={room.id}>
+                                {room.nameRoom}
+                              </option>
+                            );
+                          }
+                          return true;
+                        })}
                       </select>
                     </div>
                   </div>
                   <div className="col-lg-12 p-t-20 text-center">
-                    <button onClick={this.changeRoomAction} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Đổi phòng</button>
+                    <button
+                      onClick={this.changeRoomAction}
+                      type="button"
+                      className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink"
+                    >
+                      Đổi phòng
+                    </button>
                   </div>
                 </div>
               </div>
@@ -121,6 +157,6 @@ export default class ChangeRoom extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

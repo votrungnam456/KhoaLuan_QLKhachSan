@@ -207,7 +207,7 @@ export default class CheckOutRoomDetail extends Component {
                                       <tr key={indexTemp} className="center">
                                         <td>{log.customer.name}</td>
                                         <td>{log.type === 1 ? "Dịch vụ" : "Thiết bị"}</td>
-                                        <td>{log.name}</td>
+                                        <td>{log.name === '' ? "Đổi phòng" : log.name}</td>
                                         <td>{log.totalPrice}</td>
                                         <td>{log.quantity}</td>
                                         <td>{convertDate(log.time, false)}</td>

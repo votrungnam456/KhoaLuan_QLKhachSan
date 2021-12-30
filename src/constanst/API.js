@@ -1,6 +1,9 @@
-const API = "http://107.167.80.37:8000";
+// const API = "http://107.167.80.37:8000";
+const API = "http://localhost:8000";
 // const API = "https://hufi.loca.lt"
 const APIRoom = API+"/manager/room"
+const APIRoomOld = API+"/manager/room/old"
+const APIRoomNew = API+"/manager/room/new"
 const APILogin = API+"/user/login"
 const APITypeRoom = API+"/manager/type-room";
 const APIEmployee = API+"/user/"
@@ -15,7 +18,8 @@ const APICheckInRoom = API + "/manager/check-in/"
 const APICancel = API + "/manager/cancel/"
 const APICheckOutRoom = API + "/manager/check-out/"
 const APIUseServiceDevice = API + "/manager/use/"
+const APIChangeRoom = API + "/manager/use/change"
 const APIBill = API + "/manager/bill/"
 const APITurnover = API + "/manager/turnover"
 const APIClean = API + "/manager/scheduling"
-export {APIClean,APITurnover,APIBill,APICancel,APICheckInRoom,APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation,APIBookingRoom,APIUseServiceDevice,APICheckOutRoom};
+export {APIClean,APITurnover,APIBill,APICancel,APICheckInRoom,APIRoom,APITypeRoom,APIService,APILogin,APIEmployee,APIDevice,APICustomer,APIDetailType,APIRole,APIDelegation,APIBookingRoom,APIUseServiceDevice,APICheckOutRoom, APIRoomOld, APIRoomNew, APIChangeRoom};
