@@ -79,7 +79,11 @@ export default class CheckInRoom extends Component {
                 alert("Thất bại")
                 this.getData();
             }
-        })
+        }).catch(err=>{
+            if(err.response.data.code === -24){
+              alert("Chưa tới thời gian nhận phòng !");
+            } 
+          })
     }
     cancelRoom = (idRegister) => {
         CallAPI.POST(APICancel + idRegister).then(res => {

@@ -43,6 +43,10 @@ export default class CheckInRoomDetail extends Component {
         else{
           alert("Thất bại, có lỗi trong quá trình xử lý")
         }
+    }).catch(err=>{
+      if(err.response.data.code === -24){
+        alert("Chưa tới thời gian nhận phòng !");
+      } 
     })
 }
   convertDate = (longTime, type = true) => {

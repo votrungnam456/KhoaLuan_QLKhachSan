@@ -163,6 +163,12 @@ export default class BookingDetailDelegation extends Component {
             message: 4
           })
         }
+      }).catch(err=>{
+        if(err.response.data.code === -25){
+          alert("Phòng đã được đặt !");
+        } else if(err.response.data.code === -26) {
+          alert("Khách hàng đã booking !");
+        }
       })
     }
   }

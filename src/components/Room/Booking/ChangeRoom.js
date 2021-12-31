@@ -73,6 +73,11 @@ export default class ChangeRoom extends Component {
         } else {
           alert("Thay đổi phòng thất bại");
         }
+      }).catch(err=>{
+        if(err.response.data.code === -25){
+          console.log("long");
+          alert("Phòng mới đã được đặt !");
+        }
       })
     }
   };
