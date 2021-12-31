@@ -361,6 +361,7 @@ export default class Sidebar extends Component {
     }
     render() {
         const { user } = this.props
+        console.log(user)
         return (
             <div className="sidebar-container">
                 <div className="sidemenu-container navbar-collapse collapse fixed-menu">
@@ -394,7 +395,7 @@ export default class Sidebar extends Component {
                             <li className="menu-heading">
                                 <span>Menu</span>
                             </li>
-                            {user.codeRole === "ADMIN" ? this.loadSideBar(sideBarQL) : user.codeRole === "USER" ? this.loadSideBar(sideBarNVTiepTan) : user.codeRole === "USER_WAREHOUSE" ? this.loadSideBar(sideBarNVKho):""}
+                            {user.codeRole === "ADMIN" ? this.loadSideBar(sideBarQL) : user.codeRole === "USER_RECEPTIONISTS" ? this.loadSideBar(sideBarNVTiepTan) : user.codeRole === "USER_WAREHOUSE" ? this.loadSideBar(sideBarNVKho):""}
                         </ul>
                     </div>
                 </div>

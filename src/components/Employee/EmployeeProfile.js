@@ -130,7 +130,7 @@ export default class EmployeeProfile extends Component {
                                         </div>
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">
-                                        <Link to="/edit-employee" type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa thông tin nhân viên</Link>
+                                        <Link to={"/edit-employee/"+this.props.match.params.idCustomer} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa thông tin nhân viên</Link>
                                     </div>
                                 </div>
                             </div>
