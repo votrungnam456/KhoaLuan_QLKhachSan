@@ -155,7 +155,7 @@ export default class CheckOutRoomDetail extends Component {
                   </div>
                   <div className="col-lg-6 p-t-20">
                     <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width text-center">
-                      <label className="">Số tiền đã trả trước:{price} đồng</label>
+                      <label className="">Số tiền:{price} đồng</label>
                     </div>
                   </div>
                 </div>

@@ -51,12 +51,12 @@ export default class CleanOrderRoom extends Component {
   updateSchedule = () =>{
     CallAPI.POST(APIClean + "/save").then(res=>{
       res.status === 200 ? alert("update thông tin thành công") : alert("update thông tin thất bại");
+      this.loadData();
     }).catch(err=>{
       if(err.response.data.code === -23){
         alert("Thông tin chỉ được cập nhật 1 lần trong ngày");
       }
     })
-    this.loadData();
   }
   render() {
     const { listRoom } = this.state;

@@ -14,9 +14,9 @@ export default class ListTurnover extends Component {
       checkOutDate: "",
       total: 0,
       listRoom : [],
-      idRoom:"",
-      listBill:[],
-      baseListBill:[],
+      nameRoom:"",
+      listTurnoverName:[],
+      baseListTurnover:[],
     }
   }
   componentDidMount = ()=>{
@@ -62,27 +62,30 @@ export default class ListTurnover extends Component {
         })
       }
     })
-    CallAPI.GET(APIBill).then(res=>{
+    CallAPI.POST(APITurnover,{
+      dayStart: "",
+      dayEnd: "",
+    }).then(res=>{
       if(res.status === 200){
-        console.log(res.data);
         this.setState({
-          baseListBill:res.data
+          baseListTurnover:res.data
         })
       }
     })
   }
   searchFE = (type) =>{
-    const {baseListBill,idRoom} = this.state;
+    const {baseListTurnover,nameRoom} = this.state;
     const listSearch = [];
     switch (type) {
       case 'name':
-        baseListBill.map(bill =>{
-          let check = false;
-          bill.infoRoom.map(room =>{
-            if(room.idRoom === idRoom){
-              // listSearch.push()
-            }
-          })
+        baseListTurnover.map(room =>{
+          if(room.nameRoom === nameRoom){
+            listSearch.push(room)
+          }
+          return true;
+        })
+        this.setState({
+          listTurnoverName:listSearch
         })
         break;
     
@@ -91,7 +94,7 @@ export default class ListTurnover extends Component {
     }
   }
   render() {
-    const { listTurnover, checkInDate, checkOutDate, total,listRoom,idRoom } = this.state;
+    const { listTurnover, checkInDate, checkOutDate, total,listRoom,nameRoom,listTurnoverName } = this.state;
     return (
       <div className="page-content-wrapper">
         <div className="page-content">
@@ -188,19 +191,19 @@ export default class ListTurnover extends Component {
                   <div className="col-md-12 col-sm-12 col-12">
                     <div className="row">
                       <div className="col-md-4">
-                      <select name="idRoom" onChange={this.onChange} value={idRoom} className="mdl-textfield__input">
+                      <select name="nameRoom" onChange={this.onChange} value={nameRoom} className="mdl-textfield__input">
                         <option value="">Chọn phòng</option>
                         {
                           listRoom.map((room, index) => {
                             return (
-                              <option key={index} value={room.id}>{room.nameRoom}</option>
+                              <option key={index} value={room.nameRoom}>{room.nameRoom}</option>
                             )
                           })
                         }
                       </select>
                       </div>
                       <div className="col-md-4">
-                        <button onClick={this.search} className="btn btn-primary"> Tìm kiếm </button>
+                        <button onClick={()=>this.searchFE('name')} className="btn btn-primary"> Tìm kiếm </button>
                       </div>
                     </div>
                   </div>
@@ -219,7 +222,7 @@ export default class ListTurnover extends Component {
                       </thead>
                       <tbody>
                         {
-                          listTurnover.length > 0 ? listTurnover.map((turnover, index) => {
+                          listTurnoverName.length > 0 ? listTurnoverName.map((turnover, index) => {
                             return (
                               <tr key={index} className="center">
                                 <td>{turnover.nameRoom}</td>
