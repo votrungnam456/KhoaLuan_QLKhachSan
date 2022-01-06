@@ -47,6 +47,7 @@ export default class ListEmployee extends Component {
             if(list.nameEmployee.includes(keySearch)){
                 listSearch.push(list);
             }
+            return true;
         })
         this.setState({
             listEmployee:listSearch

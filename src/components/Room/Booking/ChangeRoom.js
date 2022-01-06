@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import {
-  APIRoom,
-  APIBookingRoom,
   APIChangeRoom,
   APIRoomOld,
   APIRoomNew,
@@ -45,7 +43,7 @@ export default class ChangeRoom extends Component {
     });
   };
   changeRoomAction = () => {
-    const { listRoomNew, listRoomOld, idRoomNew, idRoomOld } = this.state;
+    const { listRoomOld, idRoomNew, idRoomOld } = this.state;
     
     if (idRoomNew === "") {
       alert("Vui lòng chọn phòng mới");
@@ -66,7 +64,6 @@ export default class ChangeRoom extends Component {
         idRoomOld,
         idRoomNew,
       }
-      console.log(data);
       CallAPI.POST(APIChangeRoom, data).then(res => {
         if (res.status === 200) {
           alert("Thay đổi phòng thành công");
@@ -75,7 +72,6 @@ export default class ChangeRoom extends Component {
         }
       }).catch(err=>{
         if(err.response.data.code === -25){
-          console.log("long");
           alert("Phòng mới đã được đặt !");
         }
       })

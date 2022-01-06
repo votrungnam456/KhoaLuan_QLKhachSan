@@ -18,7 +18,7 @@ export default class CleanScheduling extends Component {
     }
   }
   componentDidMount() {
-    this.loadData(true);
+    this.loadData();
   }
   onChange = (ev) => {
     this.setState({
@@ -30,11 +30,10 @@ export default class CleanScheduling extends Component {
       [name]: value
     })
   }
-  loadData = (firstRun = false) => {
+  loadData = () => {
     const data = {
-      day: '', idEmployee: '', idRoom: ''
+      day: getNow(), idEmployee: '', idRoom: ''
     }
-    if (firstRun) { data.day = getNow() }
     CallAPI.POST(APIClean, data).then(res => {
       if (res.status === 200) {
         this.setState({

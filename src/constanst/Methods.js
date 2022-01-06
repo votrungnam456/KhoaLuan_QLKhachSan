@@ -47,6 +47,18 @@ const convertStatus = (status) => {
       break;
   }
 }
+const convertStatusClean = (status) => {
+  switch (status) {
+    case -1:
+      return "Cần dọn dẹp"
+    case 0:
+      return "Đang dọn dẹp"
+    case 1:
+      return "Đã dọn dẹp"
+    default:
+      break;
+  }
+}
 const getNow = (type = false) => {
   const date = new Date();
   let now = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
@@ -56,4 +68,4 @@ const getNow = (type = false) => {
   return now;
 }
 
-export { convertDate, convertDisplayCustomer, convertStatus, convertDisplayRoomName, convertDate2, getNow }
+export { convertDate, convertDisplayCustomer, convertStatus, convertDisplayRoomName, convertDate2, getNow,convertStatusClean }

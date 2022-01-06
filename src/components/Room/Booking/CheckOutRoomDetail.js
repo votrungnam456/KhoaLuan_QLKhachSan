@@ -49,7 +49,6 @@ export default class CheckOutRoomDetail extends Component {
   }
   render() {
     const { numberOfChild, bookingDate, listCustomer, note, checkOutDate, checkInDate, price, rooms, totalPrice } = this.state
-    console.log(rooms);
     return (
       <div className="page-content-wrapper">
         <div className="page-content">

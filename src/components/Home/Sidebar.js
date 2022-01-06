@@ -361,7 +361,6 @@ export default class Sidebar extends Component {
     }
     render() {
         const { user } = this.props
-        console.log(user)
         return (
             <div className="sidebar-container">
                 <div className="sidemenu-container navbar-collapse collapse fixed-menu">

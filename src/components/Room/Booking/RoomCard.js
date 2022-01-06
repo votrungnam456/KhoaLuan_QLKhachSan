@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { convertStatus } from '../../../constanst/Methods';
+import { convertStatus, convertStatusClean } from '../../../constanst/Methods';
 export default class RoomCard extends Component {
   constructor(props) {
     super(props);
@@ -28,15 +28,15 @@ export default class RoomCard extends Component {
                 <div className="user-name">{room.nameRoom}</div>
               </div>
               <img src="./assets/img/room.png" className="user-img" alt="" />
-              {/* <p>
-                {room.description}
-              </p> */}
               <div>
                 <p>
                   Loại phòng: {room.nameTypeRoom}
                 </p>
                 <p>
                   Tình Trạng: {convertStatus(room.status)}
+                </p>
+                <p>
+                  Tình Trạng dọn dẹp: {convertStatusClean(room.statusClear)}
                 </p>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { APITurnover, APIRoom,APIBill } from '../../constanst/API';
+import { APITurnover, APIRoom, APITypeRoom } from '../../constanst/API';
 import * as CallAPI from "../../constanst/CallAPI";
 import Title from '../Home/Title';
 import { convertDate2, getNow, convertDate } from '../../constanst/Methods';
@@ -13,13 +13,15 @@ export default class ListTurnover extends Component {
       checkInDate: "",
       checkOutDate: "",
       total: 0,
-      listRoom : [],
-      nameRoom:"",
-      listTurnoverName:[],
-      baseListTurnover:[],
+      total2: 0,
+      listRoom: [],
+      nameRoom: "",
+      listTurnoverName: [],
+      baseListTurnover: [],
+      listTypeRoom: [],
     }
   }
-  componentDidMount = ()=>{
+  componentDidMount = () => {
     this.loadData();
   }
   onChange = (ev) => {
@@ -31,17 +33,26 @@ export default class ListTurnover extends Component {
   }
   search = () => {
     const { checkInDate, checkOutDate } = this.state;
-    if (checkInDate === '' || checkOutDate === '') {
-      alert("Vui lòng chọn ngày để tìm kiếm");
+    let data = {};
+    if (checkInDate === '' && checkOutDate === '') {
+      data = {
+        dayStart: '',
+        dayEnd: ''
+      }
+    }
+    else if (checkInDate === '' || checkOutDate === '') {
+      alert("Vui lòng chọn ngày đầy đủ để tìm kiếm");
       return;
     }
     else if (convertDate2(checkInDate) >= convertDate2(checkOutDate)) {
       alert("Ngày đến không được lớn hơn hoặc bằng ngày đi");
       return;
     }
-    const data = {
-      dayStart: convertDate2(checkInDate),
-      dayEnd: convertDate2(checkOutDate),
+    else {
+      data = {
+        dayStart: convertDate2(checkInDate),
+        dayEnd: convertDate2(checkOutDate),
+      }
     }
     CallAPI.POST(APITurnover, data).then(res => {
       if (res.status === 200) {
@@ -54,51 +65,86 @@ export default class ListTurnover extends Component {
       }
     });
   }
-  loadData = () =>{
-    CallAPI.GET(APIRoom).then(res=>{
-      if(res.status === 200){
+  loadData = () => {
+    CallAPI.GET(APIRoom).then(res => {
+      if (res.status === 200) {
         this.setState({
-          listRoom:res.data
+          listRoom: res.data
         })
       }
     })
-    CallAPI.POST(APITurnover,{
+    CallAPI.POST(APITurnover, {
       dayStart: "",
       dayEnd: "",
-    }).then(res=>{
-      if(res.status === 200){
+    }).then(res => {
+      if (res.status === 200) {
         this.setState({
-          baseListTurnover:res.data
+          baseListTurnover: res.data
         })
       }
     })
+    CallAPI.GET(APITypeRoom).then(res => {
+      if (res.status === 200) {
+        this.setState({
+          listTypeRoom: res.data
+        })
+      }
+    })
+
   }
-  searchFE = (type) =>{
-    const {baseListTurnover,nameRoom} = this.state;
+  searchFE = () => {
+    const { baseListTurnover, nameRoom, idTypeRoom } = this.state;
     const listSearch = [];
-    switch (type) {
-      case 'name':
-        baseListTurnover.map(room =>{
-          if(room.nameRoom === nameRoom){
+    if (nameRoom === '' && idTypeRoom === '') {
+      this.setState({
+        listTurnoverName: baseListTurnover
+      })
+    } else {
+      if (nameRoom === '') {
+        baseListTurnover.map(room => {
+          if (room.idTypeRoom === idTypeRoom) {
             listSearch.push(room)
           }
           return true;
         })
-        this.setState({
-          listTurnoverName:listSearch
+      }
+      else if (idTypeRoom === '') {
+        baseListTurnover.map(room => {
+          if (room.nameRoom === nameRoom) {
+            listSearch.push(room)
+          }
+          return true;
         })
-        break;
-    
-      default:
-        break;
+      }
+      else {
+        baseListTurnover.map(room => {
+          if (room.nameRoom === nameRoom && room.idTypeRoom === idTypeRoom) {
+            listSearch.push(room)
+          }
+          return true;
+        })
+      }
+      let total = 0;
+      this.setState({
+        listTurnoverName: listSearch
+      }, () => {
+        this.state.listTurnoverName.map(data => total += data.totalPrice)
+        this.setState({
+          total2: total
+        })
+      })
+
     }
+
+
   }
   render() {
-    const { listTurnover, checkInDate, checkOutDate, total,listRoom,nameRoom,listTurnoverName } = this.state;
+    const { listTurnover, checkInDate, checkOutDate, total, total2, listRoom, nameRoom, listTurnoverName, listTypeRoom, idTypeRoom } = this.state;
     return (
       <div className="page-content-wrapper">
         <div className="page-content">
           <Title title="Doanh Thu"></Title>
+
           <div className="row">
             <div className="col-md-12">
               <div className="card card-box">
@@ -112,7 +158,7 @@ export default class ListTurnover extends Component {
                   <div className="row p-b-20">
                     <div className="col-md-6 col-sm-6 col-6">
                       <div className="btn-group">
-                        <ExportExcel tableName="table" fileName={"listTurnoverForDate" +checkInDate + '-' + checkOutDate + getNow(true)}></ExportExcel>
+                        <ExportExcel tableName="table" fileName={"listTurnoverForDate" + checkInDate + '-' + checkOutDate + getNow(true)}></ExportExcel>
                       </div>
                     </div>
                   </div>
@@ -175,7 +221,7 @@ export default class ListTurnover extends Component {
             <div className="col-md-12">
               <div className="card card-box">
                 <div className="card-head">
-                  <header>Doanh Thu Theo Phòng</header>
+                  <header>Doanh Thu Theo Phòng/Loại phòng</header>
                   <div className="tools">
                     <i className="t-collapse btn-color fa fa-chevron-down" />
                   </div>
@@ -184,26 +230,38 @@ export default class ListTurnover extends Component {
                   <div className="row p-b-20">
                     <div className="col-md-6 col-sm-6 col-6">
                       <div className="btn-group">
-                        <ExportExcel tableName="table" fileName={"listTurnoverForRoom" + getNow(true)}></ExportExcel>
+                        <ExportExcel tableName="table" fileName={"listTurnoverForRoomOrTypeRoom" + getNow(true)}></ExportExcel>
                       </div>
                     </div>
                   </div>
                   <div className="col-md-12 col-sm-12 col-12">
                     <div className="row">
                       <div className="col-md-4">
-                      <select name="nameRoom" onChange={this.onChange} value={nameRoom} className="mdl-textfield__input">
-                        <option value="">Chọn phòng</option>
-                        {
-                          listRoom.map((room, index) => {
-                            return (
-                              <option key={index} value={room.nameRoom}>{room.nameRoom}</option>
-                            )
-                          })
-                        }
-                      </select>
+                        <select name="nameRoom" onChange={this.onChange} value={nameRoom} className="mdl-textfield__input">
+                          <option value="">Chọn phòng</option>
+                          {
+                            listRoom.map((room, index) => {
+                              return (
+                                <option key={index} value={room.nameRoom}>{room.nameRoom}</option>
+                              )
+                            })
+                          }
+                        </select>
                       </div>
                       <div className="col-md-4">
-                        <button onClick={()=>this.searchFE('name')} className="btn btn-primary"> Tìm kiếm </button>
+                        <select name="idTypeRoom" onChange={this.onChange} value={idTypeRoom} className="mdl-textfield__input">
+                          <option value="">Chọn loại phòng</option>
+                          {
+                            listTypeRoom.map((room, index) => {
+                              return (
+                                <option key={index} value={room.id}>{room.nameTypeRoom}</option>
+                              )
+                            })
+                          }
+                        </select>
+                      </div>
+                      <div className="col-md-4">
+                        <button onClick={this.searchFE} className="btn btn-primary"> Tìm kiếm </button>
                       </div>
                     </div>
                   </div>
@@ -238,7 +296,7 @@ export default class ListTurnover extends Component {
                             <td colSpan={9}>Không tìm thấy thông tin doanh thu </td>
                           </tr>
                         }
-                        <tr><td colSpan={9}>Tổng doanh thu: {total} đồng</td></tr>
+                        <tr><td colSpan={9}>Tổng doanh thu: {total2} đồng</td></tr>
                       </tbody>
                     </table>
                   </div>
@@ -246,6 +304,7 @@ export default class ListTurnover extends Component {
               </div>
             </div>
           </div>
+
         </div>
       </div>
     )
