@@ -42,7 +42,6 @@ export default class Content extends Component {
             img: 'https://scontent.fsgn8-2.fna.fbcdn.net/v/t39.30808-1/p240x240/252247418_1213509575798540_5134057226427800621_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=7206a8&_nc_ohc=h1Nv6nnNRQMAX_dbmpa&_nc_ht=scontent.fsgn8-2.fna&oh=00_AT8MixVKmk-9IHtiZhbzIToGbUfzrBti3YZvDBF7zxp9ew&oe=61DC2C30'
         }]
         const { room } = this.state;
-        console.log(room);
         return (
             <div className="page-content-wrapper">
                 <div className="page-content">
