@@ -50,11 +50,13 @@ const convertStatus = (status) => {
 const convertStatusClean = (status) => {
   switch (status) {
     case -1:
-      return "Cần dọn dẹp"
+      return "Không cần dọn dẹp"
     case 0:
-      return "Đang dọn dẹp"
+      return "Cần dọn dẹp"
     case 1:
-      return "Đã dọn dẹp"
+      return "Đang dọn dẹp"
+      case 2:
+        return "Dọn dẹp xong"
     default:
       break;
   }
