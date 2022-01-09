@@ -3,6 +3,7 @@ import Title from '../../Home/Title'
 import { APICustomer, APIRoom, APITypeRoom, APIBookingRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 import RoomDetailItem from '../RoomDetailItem';
+import { getNow } from '../../../constanst/Methods';
 export default class BookingDetailOne extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +34,6 @@ export default class BookingDetailOne extends Component {
     }
   }
   componentDidMount() {
-    const date = new Date();
     const userLocal = JSON.parse(localStorage.getItem("userLogin"));
     const userSession = JSON.parse(sessionStorage.getItem("userLogin"));
     const checkDate = JSON.parse(localStorage.getItem("date"));
@@ -41,7 +41,7 @@ export default class BookingDetailOne extends Component {
       user: userLocal || userSession,
       checkInDate: checkDate.checkInDate || "",
       checkOutDate: checkDate.checkOutDate || "",
-      now: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+      now: getNow()
     })
     CallAPI.GET(APICustomer).then(res => {
       if (res.status === 200) {

@@ -3,6 +3,7 @@ import Title from '../../Home/Title'
 import { APIDelegation, APIRoom, APITypeRoom, APIBookingRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 import { convertStatus } from '../../../constanst/Methods';
+import { getNow } from '../../../constanst/Methods';
 export default class BookingDetailDelegation extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +29,6 @@ export default class BookingDetailDelegation extends Component {
     }
   }
   async componentDidMount() {
-    const date = new Date();
     const userLocal = JSON.parse(localStorage.getItem("userLogin"));
     const userSession = JSON.parse(sessionStorage.getItem("userLogin"));
     const checkDate = JSON.parse(localStorage.getItem("date"));
@@ -36,7 +36,7 @@ export default class BookingDetailDelegation extends Component {
       user: userLocal || userSession,
       checkInDate: checkDate.checkInDate || "",
       checkOutDate: checkDate.checkOutDate || "",
-      now: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+      now: getNow()
     })
     CallAPI.GET(APIDelegation).then(res => {
       if (res.status === 200) {

@@ -50,15 +50,6 @@ export default class BillDetail extends Component {
       }
     })
   }
-  convertDate = (longTime, type = true) => {
-    const date = new Date(longTime);
-    if (type) {
-      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    }
-    else {
-      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    }
-  }
   render() {
     const { numberOfChild, bookingDate, listCustomer, note, checkOutDate, checkInDate, price, rooms, totalPrice } = this.state
     return (

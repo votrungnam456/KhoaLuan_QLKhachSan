@@ -1,10 +1,10 @@
 const convertDate = (longTime, type = true) => {
   const date = new Date(longTime);
   if (type) {
-    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    return date.getFullYear() + "-" + String((date.getMonth() + 1)).padStart(2, '0') + "-" +  String(date.getDate()).padStart(2, '0');
   }
   else {
-    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    return date.getFullYear() + "-" + String((date.getMonth() + 1)).padStart(2, '0') + "-" +  String(date.getDate()).padStart(2, '0') + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
   }
 }
 const convertDate2 = (time) => {
@@ -63,7 +63,7 @@ const convertStatusClean = (status) => {
 }
 const getNow = (type = false) => {
   const date = new Date();
-  let now = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+  let now = date.getFullYear() + "-" +  String((date.getMonth() + 1)).padStart(2, '0')+ "-" + String(date.getDate()).padStart(2, '0');
   if (type) {
     now = convertDate(date.getTime(), false);
   }

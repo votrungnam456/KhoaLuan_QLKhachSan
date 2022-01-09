@@ -3,7 +3,7 @@ import { APIRoom, APITypeRoom, APICustomer, APIDelegation } from '../../../const
 import * as CallAPI from "../../../constanst/CallAPI";
 import Title from '../../Home/Title';
 import RoomCard from './RoomCard';
-import { convertDate2 } from '../../../constanst/Methods';
+import { convertDate2,getNow } from '../../../constanst/Methods';
 export default class BookingRoom extends Component {
     constructor(props) {
         super(props);
@@ -21,9 +21,8 @@ export default class BookingRoom extends Component {
         }
     }
     componentDidMount() {
-        const date = new Date();
         this.setState({
-            now: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+            now: getNow()
         })
         this.loadData();
     }

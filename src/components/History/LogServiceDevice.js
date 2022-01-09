@@ -4,7 +4,7 @@ import * as CallAPI from "../../constanst/CallAPI";
 import { getNow } from '../../constanst/Methods';
 import ExportExcel from '../Excel/ExportExcel';
 import Title from '../Home/Title';
-
+import { convertDate } from '../../constanst/Methods';
 export default class LogServiceDevice extends Component {
   constructor(props) {
     super(props);
@@ -45,15 +45,7 @@ export default class LogServiceDevice extends Component {
       listLogServiceDevice: listSearch
     })
   }
-  convertDate = (longTime, type = true) => {
-    const date = new Date(longTime);
-    if (type) {
-      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    }
-    else {
-      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    }
-  }
+
 x
   render() {
     const { listLogServiceDevice } = this.state;
@@ -107,7 +99,7 @@ x
                                 <td className="center">{value.name}</td>
                                 <td className="center">{value.quantity}</td>
                                 <td className="center">{value.totalPrice}</td>
-                                <td className="center">{this.convertDate(value.time, false)}</td>
+                                <td className="center">{convertDate(value.time, false)}</td>
                                 <td className="center">{value.description}</td>
                               </tr>
                             )

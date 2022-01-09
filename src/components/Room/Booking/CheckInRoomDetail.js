@@ -3,6 +3,7 @@ import Title from '../../Home/Title'
 import { APIBookingRoom, APICheckInRoom } from '../../../constanst/API';
 import * as CallAPI from "../../../constanst/CallAPI";
 import RoomDetailItem from '../RoomDetailItem';
+import { convertDate } from '../../../constanst/Methods';
 export default class CheckInRoomDetail extends Component {
   constructor(props) {
     super(props);
@@ -24,9 +25,9 @@ export default class CheckInRoomDetail extends Component {
         this.setState({
           listCustomer: res.data.customers,
           numberOfChild: res.data.numberOfChild,
-          bookingDate: this.convertDate(res.data.bookingDate, false),
-          checkInDate: this.convertDate(res.data.checkInDate),
-          checkOutDate: this.convertDate(res.data.checkOutDate),
+          bookingDate: convertDate(res.data.bookingDate, false),
+          checkInDate: convertDate(res.data.checkInDate),
+          checkOutDate: convertDate(res.data.checkOutDate),
           note: res.data.note,
           price: res.data.intoMoney,
           rooms: res.data.rooms
@@ -49,15 +50,6 @@ export default class CheckInRoomDetail extends Component {
       } 
     })
 }
-  convertDate = (longTime, type = true) => {
-    const date = new Date(longTime);
-    if (type) {
-      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    }
-    else {
-      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    }
-  }
   render() {
     const { numberOfChild, bookingDate, listCustomer, note, checkOutDate, checkInDate, price, rooms } = this.state
     return (
