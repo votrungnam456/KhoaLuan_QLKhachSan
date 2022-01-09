@@ -5,6 +5,7 @@ import * as CallAPI from "../../constanst/CallAPI";
 import { getNow } from '../../constanst/Methods';
 import ExportExcel from '../Excel/ExportExcel';
 import Title from '../Home/Title';
+import { convertStatusClean } from '../../constanst/Methods';
 export default class CleanScheduling extends Component {
   constructor(props) {
     super(props);
@@ -74,18 +75,9 @@ export default class CleanScheduling extends Component {
       } else { alert('get schedule failed') }
     });
   }
-  convertCleanStatus = (status) => {
-    switch (status) {
-      case 0:
-        return 'Đang dọn dẹp'
-      case 1:
-        return 'Đã dọn dẹp'
-      default:
-        return 'Chưa dọn dẹp'
-    }
-  }
   render() {
     const { listEmployee, listSchedule, daySearch, listRoom, idRoom, idEmployee } = this.state;
+  
     return (
       <div className="page-content-wrapper">
         <div className="page-content">
@@ -164,7 +156,7 @@ export default class CleanScheduling extends Component {
                                 <td className='text-center'>{value.employee.nameEmployee}</td>
                                 <td className='text-center'>{value.room.nameRoom}</td>
                                 <td className='text-center'>{value.dayWork}</td>
-                                <td className='text-center'>{this.convertCleanStatus(value.status)}</td>
+                                <td className='text-center'>{convertStatusClean(value.status)}</td>
                               </tr>
                             )
                           }) : (
