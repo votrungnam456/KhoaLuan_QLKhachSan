@@ -94,7 +94,7 @@ export default class LogCleaning extends Component {
             <div className="col-md-12">
               <div className="card card-box">
                 <div className="card-head">
-                  <header>Lịch sử dọn dẹp của nhân viênp</header>
+                  <header>Lịch sử dọn dẹp của nhân viên</header>
                   <div className="tools">
                     <i className="t-collapse btn-color fa fa-chevron-down" />
                   </div>

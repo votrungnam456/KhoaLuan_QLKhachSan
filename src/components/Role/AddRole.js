@@ -84,7 +84,7 @@ export default class AddRole extends Component {
                     </div>
                   </div>
                   <div className="col-lg-12 p-t-20 text-center">
-                    <button onClick={this.addRole} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Thêm nhân viên</button>
+                    <button onClick={this.addRole} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Thêm quyền</button>
                     <p style={message === 3 ? { color: "green" } : { color: "red" }}>{message === 1 ? "Thông tin không được để trống" : message === 2 ? "Thêm thất bại, vui lòng kiểm tra lại thông tin và thử lại" : message === 3 ? "Thêm thành công" : ""}</p>
                   </div>
                 </div>

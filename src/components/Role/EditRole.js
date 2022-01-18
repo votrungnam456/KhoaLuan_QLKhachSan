@@ -87,7 +87,7 @@ export default class EditRole extends Component {
                     </div>
                   </div>
                   <div className="col-lg-12 p-t-20 text-center">
-                    <button onClick={this.editRoom} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa thông tin phòng</button>
+                    <button onClick={this.editRoom} type="button" className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Sửa thông tin quyền</button>
                     <p style={{ color: "red" }} >{message === 1 ? "Thông tin không được để trống" : message === 2 ? "Sửa thông tin thất bại, vui lòng kiểm tra lại thông tin và thử lại" : ""}</p>
                   </div>
                 </div>

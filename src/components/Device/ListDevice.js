@@ -24,8 +24,10 @@ export default class ListDevice extends Component {
                     listDevice: res.data,
                     baseListDevice: res.data
                 })
+                console.log(res.data);
             }
         });
+
     }
     deleteItem = (id) => {
         CallAPI.DELETE(APIDevice + "/" + id).then(res => {
