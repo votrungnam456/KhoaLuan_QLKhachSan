@@ -147,19 +147,19 @@ export default class EmployeeProfile extends Component {
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                                             <label className="">Mật khẩu cũ</label>
-                                            <input className="mdl-textfield__input" type="text" value={oldPwd} name="oldPwd" onChange={this.onChange} />
+                                            <input className="mdl-textfield__input" type="password" value={oldPwd} name="oldPwd" onChange={this.onChange} />
                                         </div>
                                     </div>
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                                             <label className="">Mật khẩu mới</label>
-                                            <input className="mdl-textfield__input" type="text" value={newPwd} name="newPwd" onChange={this.onChange} />
+                                            <input className="mdl-textfield__input" type="password" value={newPwd} name="newPwd" onChange={this.onChange} />
                                         </div>
                                     </div>
                                     <div className="col-lg-6 p-t-20">
                                         <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
                                             <label className="">Xác nhận mật khẩu mới</label>
-                                            <input className="mdl-textfield__input" type="text" value={confirmNewPwd} name="confirmNewPwd" onChange={this.onChange} />
+                                            <input className="mdl-textfield__input" type="password" value={confirmNewPwd} name="confirmNewPwd" onChange={this.onChange} />
                                         </div>
                                     </div>
                                     <div className="col-lg-12 p-t-20 text-center">

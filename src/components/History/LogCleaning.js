@@ -4,6 +4,7 @@ import * as CallAPI from "../../constanst/CallAPI";
 import { getNow } from '../../constanst/Methods';
 import ExportExcel from '../Excel/ExportExcel';
 import Title from '../Home/Title';
+import { convertDate } from '../../constanst/Methods';
 export default class LogCleaning extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +40,7 @@ export default class LogCleaning extends Component {
         this.setState({
           listSchedule: res.data
         })
+        console.log(res.data);
       } else { alert('get schedule failed') }
     });
     CallAPI.GET(APIRoom).then(res => {
@@ -148,7 +150,9 @@ export default class LogCleaning extends Component {
                           <th className="center"> Tên nhân viên </th>
                           <th className="center"> Phòng </th>
                           <th className="center"> Ngày làm việc </th>
-                          <th className="center"> Tình trạng</th>
+                          <th className="center"> Thời gian check-in </th>
+                          <th className="center"> Thời gian check-out </th>
+                          <th className="center"> Tình trạng </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -159,7 +163,9 @@ export default class LogCleaning extends Component {
                                 <td className='text-center'>{value.employee.nameEmployee}</td>
                                 <td className='text-center'>{value.room.nameRoom}</td>
                                 <td className='text-center'>{value.dayWork}</td>
-                                <td className='text-center'>{this.convertCleanStatus(value.status)}</td>
+                                <td className='text-center'>{convertDate(value.timeStart,false)}</td>
+                                <td className='text-center'>{convertDate(value.timeEnd,false)}</td>
+                                <td className='text-center'>{value.timeEnd === null ? 'Đang dọn dẹp' : 'Đã dọn dẹp'}</td>
                               </tr>
                             )
                           }) : (
