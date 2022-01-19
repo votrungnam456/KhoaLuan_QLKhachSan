@@ -16,7 +16,7 @@ export default class DeviceItem extends Component {
         <td className="center">{device.nameHotelDevice}</td>
         <td className="center">{device.price}</td>
         <td className="center">{device.quantity}</td>
-        <td className="center">{device.status ? "Còn hàng" : "Hết hàng"}</td>
+        <td className="center">{device.quantity > 0 ? "Còn hàng" : "Hết hàng"}</td>
         <td className="center">
           <Link to={"/edit-device/"+device.id} className="btn btn-tbl-edit btn-xs">
             <i className="fa fa-pencil" />

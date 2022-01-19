@@ -80,7 +80,15 @@ export default class EditEmployee extends Component {
                             message: 2
                         })
                     }
-                });
+                }).catch(err=>{
+                    if(err.response.data.code === -9){
+                      alert("Email đã tồn tại !");
+                    } else if(err.response.data.code === -10) {
+                        alert("Phone đã tồn tại !");
+                    } else if(err.response.data.code === -11) {
+                        alert("IdCard đã tồn tại !");
+                    }
+                  });
             }else{
                 this.setState({
                     message: 3

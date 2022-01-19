@@ -65,7 +65,11 @@ export default class EditRoom extends Component {
                     })
                 }
 
-            });
+            }).catch(err=>{
+                if(err.response.data.code === -4){
+                  alert("Tên phòng đã tồn tại !");
+                } 
+              });
         }
 
     }

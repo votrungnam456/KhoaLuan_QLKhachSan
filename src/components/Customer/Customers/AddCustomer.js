@@ -70,7 +70,15 @@ export default class AddCustomer extends Component {
                         message: 3
                     })
                 }
-            }).catch(err => console.log(err.response));
+            }).catch(err=>{
+                if(err.response.data.code === -9){
+                  alert("Email đã tồn tại !");
+                } else if(err.response.data.code === -10) {
+                    alert("Phone đã tồn tại !");
+                } else if(err.response.data.code === -11) {
+                    alert("IdCard đã tồn tại !");
+                }
+              });
         }
     }
 
